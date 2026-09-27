@@ -42,6 +42,32 @@ plugins/
 
 同一个市场里可以混用：本地目录插件 + 指向别的仓库的插件都行。
 
+### 图标（`icon`）与详情页大图（`heroImage`）
+
+**插件包自己的 `plugin.json` 里没有 icon 字段**——图标只能由**市场条目**声明：
+
+```jsonc
+{
+  "name": "hello-ccode",
+  "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/hello-ccode/icon.png",
+  "heroImage": "https://…/hero.png"
+}
+```
+
+硬性要求与事实（都实测过）：
+
+| 事实 | 说明 |
+| --- | --- |
+| **必须是 `https://`** | 客户端的图片信任判定只放行 `https://` 前缀（`isTrustedImageUrl`）。写成相对路径、`file://`、`http://` 会被**静默忽略** |
+| 缺失或被忽略时 | 卡片/详情页回退成中性占位图标（一个灰色 `Blocks` 图标），**不会报错** |
+| 走哪个 URL | 仓库是公开的，直接用 `raw.githubusercontent.com/<owner>/<repo>/<分支>/<路径>` 即可（实测 200 image/png） |
+| 尺寸与格式 | 跟官方插件图标一致：**128×128 PNG，透明背景，只画图形本身**——外层容器（`bg-surface rounded-xl`）负责主题背景，明暗主题都不用换图 |
+| 放哪 | 约定放 `plugins/<插件>/icon.png`，跟插件同目录 |
+| 生效时机 | 改完要 **push**，然后在应用里对市场点「更新」（或顶栏刷新）重新拉 catalog，图标才会出现 |
+
+> 想换成自己的 Logo：把 `plugins/<插件>/icon.png` 替换掉（保持 128×128、透明底、只画图形），push 即可；
+> 文件名/路径变了就同步改 `marketplace.json` 里的 `icon`。
+
 ## 插件清单（`.ccode-plugin/plugin.json`）
 
 ```jsonc
