@@ -1,0 +1,20 @@
+{
+  "name": "jnmhub-ccode-market",
+  "description": "JnmHub 自建 CCode 插件市场：示例插件与自持插件分发。",
+  "metadata": {
+    "pluginRoot": "plugins"
+  },
+  "plugins": [
+    {
+      "name": "hello-ccode",
+      "displayName": "Hello CCode（示例插件）",
+      "description": "最小示例插件：一条斜杠命令 + 一个技能，用来验证「自建市场源 → 添加 → 安装 → 启用 → 命令/skill 生效」的完整链路。",
+      "category": "examples",
+      "version": "0.1.0",
+      "author": "JnmHub",
+      "homepage": "https://github.com/JnmHub/jnmhub-ccode-market",
+      "source": "hello-ccode",
+      "tags": ["example", "demo"]
+    }
+  ]
+}

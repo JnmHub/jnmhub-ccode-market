@@ -1,0 +1,10 @@
+{
+  "name": "hello-ccode",
+  "version": "0.1.0",
+  "description": "Minimal example plugin served from a self-hosted CCode marketplace: one slash command and one skill.",
+  "author": { "name": "JnmHub" },
+  "license": "MIT",
+  "homepage": "https://github.com/JnmHub/jnmhub-ccode-market",
+  "commands": "commands",
+  "skills": "skills"
+}
