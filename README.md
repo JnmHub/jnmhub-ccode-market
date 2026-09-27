@@ -77,8 +77,8 @@ plugins/
 | --- | --- |
 | `JnmHub/jnmhub-ccode-market` | github（等价于 clone `https://github.com/JnmHub/jnmhub-ccode-market.git`） |
 | `https://github.com/JnmHub/jnmhub-ccode-market.git` | git |
-| `D:\code\ccode-marketplace` | directory（本地目录，开发时最好用） |
-| `D:\code\ccode-marketplace\marketplace.json` | file（只读清单，不含插件本体） |
+| `D:\code\jnmhub-ccode-market` | directory（本地目录，开发时最好用） |
+| `D:\code\jnmhub-ccode-market\marketplace.json` | file（只读清单，不含插件本体） |
 
 CLI 同样可用：`ccode plugins marketplace add <source>`。
 
@@ -92,7 +92,7 @@ CLI 同样可用：`ccode plugins marketplace add <source>`。
 
 ## 本地开发
 
-改完插件后不必推远端：应用里把源指向**本地目录**（`D:\code\ccode-marketplace`）并点更新即可。
+改完插件后不必推远端：应用里把源指向**本地目录**（`D:\code\jnmhub-ccode-market`）并点更新即可。
 发布前用同一份内容做一次 git 提交，保证「推上去的」和「本地验证过的」是同一棵树。
 
 ## License
