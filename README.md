@@ -69,6 +69,26 @@ plugins/
 里出现上表以外的键只会告警，不会被拒绝。`channels` / `lspServers` / `outputStyles` / `settings` 四个
 字段在这个运行时是「只诊断不生效」的。
 
+## 首次发布到 GitHub
+
+本仓库已经是一个提交好的本地 Git 仓库（分支 `main`），发布就是把远端接上再推：
+
+```bash
+cd D:\code\jnmhub-ccode-market
+gh repo create JnmHub/jnmhub-ccode-market --public --source . --remote origin --push
+```
+
+没有 `gh` 时用 git 原生写法：
+
+```bash
+git remote add origin git@github.com:JnmHub/jnmhub-ccode-market.git
+git push -u origin main
+```
+
+推完之后应用里的源用 `JnmHub/jnmhub-ccode-market` 即可（等价于 clone
+`https://github.com/JnmHub/jnmhub-ccode-market.git`）。若是**私有**仓库，本地 git 凭据要能免交互拿到
+（本机已配 `gh` 的 credential helper，通常没问题）；公开仓库没有这个顾虑。
+
 ## 怎么加进 CCode
 
 设置 → 插件市场 → 添加插件市场，任一形式：
