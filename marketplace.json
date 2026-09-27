@@ -8,6 +8,7 @@
     {
       "name": "hello-ccode",
       "displayName": "Hello CCode（示例插件）",
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/hello-ccode/icon.png",
       "description": "最小示例插件：一条斜杠命令 + 一个技能，用来验证「自建市场源 → 添加 → 安装 → 启用 → 命令/skill 生效」的完整链路。",
       "category": "examples",
       "version": "0.1.0",
