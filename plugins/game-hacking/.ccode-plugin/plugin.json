@@ -1,0 +1,9 @@
+{
+  "name": "game-hacking",
+  "version": "1.0.0",
+  "description": "End-to-end game-assist reverse-engineering: memory R/W, protocol analysis, decompilation, hooks, driver-level hiding and automation scripts across PC, Android/iOS and consoles. — 游戏辅助开发全链路：内存读写、协议分析、反编译、Hook、驱动级隐藏与自动化脚本，覆盖 PC 端游、Android/iOS 手游与主机。",
+  "author": {
+    "name": "JnmHub"
+  },
+  "skills": "skills"
+}

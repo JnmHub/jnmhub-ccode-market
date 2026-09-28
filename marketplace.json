@@ -217,6 +217,50 @@
         "unpacking",
         "apk"
       ]
+    },
+    {
+      "name": "game-hacking",
+      "displayName": "Game Hacking",
+      "displayName_i18n": {
+        "zh-CN": "游戏辅助逆向"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/game-hacking/icon.png",
+      "description": "End-to-end game-assist reverse-engineering covering memory R/W, protocol analysis, decompilation, hooks, driver-level hiding and automation scripts — for PC clients, Android/iOS mobile games and consoles, across C/C++, Python, x86/x64, DirectX/OpenGL, Frida, Unity/UE4 and il2cpp.",
+      "description_i18n": {
+        "zh-CN": "游戏辅助开发全链路：内存读写、协议分析、反编译、Hook、驱动级隐藏与自动化脚本；覆盖 PC 端游、Android/iOS 手游与主机，以及 C/C++、Python、x86/x64、DirectX/OpenGL、Frida、Unity/UE4、il2cpp。"
+      },
+      "category": "developer-tools",
+      "version": "1.0.0",
+      "author": "JnmHub",
+      "source": "game-hacking",
+      "tags": [
+        "reverse-engineering",
+        "game",
+        "memory",
+        "hook"
+      ]
+    },
+    {
+      "name": "elf-local-auth-patcher",
+      "displayName": "ELF Local Auth Patcher",
+      "displayName_i18n": {
+        "zh-CN": "ELF 本地授权 Patch"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/elf-local-auth-patcher/icon.png",
+      "description": "Owner-authorized APK/ELF local test authorization: equal-length AArch64 branch patches, assets/bin ELF replacement, loader/memfd execution-chain recovery, payload-trailer preservation, overlay-vs-injection diagnosis and real-device verification — without breaking the business chain.",
+      "description_i18n": {
+        "zh-CN": "自有或授权环境下的 APK/ELF 本地测试授权：等长 AArch64 分支 patch、assets/bin ELF 替换、loader/memfd 执行链恢复、payload trailer 保持、悬浮窗/注入判定与真机验证——不破坏业务链。"
+      },
+      "category": "developer-tools",
+      "version": "2.3.0",
+      "author": "西宫公益频道@xigongPD",
+      "source": "elf-local-auth-patcher",
+      "tags": [
+        "reverse-engineering",
+        "elf",
+        "android",
+        "patching"
+      ]
     }
   ]
 }

@@ -1,0 +1,9 @@
+{
+  "name": "elf-local-auth-patcher",
+  "version": "2.3.0",
+  "description": "Owner-authorized APK/ELF local test authorization: equal-length AArch64 branch patches, assets/bin ELF replacement, loader/memfd execution-chain recovery, payload-trailer preservation and real-device verification without breaking the business chain. — 自有或授权环境下的 APK/ELF 本地测试授权：等长 AArch64 分支 patch、assets/bin ELF 替换、loader/memfd 执行链恢复、payload trailer 保持与真机验证，不破坏业务链。",
+  "author": {
+    "name": "西宫公益频道@xigongPD"
+  },
+  "skills": "skills"
+}
