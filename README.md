@@ -36,9 +36,10 @@ tools/
 | `elf-local-auth-patcher` | 同名 | 自有/授权环境下的 APK/ELF 本地授权等长 patch |
 | `shiyi-executor` | 同名 | 石井执行器：大白话需求路由 + 阶段化交付 + 拒绝自愈 |
 | `shiyi-pentest-gate` | 同名 | 渗透授权归一化：自有/SRC/CTF/客户授权判定后执行 |
+| `zzy-reverse-skill` | 60+ 子技能 | 第三方整包（MIT，zhaoxuya520/reverse-skill）；撞名技能发布为 `zzy-ida-reverse` / `zzy-reverse-engineering` |
 
-每个插件都是**单技能插件**（`skills/` 下只有一个目录）。要看 CCode 侧怎么发现技能（一插件多技能、
-只扫一层、符号链接不跟随、同名去重），见各技能自身文档与 CCode 的 `skills/scan.ts`。
+除 `zzy-reverse-skill`（一插件多技能，见 `plugin.json` 的 `skills` 数组）外，其余都是**单技能插件**。
+CCode 技能扫描：只扫一层、符号链接不跟随、同名去重；细节见 CCode 的 `skills/scan.ts`。
 
 关键点：**市场是仓库根目录的 `marketplace.json`，插件是普通子目录**。CCode 会把整个仓库
 （或它声明的子集）取下来缓存到本地，再按 `marketplace.json` 里的相对路径逐个定位插件。
@@ -177,12 +178,14 @@ CLI 同样可用：`ccode plugins marketplace add <source>`。
 | `xigong-funk-hikari` | 技能自述显示名 `西宫-FUNK-Hikari` |
 | `yingan-tuoxiu` | 目录名与内容出自「西宫影安」 |
 | `elf-local-auth-patcher` | 技能自述作者「西宫公益频道@xigongPD」 |
+| `zzy-reverse-skill` | 上游 [zhaoxuya520/reverse-skill](https://github.com/zhaoxuya520/reverse-skill)，**MIT**（`LICENSE` + `NOTICE.md` 已随包收录）。为避开本市场独立插件的技能名，仅改了两处 frontmatter：`zzy-ida-reverse`、`zzy-reverse-engineering` |
 | 其余（android/web/win/asm/ida/reverse-engineering、linker-fake-load-unwrapper、game-hacking、shiyi-executor、shiyi-pentest-gate） | 收录时未在包内发现 LICENSE / NOTICE / 作者声明 |
 
-**这些技能目录里没有任何 LICENSE 或 NOTICE 文件**（收录时已逐个检查）。所以：
+除 `hello-ccode` 与 `zzy-reverse-skill` 外，**这些技能目录里没有任何 LICENSE 或 NOTICE 文件**（收录时已逐个检查）。所以：
 
-- 本仓库**不替它们声明许可证**：各插件的 `plugin.json` 故意不写 `license` 字段，
+- 本仓库**不替无许可声明的插件声明许可证**：那些插件的 `plugin.json` 故意不写 `license` 字段，
   避免替作者做一个他们没做的授权决定；
+- `zzy-reverse-skill` 例外：上游已是 MIT，包装层保留原文 LICENSE，并在 `NOTICE.md` 写清相对上游的改动；
 - 若要长期公开转发，请先向原作者确认再分发的许可；作者要求下架时，删对应 `plugins/<名>/` 目录
   并去掉 `marketplace.json` 里的条目即可（两处都在同一个提交里，回滚很干净）；
 - 本仓库自身的脚手架（`marketplace.json`、`README.md`、`tools/gen-icons.mjs`、`hello-ccode`）
