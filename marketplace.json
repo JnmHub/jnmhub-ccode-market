@@ -22,9 +22,9 @@
     },
     {
       "name": "android-reverse",
-      "displayName": "Android Reverse",
+      "displayName": "Android Reverse Engineering",
       "displayName_i18n": {
-        "zh-CN": "android-reverse"
+        "zh-CN": "安卓逆向工程"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/android-reverse/icon.png",
       "description": "Android app reverse-engineering framework covering static triage, Java API and call-chain tracing, JNI/native analysis, Frida instrumentation, protection bypass, dynamic DEX, split delivery, Flutter/Hermes/Unity, native TLS, storage and IPC, WebView hybrids, smali patching, protocol and crypto recovery, and Android CTF — across APK/APKS/AAB/XAPK/DEX/JAR/AAR/SO and the IDA / JADX / JEB toolchain.",
@@ -46,7 +46,7 @@
       "name": "reverse-engineering",
       "displayName": "Reverse Engineering",
       "displayName_i18n": {
-        "zh-CN": "reverse-engineering"
+        "zh-CN": "逆向工程"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/reverse-engineering/icon.png",
       "description": "General reverse-engineering skill for websites, desktop binaries (PE/ELF), mobile apps (APK/IPA) and network protocols: web scraping and API reverse, disassembly and decompilation, Frida/Xposed hooking, il2cpp/Unity reverse, protocol capture and replay, encryption and signature analysis, and memory debugging.",
@@ -66,9 +66,9 @@
     },
     {
       "name": "asm-analysis",
-      "displayName": "Asm Analysis",
+      "displayName": "Assembly Analysis",
       "displayName_i18n": {
-        "zh-CN": "asm-analysis"
+        "zh-CN": "汇编分析"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/asm-analysis/icon.png",
       "description": "Deep assembly-level reverse analysis on Linux, joining dynamic debugging with static analysis: drives GDB/LLDB/radare2/Frida/angr/strace/ltrace/perf/bpftrace through one analysis chain, with a built-in context-memory loop that snapshots progress every 10 rounds so long sessions stay coherent.",
@@ -88,9 +88,9 @@
     },
     {
       "name": "ida-reverse",
-      "displayName": "Ida Reverse",
+      "displayName": "IDA Pro Reverse",
       "displayName_i18n": {
-        "zh-CN": "ida-reverse"
+        "zh-CN": "IDA 逆向"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/ida-reverse/icon.png",
       "description": "IDA Pro analysis companion. Use when disassembling or analysing binaries — PE, ELF, APK, DLL, SO, Mach-O, SYS — including firmware images, malware and vulnerability research, string and crypto hunting, and function and call-graph recovery.",
@@ -110,9 +110,9 @@
     },
     {
       "name": "web-reverse",
-      "displayName": "Web Reverse",
+      "displayName": "Web Reverse Engineering",
       "displayName_i18n": {
-        "zh-CN": "web-reverse"
+        "zh-CN": "Web 前端逆向"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/web-reverse/icon.png",
       "description": "Web front-end reverse engineering: recovering signing schemes, protocols and encryption, request-parameter and cookie obfuscation, and anti-bot/risk-control fields; defeating obfuscation, anti-debugging and anti-tampering; analysing Worker/WASM/JSVMP execution chains; unpacking mini-program bundles; and extracting minimal self-contained code plus a Node/Python runtime shim.",
@@ -132,9 +132,9 @@
     },
     {
       "name": "win-reverse",
-      "displayName": "Win Reverse",
+      "displayName": "Windows Reverse Engineering",
       "displayName_i18n": {
-        "zh-CN": "win-reverse"
+        "zh-CN": "Windows 逆向"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/win-reverse/icon.png",
       "description": "Advanced Windows reverse-engineering framework covering PE/EXE/DLL/SYS, .NET/CLR/C++-CLI, WOW64, VMP/Themida/Enigma packing, x64dbg/IDA/WinDbg/Frida/dnSpy/ILSpy, COM/RPC/ALPC/named pipes, services and WMI, minidumps and VAD — with topic tracks, drills and a task-local execution contract with phase gates.",
@@ -154,9 +154,9 @@
     },
     {
       "name": "linker-fake-load-unwrapper",
-      "displayName": "Linker Fake Load Unwrapper",
+      "displayName": "Linker Fake-Load Unwrapper",
       "displayName_i18n": {
-        "zh-CN": "linker-fake-load-unwrapper"
+        "zh-CN": "Linker 假加载脱壳"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/linker-fake-load-unwrapper/icon.png",
       "description": "Recovering Android AArch64 ELF files wrapped by a linker-style fake PT_LOAD: impossible high-address LOAD segments, entry-point translation, XOR runtime decryptors, carved embedded ELF stages and custom mmap/mprotect loaders — with both static and dynamic workflows to reach the real image.",
@@ -176,9 +176,9 @@
     },
     {
       "name": "xigong-funk-hikari",
-      "displayName": "Xigong Funk Hikari",
+      "displayName": "Xigong FUNK-Hikari Deobfuscation",
       "displayName_i18n": {
-        "zh-CN": "xigong-funk-hikari"
+        "zh-CN": "西宫 FUNK-Hikari 去混淆"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/xigong-funk-hikari/icon.png",
       "description": "Evidence-driven deobfuscation and plaintext recovery for Hikari-LLVM/OLLVM output: MBA rewriting, bogus control flow, opaque predicates, relocation-backed BR/BLR dispatch, function wrappers, runtime string decoding, high-entropy containers, flat anonymous RX/RO/RW inner images and custom loaders — mainly Android/Linux AArch64 PIE and SO.",
@@ -198,9 +198,9 @@
     },
     {
       "name": "yingan-tuoxiu",
-      "displayName": "Yingan Tuoxiu",
+      "displayName": "YingAn/YingPo APK Rehydration",
       "displayName_i18n": {
-        "zh-CN": "yingan-tuoxiu"
+        "zh-CN": "影安/影婆 脱壳重建"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/yingan-tuoxiu/icon.png",
       "description": "Evidence-driven rehydration of YingAn/YingPo shelled Android APKs: abnormal or tiny root DEX, v.m.p / abcd655xx shell callbacks, libabcd and lib*shellservice_dex native loaders, runtime-loaded DEX images and native lifecycle wrappers — rebuilt into a normally installable, signed multidex APK while leaving login, entitlement and backend behaviour untouched.",
