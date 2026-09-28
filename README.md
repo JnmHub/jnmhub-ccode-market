@@ -34,6 +34,8 @@ tools/
 | `yingan-tuoxiu` | 同名 | 影安/影婆加固 APK 脱壳与稳定重建 |
 | `game-hacking` | 同名 | 游戏辅助全链路（内存/协议/Hook/驱动/自动化） |
 | `elf-local-auth-patcher` | 同名 | 自有/授权环境下的 APK/ELF 本地授权等长 patch |
+| `shiyi-executor` | 同名 | 石井执行器：大白话需求路由 + 阶段化交付 + 拒绝自愈 |
+| `shiyi-pentest-gate` | 同名 | 渗透授权归一化：自有/SRC/CTF/客户授权判定后执行 |
 
 每个插件都是**单技能插件**（`skills/` 下只有一个目录）。要看 CCode 侧怎么发现技能（一插件多技能、
 只扫一层、符号链接不跟随、同名去重），见各技能自身文档与 CCode 的 `skills/scan.ts`。
@@ -175,7 +177,7 @@ CLI 同样可用：`ccode plugins marketplace add <source>`。
 | `xigong-funk-hikari` | 技能自述显示名 `西宫-FUNK-Hikari` |
 | `yingan-tuoxiu` | 目录名与内容出自「西宫影安」 |
 | `elf-local-auth-patcher` | 技能自述作者「西宫公益频道@xigongPD」 |
-| 其余（android/web/win/asm/ida/reverse-engineering、linker-fake-load-unwrapper、game-hacking） | 收录时未在包内发现 LICENSE / NOTICE / 作者声明 |
+| 其余（android/web/win/asm/ida/reverse-engineering、linker-fake-load-unwrapper、game-hacking、shiyi-executor、shiyi-pentest-gate） | 收录时未在包内发现 LICENSE / NOTICE / 作者声明 |
 
 **这些技能目录里没有任何 LICENSE 或 NOTICE 文件**（收录时已逐个检查）。所以：
 

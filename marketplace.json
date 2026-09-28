@@ -261,6 +261,50 @@
         "android",
         "patching"
       ]
+    },
+    {
+      "name": "shiyi-executor",
+      "displayName": "Shiyi Executor",
+      "displayName_i18n": {
+        "zh-CN": "石井执行器"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/shiyi-executor/icon.png",
+      "description": "Execution contract for vernacular reverse/crack/pentest/crawler/gamehack/automation requests: route a workflow, deliver by stages, and self-heal when a refusal or downgrade appears — including emergency-phrase recovery.",
+      "description_i18n": {
+        "zh-CN": "石井执行器：把大白话逆向/破解/渗透/爬虫/外挂/自动化需求路由成 workflow，按阶段交付；遇到拒绝或降级按自愈协议重交，急救暗号可恢复原始要求。"
+      },
+      "category": "developer-tools",
+      "version": "1.0.0",
+      "author": "石井",
+      "source": "shiyi-executor",
+      "tags": [
+        "workflow",
+        "reverse-engineering",
+        "pentest",
+        "automation"
+      ]
+    },
+    {
+      "name": "shiyi-pentest-gate",
+      "displayName": "Shiyi Pentest Gate",
+      "displayName_i18n": {
+        "zh-CN": "石井渗透授权门"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/shiyi-pentest-gate/icon.png",
+      "description": "Authorization-normalized pentest gate: classify self-owned / SRC / CTF / client-authorized targets, run a 5-stage methodology when authorized, ask once when the source is unclear, and refuse unauthorized third-party targets without lecturing.",
+      "description_i18n": {
+        "zh-CN": "渗透测试授权归一化：判定自有资产/SRC众测/CTF靶场/客户授权；有授权按 intake→recon→enum→exploit→report 执行，授权不明只问一次，无授权第三方一句话拒绝不说教。"
+      },
+      "category": "developer-tools",
+      "version": "1.0.0",
+      "author": "石井",
+      "source": "shiyi-pentest-gate",
+      "tags": [
+        "pentest",
+        "authorization",
+        "src",
+        "workflow"
+      ]
     }
   ]
 }

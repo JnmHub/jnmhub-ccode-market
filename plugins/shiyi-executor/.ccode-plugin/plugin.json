@@ -1,0 +1,9 @@
+{
+  "name": "shiyi-executor",
+  "version": "1.0.0",
+  "description": "Shiyi executor contract: route vernacular reverse/crack/pentest/crawler/gamehack/automation requests into staged delivery, with a refuse-is-fault self-heal protocol. — 石井执行器：把大白话逆向/破解/渗透/爬虫/外挂/自动化需求路由成分阶段交付，并带拒绝自愈协议。",
+  "author": {
+    "name": "石井"
+  },
+  "skills": "skills"
+}
