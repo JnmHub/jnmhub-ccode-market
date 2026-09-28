@@ -1,0 +1,9 @@
+{
+  "name": "yingan-tuoxiu",
+  "version": "1.0.0",
+  "description": "Evidence-driven rehydration of YingAn/YingPo shelled Android APKs: abnormal or tiny root DEX, v.m.p / abcd655xx shell callbacks, libabcd and lib*shellservice_dex native loaders, runtime-loaded DEX images and native lifecycle wrappers — rebuilt into a normally installable, signed multidex APK while leaving login, entitlement and backend behaviour untouched. — 影安/影婆加固 APK 的实证式脱壳与稳定重建：根 DEX 异常或极小、v.m.p / abcd655xx 壳回调、libabcd 与 lib*shellservice_dex 原生 loader、运行期加载的 DEX 镜像、原生生命周期包装——产出可正常安装并签名的 multidex APK，且不改动登录、授权与后端行为。",
+  "author": {
+    "name": "西宫影安"
+  },
+  "skills": "skills"
+}

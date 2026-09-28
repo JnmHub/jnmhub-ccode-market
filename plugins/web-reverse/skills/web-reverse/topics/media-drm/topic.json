@@ -1,0 +1,67 @@
+{
+  "key": "media-drm",
+  "label": "Media DRM / EME / license flow",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "media-drm",
+  "signals": [
+    "MediaSource",
+    "encrypted event",
+    "requestMediaKeySystemAccess",
+    "license",
+    "m3u8",
+    "mpd",
+    "video frame",
+    "decrypt",
+    "clearkey",
+    "SourceBuffer",
+    "key session"
+  ],
+  "protocol": "references/media-drm-playbook.md",
+  "secondaryProtocol": "references/video-frame-decryption-playbook.md",
+  "extendedProtocols": [
+    "references/browser-controlled-reuse-playbook.md",
+    "references/composite-protection-playbook.md",
+    "references/websearch-escalation-playbook.md"
+  ],
+  "caseFiles": [
+    "scripts/cases/web-media-drm-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "requestMediaKeySystemAccess",
+    "run/license-flow.md",
+    "run/token-inputs.json",
+    "run/frame-decryption-chain.md",
+    "run/key-session-timeline.json",
+    "run/verify-decryption.mjs",
+    "run/wasm-imports-exports.json",
+    "run/vm-trace.jsonl",
+    "clear-frame",
+    "keyStatus",
+    "keystatuseschange",
+    "appendBuffer"
+  ],
+  "synthetic": {
+    "id": "synthetic-media-drm",
+    "artifactSeeds": [
+      {
+        "path": "run/license-flow.md",
+        "text": "# License Flow\n\n- EME: Widevine\n- Key System: com.widevine.alpha\n- License Endpoint: https://license.example.com/widevine\n"
+      },
+      {
+        "path": "run/token-inputs.json",
+        "json": {
+          "licenseUrl": "https://license.example.com/widevine",
+          "tokenType": "clearkey",
+          "keyId": "abc123"
+        }
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ]
+}

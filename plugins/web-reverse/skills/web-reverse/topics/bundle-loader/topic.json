@@ -1,0 +1,30 @@
+{
+  "key": "bundle-loader",
+  "label": "Bundle / chunk loader",
+  "maturity": "closed-loop",
+  "routeTrack": "bundle-loader",
+  "signals": [
+    "webpackJsonp",
+    "__webpack_require__",
+    "chunk loader",
+    "dynamic import"
+  ],
+  "protocol": "references/bundle-loader-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-bundle-loader-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "chunk loader",
+    "run/chunk-loader-notes.md",
+    "run/preload-orchestrator.js"
+  ],
+  "owner": "web-reverse-core",
+  "riskLevel": "medium",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

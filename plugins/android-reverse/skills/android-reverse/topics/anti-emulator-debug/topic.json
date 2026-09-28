@@ -1,0 +1,23 @@
+{
+  "key": "anti-emulator-debug",
+  "label": "Anti-emulator / anti-debug / tracer bypass",
+  "routeTrack": "anti-emulator-debug",
+  "signals": [
+    "emulator",
+    "debug",
+    "tracer",
+    "ro.kernel.qemu",
+    "isdebuggerconnected",
+    "ptrace"
+  ],
+  "protocol": "references/anti-emulator-debug-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-anti-emulator-debug-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "high",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/anti-emulator-bypass.js"
+  ],
+  "historicalMaturity": "closed-loop"
+}

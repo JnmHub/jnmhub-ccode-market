@@ -8,11 +8,33 @@ JnmHub 自建的 CCode 插件市场源。这是一个**普通的 Git 仓库**，
 ```
 marketplace.json                     # 市场清单（市场身份 + 插件条目）
 plugins/
-  hello-ccode/                       # 一个插件 = 一个目录
+  <插件名>/                          # 一个插件 = 一个目录
     .ccode-plugin/plugin.json        # 插件清单（组件声明）
-    commands/hello.md                # 斜杠命令
-    skills/hello-ccode/SKILL.md      # 技能
+    icon.png                         # 128×128 透明底图标（只画图形本身）
+    skills/<技能名>/SKILL.md         # 技能（一个插件可以有多个）
+    commands/*.md                    # 斜杠命令（可选）
+    agents/*.md                      # 子代理（可选）
+tools/
+  gen-icons.mjs                      # 由 SVG 生成全部 icon.png（可重跑）
 ```
+
+## 插件索引
+
+| 插件 | 技能 | 说明 |
+| --- | --- | --- |
+| `hello-ccode` | `hello-ccode` | 最小示例：一条斜杠命令 + 一个技能，用于验证链路 |
+| `android-reverse` | `android-reverse` | Android 逆向框架（APK/DEX/SO、Frida、JADX/JEB、脱壳、协议还原） |
+| `reverse-engineering` | `reverse-engineering` | 通用逆向（网站/PE/ELF/APK/IPA/协议、Hook、签名与加密分析） |
+| `asm-analysis` | `asm-analysis` | 汇编级逆向（GDB/LLDB/r2/Frida/angr/strace… 统一链路 + 上下文快照） |
+| `ida-reverse` | `ida-reverse` | IDA Pro 分析辅助（反汇编、固件、样本、函数调用图） |
+| `web-reverse` | `web-reverse` | Web 前端逆向（签名/协议/加密、混淆与反调试、WASM/JSVMP、扣代码补环境） |
+| `win-reverse` | `win-reverse` | Windows 逆向框架（PE/.NET/驱动/壳/IPC，含专题、演练与阶段门禁） |
+| `linker-fake-load-unwrapper` | 同名 | 假 PT_LOAD 包裹的 Android AArch64 ELF 还原 |
+| `xigong-funk-hikari` | 同名 | Hikari-LLVM/OLLVM 去混淆与明文还原 |
+| `yingan-tuoxiu` | 同名 | 影安/影婆加固 APK 脱壳与稳定重建 |
+
+每个插件都是**单技能插件**（`skills/` 下只有一个目录）。要看 CCode 侧怎么发现技能（一插件多技能、
+只扫一层、符号链接不跟随、同名去重），见各技能自身文档与 CCode 的 `skills/scan.ts`。
 
 关键点：**市场是仓库根目录的 `marketplace.json`，插件是普通子目录**。CCode 会把整个仓库
 （或它声明的子集）取下来缓存到本地，再按 `marketplace.json` 里的相对路径逐个定位插件。
@@ -141,6 +163,26 @@ CLI 同样可用：`ccode plugins marketplace add <source>`。
 改完插件后不必推远端：应用里把源指向**本地目录**（`D:\code\jnmhub-ccode-market`）并点更新即可。
 发布前用同一份内容做一次 git 提交，保证「推上去的」和「本地验证过的」是同一棵树。
 
+## 来源与许可（**发布/转发前必读**）
+
+本仓库除 `hello-ccode`（本仓库自建示例）外，`plugins/` 下的技能内容来自**外部作者的作品**，
+原样收录以便分发与本地安装：
+
+| 插件 | 来源标记 |
+| --- | --- |
+| `xigong-funk-hikari` | 技能自述显示名 `西宫-FUNK-Hikari` |
+| `yingan-tuoxiu` | 目录名与内容出自「西宫影安」 |
+| 其余（android/web/win/asm/ida/reverse-engineering、linker-fake-load-unwrapper） | 收录时未在包内发现 LICENSE / NOTICE / 作者声明 |
+
+**这些技能目录里没有任何 LICENSE 或 NOTICE 文件**（收录时已逐个检查）。所以：
+
+- 本仓库**不替它们声明许可证**：各插件的 `plugin.json` 故意不写 `license` 字段，
+  避免替作者做一个他们没做的授权决定；
+- 若要长期公开转发，请先向原作者确认再分发的许可；作者要求下架时，删对应 `plugins/<名>/` 目录
+  并去掉 `marketplace.json` 里的条目即可（两处都在同一个提交里，回滚很干净）；
+- 本仓库自身的脚手架（`marketplace.json`、`README.md`、`tools/gen-icons.mjs`、`hello-ccode`）
+  按下面的 MIT 授权。
+
 ## License
 
-MIT
+MIT（仅指本仓库脚手架，见上节）

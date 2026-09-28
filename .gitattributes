@@ -1,0 +1,20 @@
+# 二进制资产不可做换行转换：转换会把 PDF/PNG 弄坏（体积变化 + 内容损坏），
+# 而且 git 只在"判定为文本"时才转换 —— 显式声明比依赖自动探测可靠。
+*.png  binary
+*.pdf  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.ico  binary
+*.zip  binary
+*.apk  binary
+*.so   binary
+*.dylib binary
+*.dll  binary
+*.exe  binary
+*.node binary
+*.dmp  binary
+
+# 文本一律以 LF 入库，检出时按平台自动处理。
+* text=auto

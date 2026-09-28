@@ -1,0 +1,23 @@
+{
+  "key": "storage-ipc",
+  "label": "Storage / IPC / provider / binder evidence",
+  "routeTrack": "storage-ipc",
+  "signals": [
+    "sharedpreferences",
+    "sqlite",
+    "room",
+    "mmkv",
+    "contentprovider",
+    "binder"
+  ],
+  "protocol": "references/storage-ipc-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-storage-ipc-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "medium",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/storage-ipc-notes.md"
+  ],
+  "historicalMaturity": "closed-loop"
+}

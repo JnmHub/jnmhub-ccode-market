@@ -1,0 +1,29 @@
+{
+  "key": "frame",
+  "label": "Frame / iframe",
+  "maturity": "closed-loop",
+  "routeTrack": "frame",
+  "signals": [
+    "iframe",
+    "frame",
+    "postMessage",
+    "cross-frame"
+  ],
+  "protocol": "references/frame-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-frame-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "target frame",
+    "run/frame-notes.md"
+  ],
+  "owner": "web-reverse-core",
+  "riskLevel": "medium",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

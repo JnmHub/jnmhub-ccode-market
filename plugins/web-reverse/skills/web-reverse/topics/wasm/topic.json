@@ -1,0 +1,63 @@
+{
+  "key": "wasm",
+  "label": "WASM runtime",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "wasm",
+  "signals": [
+    "instantiate",
+    "instantiateStreaming",
+    "glue",
+    "memory"
+  ],
+  "protocol": "references/wasm-runtime-playbook.md",
+  "extendedProtocols": [
+    "references/wasm-binary-analysis-playbook.md",
+    "references/wasm-jsvmp-bridge-playbook.md",
+    "references/browser-controlled-reuse-playbook.md",
+    "references/composite-protection-playbook.md",
+    "references/websearch-escalation-playbook.md"
+  ],
+  "caseFiles": [
+    "scripts/cases/web-wasm-runtime-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "WASM",
+    "imports / exports",
+    "run/wasm-analysis.wat"
+  ],
+  "synthetic": {
+    "id": "synthetic-wasm",
+    "artifactSeeds": [
+      {
+        "path": "run/wasm-analysis.wat",
+        "text": "(module)\n"
+      },
+      {
+        "path": "run/wasm-runtime-hook-template.js",
+        "text": "export function hookWasm() { return true; }\n"
+      },
+      {
+        "path": "run/wasm-imports-exports.json",
+        "json": {
+          "imports": [
+            "env.memory"
+          ],
+          "exports": [
+            "sign"
+          ]
+        }
+      },
+      {
+        "path": "run/wasm-notes.md",
+        "text": "# wasm\n\nloader observed\n"
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "key": "ctf",
+  "label": "Android CTF / crackme / solver extraction",
+  "routeTrack": "ctf",
+  "signals": [
+    "ctf",
+    "crackme",
+    "flag",
+    "solver",
+    "challenge"
+  ],
+  "protocol": "references/ctf-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-ctf-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "medium",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/solver-template.py"
+  ],
+  "historicalMaturity": "guided"
+}

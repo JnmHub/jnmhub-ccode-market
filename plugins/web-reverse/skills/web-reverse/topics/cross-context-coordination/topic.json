@@ -1,0 +1,33 @@
+{
+  "key": "cross-context-coordination",
+  "label": "Cross-context coordination / message graph",
+  "maturity": "closed-loop",
+  "routeTrack": "cross-context-coordination",
+  "signals": [
+    "BroadcastChannel",
+    "storage event",
+    "SharedArrayBuffer",
+    "Atomics",
+    "AudioWorklet",
+    "PaintWorklet",
+    "OffscreenCanvas"
+  ],
+  "protocol": "references/cross-context-coordination-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-cross-context-coordination-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "BroadcastChannel",
+    "run/context-map.md",
+    "run/message-graph.json"
+  ],
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

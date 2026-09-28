@@ -1,0 +1,25 @@
+{
+  "name": "android-reverse-skill-framework",
+  "private": true,
+  "version": "0.3.0",
+  "description": "android-reverse 本地只读引用检查与离线文件行为回归",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "check": "node tools/qa/check-all.mjs",
+    "smoke": "node --test tools/qa/test-task-lite.mjs tools/qa/test-maintenance.mjs tools/qa/test-doc-semantics.mjs",
+    "smoke:quick": "node --test tools/qa/test-task-lite.mjs tools/qa/test-maintenance.mjs tools/qa/test-doc-semantics.mjs",
+    "test": "npm run check && npm run smoke",
+    "test:task-lite": "node --test tools/qa/test-task-lite.mjs",
+    "test:docs": "node --test tools/qa/test-doc-semantics.mjs",
+    "release:check": "npm run test",
+    "check:skill-contract": "node tools/qa/check-skill-contract.mjs",
+    "check:framework-layout": "node tools/qa/check-framework-layout.mjs",
+    "check:topic-manifests": "node tools/qa/check-topic-manifests.mjs",
+    "check:frida-compat": "node tools/qa/check-frida-compat.mjs",
+    "lint:cases": "node tools/qa/lint-cases.mjs",
+    "task:init": "node tools/task/task-init.mjs",
+    "check:script-encoding": "node tools/qa/check-script-encoding.mjs"
+  }
+}

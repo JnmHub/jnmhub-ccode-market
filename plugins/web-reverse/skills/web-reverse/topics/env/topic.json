@@ -1,0 +1,60 @@
+{
+  "key": "env",
+  "label": "Env conformance / host behavior",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "env",
+  "signals": [
+    "first divergence",
+    "descriptor",
+    "queueMicrotask",
+    "typed array"
+  ],
+  "protocol": "references/env-conformance-playbook.md",
+  "extendedProtocols": [
+    "references/env-drift-decision-tree.md",
+    "references/composite-protection-playbook.md",
+    "references/websearch-escalation-playbook.md"
+  ],
+  "caseFiles": [
+    "scripts/cases/web-env-conformance-workflow.mjs",
+    "scripts/cases/web-node-env-patching-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "first divergence",
+    "present / undefined / absent / pending",
+    "typed-array",
+    "run/env-drift-matrix.md"
+  ],
+  "synthetic": {
+    "id": "synthetic-env",
+    "artifactSeeds": [
+      {
+        "path": "run/env-conformance-template.js",
+        "text": "export const drift = 'queueMicrotask';\n"
+      },
+      {
+        "path": "run/env-conformance-notes.md",
+        "text": "# env notes\n\nfirst divergence narrowed to queueMicrotask\n\npresence classification recorded: process absent\n"
+      },
+      {
+        "path": "run/env-drift-matrix.md",
+        "text": "# drift\n\n- queueMicrotask: patched\n"
+      },
+      {
+        "path": "run/browser-env-snapshot.json",
+        "json": {
+          "process": "absent",
+          "queueMicrotask": "native",
+          "crypto": "present"
+        }
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "medium",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "linker-fake-load-unwrapper",
+  "version": "1.0.0",
+  "description": "Recovering Android AArch64 ELF files wrapped by a linker-style fake PT_LOAD: impossible high-address LOAD segments, entry-point translation, XOR runtime decryptors, carved embedded ELF stages and custom mmap/mprotect loaders — with both static and dynamic workflows to reach the real image. — 处理被 linker 风格假 PT_LOAD 包裹的 Android AArch64 ELF：虚高地址 LOAD 段、入口点偏移、XOR 运行期解密、内嵌 ELF 分阶段、自研 mmap/mprotect loader——提供静态与动态两条路走到真实镜像。",
+  "author": {
+    "name": "JnmHub"
+  },
+  "skills": "skills"
+}

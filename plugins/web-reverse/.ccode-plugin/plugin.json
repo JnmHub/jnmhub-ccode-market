@@ -1,0 +1,9 @@
+{
+  "name": "web-reverse",
+  "version": "0.2.0",
+  "description": "Web front-end reverse engineering: recovering signing schemes, protocols and encryption, request-parameter and cookie obfuscation, and anti-bot/risk-control fields; defeating obfuscation, anti-debugging and anti-tampering; analysing Worker/WASM/JSVMP execution chains; unpacking mini-program bundles; and extracting minimal self-contained code plus a Node/Python runtime shim. — Web 前端逆向：还原签名与协议、请求参数与 Cookie 加密、反爬与风控字段；处理混淆/反调试/反篡改并做反混淆还原；分析 Worker/WASM/JSVMP 运行链；解包小程序；扣代码做最小闭包提取并补环境（Node/Python）。",
+  "author": {
+    "name": "JnmHub"
+  },
+  "skills": "skills"
+}

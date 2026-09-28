@@ -1,0 +1,23 @@
+{
+  "key": "split-delivery",
+  "label": "Split delivery / APKS / AAB",
+  "routeTrack": "split-delivery",
+  "signals": [
+    "apks",
+    "aab",
+    "split apk",
+    "dynamic feature",
+    "asset pack"
+  ],
+  "protocol": "references/split-delivery-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-split-delivery-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "medium",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/split-delivery-notes.md",
+    "artifacts/tasks/_TEMPLATE/run/split-layout.json"
+  ],
+  "historicalMaturity": "synthetic-e2e"
+}

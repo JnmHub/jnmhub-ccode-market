@@ -1,0 +1,50 @@
+{
+  "key": "compression-stream",
+  "label": "Compression / decompression boundary",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "compression-stream",
+  "signals": [
+    "gzip",
+    "deflate",
+    "brotli",
+    "CompressionStream",
+    "DecompressionStream"
+  ],
+  "protocol": "references/compression-stream-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-compression-stream-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "CompressionStream",
+    "gzip",
+    "run/compression-stream-notes.md",
+    "run/compression-samples.json"
+  ],
+  "synthetic": {
+    "id": "synthetic-compression-stream",
+    "artifactSeeds": [
+      {
+        "path": "run/compression-stream-notes.md",
+        "text": "# compression stream notes\n\n- order: json -> gzip -> request body\n"
+      },
+      {
+        "path": "run/compression-samples.json",
+        "json": {
+          "codec": "gzip",
+          "before": "json payload",
+          "afterCarrier": "request body"
+        }
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "medium",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

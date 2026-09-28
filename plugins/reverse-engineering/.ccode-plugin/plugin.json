@@ -1,0 +1,9 @@
+{
+  "name": "reverse-engineering",
+  "version": "1.0.0",
+  "description": "General reverse-engineering skill for websites, desktop binaries (PE/ELF), mobile apps (APK/IPA) and network protocols: web scraping and API reverse, disassembly and decompilation, Frida/Xposed hooking, il2cpp/Unity reverse, protocol capture and replay, encryption and signature analysis, and memory debugging. — 通用逆向工程技能，面向网站、桌面二进制（PE/ELF）、移动应用（APK/IPA）与网络协议：爬虫与 API 逆向、反汇编与反编译、Frida/Xposed Hook、il2cpp/Unity 逆向、协议抓取与重放、加密与签名分析、内存调试。",
+  "author": {
+    "name": "JnmHub"
+  },
+  "skills": "skills"
+}

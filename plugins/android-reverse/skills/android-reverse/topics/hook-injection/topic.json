@@ -1,0 +1,31 @@
+{
+  "key": "hook-injection",
+  "label": "Hook framework internals / injection methods",
+  "routeTrack": "hook-injection",
+  "signals": [
+    "hook",
+    "injection",
+    "plt hook",
+    "got hook",
+    "inline hook",
+    "artmethod",
+    "zygisk",
+    "ptrace",
+    "frida internals",
+    "dobby",
+    "bhook",
+    "lsposed",
+    "xposed module",
+    "dexlib2"
+  ],
+  "protocol": "references/hook-injection-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-hook-injection-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "high",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/topic-packs/hook-injection/run/hook-injection-notes.md"
+  ],
+  "historicalMaturity": "guided"
+}

@@ -1,0 +1,26 @@
+{
+  "key": "protection-bypass",
+  "label": "Protection bypass / root / frida / integrity / pinning",
+  "routeTrack": "protection-bypass",
+  "signals": [
+    "rootbeer",
+    "frida detection",
+    "ptrace",
+    "play integrity",
+    "safetynet",
+    "certificatepinner"
+  ],
+  "protocol": "references/integrity-pinning-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-protection-bypass-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "high",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/anti-root-bypass.js",
+    "artifacts/tasks/_TEMPLATE/run/anti-frida-bypass.js",
+    "artifacts/tasks/_TEMPLATE/run/integrity-bypass.js",
+    "artifacts/tasks/_TEMPLATE/run/cert-pinning-bypass.js"
+  ],
+  "historicalMaturity": "synthetic-e2e"
+}

@@ -1,0 +1,31 @@
+{
+  "key": "webauthn-passkey",
+  "label": "WebAuthn / passkey / challenge flow",
+  "maturity": "closed-loop",
+  "routeTrack": "webauthn-passkey",
+  "signals": [
+    "navigator.credentials",
+    "PublicKeyCredential",
+    "webauthn.create",
+    "webauthn.get",
+    "challenge"
+  ],
+  "protocol": "references/webauthn-passkey-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-webauthn-passkey-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "PublicKeyCredential",
+    "run/credential-flow.md",
+    "run/request-response-samples.json"
+  ],
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

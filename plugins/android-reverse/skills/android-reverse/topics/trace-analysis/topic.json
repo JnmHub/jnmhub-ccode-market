@@ -1,0 +1,27 @@
+{
+  "key": "trace-analysis",
+  "label": "Trace collection, slicing, taint analysis, and algorithm recovery",
+  "routeTrack": "trace-analysis",
+  "signals": [
+    "trace",
+    "trace-ui",
+    "trace-slice",
+    "taint",
+    "ltv-taint",
+    "gumtrace",
+    "qtrace",
+    "vmlifter",
+    "instruction trace",
+    "execution trace",
+    "algorithm recovery",
+    "semantic lift"
+  ],
+  "protocol": "references/trace-analysis-playbook.md",
+  "caseFiles": [],
+  "owner": "android-reverse-core",
+  "riskLevel": "medium",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/topic-packs/trace-analysis/run/trace-analysis-notes.md"
+  ],
+  "historicalMaturity": "guided"
+}

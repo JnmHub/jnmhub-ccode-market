@@ -1,0 +1,9 @@
+{
+  "name": "asm-analysis",
+  "version": "1.0.0",
+  "description": "Deep assembly-level reverse analysis on Linux, joining dynamic debugging with static analysis: drives GDB/LLDB/radare2/Frida/angr/strace/ltrace/perf/bpftrace through one analysis chain, with a built-in context-memory loop that snapshots progress every 10 rounds so long sessions stay coherent. — 深度汇编级逆向分析（Linux），把动态调试与静态分析串成一条链路：统一调度 GDB/LLDB/radare2/Frida/angr/strace/ltrace/perf/bpftrace。内置上下文记忆机制——每 10 轮生成一次分析快照，保证长会话连续性并降低幻觉。",
+  "author": {
+    "name": "JnmHub"
+  },
+  "skills": "skills"
+}

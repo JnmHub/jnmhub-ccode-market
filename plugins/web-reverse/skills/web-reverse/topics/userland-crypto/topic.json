@@ -1,0 +1,59 @@
+{
+  "key": "userland-crypto",
+  "label": "Userland crypto / algorithm extraction",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "userland-crypto",
+  "signals": [
+    "CryptoJS",
+    "AES.encrypt",
+    "MD5",
+    "SHA256",
+    "RSAKey",
+    "WordArray",
+    "Base64.parse"
+  ],
+  "protocol": "references/userland-crypto-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-userland-crypto-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "run/crypto-callgraph.md",
+    "run/plain-cipher-pairs.json",
+    "run/pure-crypto.js"
+  ],
+  "synthetic": {
+    "id": "synthetic-userland-crypto",
+    "artifactSeeds": [
+      {
+        "path": "run/crypto-callgraph.md",
+        "text": "# crypto callgraph\n\n- entry: encryptPayload\n- family: CryptoJS AES\n"
+      },
+      {
+        "path": "run/plain-cipher-pairs.json",
+        "json": {
+          "family": "cryptojs-aes",
+          "pairs": [
+            {
+              "plain": "hello",
+              "cipher": "BASE64_CIPHER"
+            }
+          ]
+        }
+      },
+      {
+        "path": "run/pure-crypto.js",
+        "text": "\"use strict\";\n\nfunction pureCrypto(input) {\n  return input;\n}\n\nmodule.exports = { pureCrypto };\n"
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

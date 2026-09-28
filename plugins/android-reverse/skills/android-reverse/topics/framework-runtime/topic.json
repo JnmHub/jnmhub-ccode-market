@@ -1,0 +1,24 @@
+{
+  "key": "framework-runtime",
+  "label": "Framework runtime / Flutter / Hermes / Unity",
+  "routeTrack": "framework-runtime",
+  "signals": [
+    "flutter",
+    "libapp.so",
+    "hermes",
+    "index.android.bundle",
+    "unity",
+    "libil2cpp.so"
+  ],
+  "protocol": "references/framework-runtime-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-framework-runtime-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "high",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/framework-runtime-notes.md",
+    "artifacts/tasks/_TEMPLATE/run/framework-runtime-map.json"
+  ],
+  "historicalMaturity": "synthetic-e2e"
+}

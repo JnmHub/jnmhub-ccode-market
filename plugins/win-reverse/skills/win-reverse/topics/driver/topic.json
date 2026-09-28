@@ -1,0 +1,80 @@
+{
+  "key": "driver",
+  "label": "Kernel driver / dispatch / ioctl",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "driver",
+  "signals": [
+    "sys",
+    "driverentry",
+    "dispatch",
+    "ioctl",
+    "irp",
+    "deviceiocontrol"
+  ],
+  "protocol": "references/driver.md",
+  "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/driver.json",
+  "taskInit": {
+    "aliases": [
+      "sys-driver"
+    ],
+    "baseProtectionTier": "T0"
+  },
+  "taskSemantics": {
+    "presentPath": "driverAnalysis.present",
+    "versionPath": "driverAnalysis.version",
+    "artifactsPath": "driverAnalysis.artifacts",
+    "minArtifacts": 2,
+    "arrayPaths": [
+      "driverAnalysis.keyFindings"
+    ]
+  },
+  "formalValidation": {
+    "presentPath": "driverAnalysis.present",
+    "requirementsAll": [
+      {
+        "message": "driverAnalysis.present=true but status is still not-started",
+        "path": "driverAnalysis.status",
+        "disallow": [
+          "not-started"
+        ]
+      },
+      {
+        "message": "driverAnalysis.present=true but keyFindings is still empty",
+        "path": "driverAnalysis.keyFindings",
+        "minLength": 1
+      },
+      {
+        "message": "driverAnalysis.present=true 但 report.md 缺少「Kernel driver / dispatch / ioctl」专题小节",
+        "reportSection": "驱动|Driver|IOCTL",
+        "minChars": 120
+      }
+    ]
+  },
+  "caseFiles": [
+    "scripts/cases/win-driver-workflow.mjs"
+  ],
+  "templateArtifacts": [],
+  "qaFiles": [
+    {
+      "path": "tools/task/validation.mjs",
+      "needles": [
+        "evaluateTopicFormalValidation",
+        "evaluateTopicPhaseGuards"
+      ]
+    }
+  ],
+  "outputNeedles": [
+    "IOCTL",
+    "DriverEntry",
+    "report.md 专题发现"
+  ],
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:operating-contracts",
+    "check:deliverables"
+  ],
+  "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/driver"
+}

@@ -1,0 +1,26 @@
+{
+  "key": "crypto-protocol",
+  "label": "Crypto / protocol / signature recovery",
+  "routeTrack": "crypto-protocol",
+  "signals": [
+    "hmac",
+    "aes",
+    "token",
+    "protobuf",
+    "signature",
+    "算法自吐",
+    "sm2",
+    "evp"
+  ],
+  "protocol": "references/crypto-protocol-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-crypto-protocol-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "high",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/protocol-notes.md",
+    "artifacts/tasks/_TEMPLATE/run/crypto-fixtures.json"
+  ],
+  "historicalMaturity": "synthetic-e2e"
+}

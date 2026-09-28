@@ -1,0 +1,31 @@
+{
+  "key": "beacon-reporting",
+  "label": "Beacon / reporting / hidden telemetry",
+  "maturity": "closed-loop",
+  "routeTrack": "beacon-reporting",
+  "signals": [
+    "sendBeacon",
+    "report-to",
+    "ReportingObserver",
+    "visibilitychange",
+    "pagehide"
+  ],
+  "protocol": "references/beacon-reporting-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-beacon-reporting-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "sendBeacon",
+    "run/beacon-log.jsonl",
+    "run/reporting-map.md"
+  ],
+  "owner": "web-reverse-core",
+  "riskLevel": "medium",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

@@ -15,7 +15,208 @@
       "author": "JnmHub",
       "homepage": "https://github.com/JnmHub/jnmhub-ccode-market",
       "source": "hello-ccode",
-      "tags": ["example", "demo"]
+      "tags": [
+        "example",
+        "demo"
+      ]
+    },
+    {
+      "name": "android-reverse",
+      "displayName": "Android Reverse",
+      "displayName_i18n": {
+        "zh-CN": "android-reverse"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/android-reverse/icon.png",
+      "description": "Android app reverse-engineering framework covering static triage, Java API and call-chain tracing, JNI/native analysis, Frida instrumentation, protection bypass, dynamic DEX, split delivery, Flutter/Hermes/Unity, native TLS, storage and IPC, WebView hybrids, smali patching, protocol and crypto recovery, and Android CTF — across APK/APKS/AAB/XAPK/DEX/JAR/AAR/SO and the IDA / JADX / JEB toolchain.",
+      "description_i18n": {
+        "zh-CN": "Android 应用逆向工程技能框架：覆盖静态分诊、Java API 与调用链还原、JNI/Native 分析、Frida 动态插桩、保护绕过、动态 DEX、Split Delivery、Flutter/Hermes/Unity、Native TLS、Storage/IPC、WebView 混合、Smali 改动、协议与加解密还原、Android CTF；面向 APK/APKS/AAB/XAPK/DEX/JAR/AAR/SO 与 IDA、JADX、JEB 工具链。"
+      },
+      "category": "developer-tools",
+      "version": "0.3.0",
+      "author": "JnmHub",
+      "source": "android-reverse",
+      "tags": [
+        "reverse-engineering",
+        "android",
+        "frida",
+        "apk"
+      ]
+    },
+    {
+      "name": "reverse-engineering",
+      "displayName": "Reverse Engineering",
+      "displayName_i18n": {
+        "zh-CN": "reverse-engineering"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/reverse-engineering/icon.png",
+      "description": "General reverse-engineering skill for websites, desktop binaries (PE/ELF), mobile apps (APK/IPA) and network protocols: web scraping and API reverse, disassembly and decompilation, Frida/Xposed hooking, il2cpp/Unity reverse, protocol capture and replay, encryption and signature analysis, and memory debugging.",
+      "description_i18n": {
+        "zh-CN": "通用逆向工程技能，面向网站、桌面二进制（PE/ELF）、移动应用（APK/IPA）与网络协议：爬虫与 API 逆向、反汇编与反编译、Frida/Xposed Hook、il2cpp/Unity 逆向、协议抓取与重放、加密与签名分析、内存调试。"
+      },
+      "category": "developer-tools",
+      "version": "1.0.0",
+      "author": "JnmHub",
+      "source": "reverse-engineering",
+      "tags": [
+        "reverse-engineering",
+        "protocol",
+        "frida",
+        "unity"
+      ]
+    },
+    {
+      "name": "asm-analysis",
+      "displayName": "Asm Analysis",
+      "displayName_i18n": {
+        "zh-CN": "asm-analysis"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/asm-analysis/icon.png",
+      "description": "Deep assembly-level reverse analysis on Linux, joining dynamic debugging with static analysis: drives GDB/LLDB/radare2/Frida/angr/strace/ltrace/perf/bpftrace through one analysis chain, with a built-in context-memory loop that snapshots progress every 10 rounds so long sessions stay coherent.",
+      "description_i18n": {
+        "zh-CN": "深度汇编级逆向分析（Linux），把动态调试与静态分析串成一条链路：统一调度 GDB/LLDB/radare2/Frida/angr/strace/ltrace/perf/bpftrace。内置上下文记忆机制——每 10 轮生成一次分析快照，保证长会话连续性并降低幻觉。"
+      },
+      "category": "developer-tools",
+      "version": "1.0.0",
+      "author": "JnmHub",
+      "source": "asm-analysis",
+      "tags": [
+        "reverse-engineering",
+        "assembly",
+        "gdb",
+        "radare2"
+      ]
+    },
+    {
+      "name": "ida-reverse",
+      "displayName": "Ida Reverse",
+      "displayName_i18n": {
+        "zh-CN": "ida-reverse"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/ida-reverse/icon.png",
+      "description": "IDA Pro analysis companion. Use when disassembling or analysing binaries — PE, ELF, APK, DLL, SO, Mach-O, SYS — including firmware images, malware and vulnerability research, string and crypto hunting, and function and call-graph recovery.",
+      "description_i18n": {
+        "zh-CN": "IDA Pro 逆向分析辅助技能。用于反汇编与分析各类二进制：PE/ELF/APK/DLL/SO/Mach-O/SYS，含固件镜像、恶意样本与漏洞分析、字符串与加密线索定位、函数与调用图还原。"
+      },
+      "category": "developer-tools",
+      "version": "1.0.0",
+      "author": "JnmHub",
+      "source": "ida-reverse",
+      "tags": [
+        "reverse-engineering",
+        "ida",
+        "disassembly",
+        "binary"
+      ]
+    },
+    {
+      "name": "web-reverse",
+      "displayName": "Web Reverse",
+      "displayName_i18n": {
+        "zh-CN": "web-reverse"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/web-reverse/icon.png",
+      "description": "Web front-end reverse engineering: recovering signing schemes, protocols and encryption, request-parameter and cookie obfuscation, and anti-bot/risk-control fields; defeating obfuscation, anti-debugging and anti-tampering; analysing Worker/WASM/JSVMP execution chains; unpacking mini-program bundles; and extracting minimal self-contained code plus a Node/Python runtime shim.",
+      "description_i18n": {
+        "zh-CN": "Web 前端逆向：还原签名与协议、请求参数与 Cookie 加密、反爬与风控字段；处理混淆/反调试/反篡改并做反混淆还原；分析 Worker/WASM/JSVMP 运行链；解包小程序；扣代码做最小闭包提取并补环境（Node/Python）。"
+      },
+      "category": "developer-tools",
+      "version": "0.2.0",
+      "author": "JnmHub",
+      "source": "web-reverse",
+      "tags": [
+        "reverse-engineering",
+        "web",
+        "obfuscation",
+        "wasm"
+      ]
+    },
+    {
+      "name": "win-reverse",
+      "displayName": "Win Reverse",
+      "displayName_i18n": {
+        "zh-CN": "win-reverse"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/win-reverse/icon.png",
+      "description": "Advanced Windows reverse-engineering framework covering PE/EXE/DLL/SYS, .NET/CLR/C++-CLI, WOW64, VMP/Themida/Enigma packing, x64dbg/IDA/WinDbg/Frida/dnSpy/ILSpy, COM/RPC/ALPC/named pipes, services and WMI, minidumps and VAD — with topic tracks, drills and a task-local execution contract with phase gates.",
+      "description_i18n": {
+        "zh-CN": "Windows 高级逆向工程框架：覆盖 PE/EXE/DLL/SYS、.NET/CLR/C++-CLI、WOW64、VMP/Themida/Enigma 壳、x64dbg/IDA/WinDbg/Frida/dnSpy/ILSpy、COM/RPC/ALPC/命名管道、服务与 WMI、Minidump/VAD；含专题库、演练与带阶段门禁的 task-local 执行契约。"
+      },
+      "category": "developer-tools",
+      "version": "0.2.0",
+      "author": "JnmHub",
+      "source": "win-reverse",
+      "tags": [
+        "reverse-engineering",
+        "windows",
+        "pe",
+        "x64dbg"
+      ]
+    },
+    {
+      "name": "linker-fake-load-unwrapper",
+      "displayName": "Linker Fake Load Unwrapper",
+      "displayName_i18n": {
+        "zh-CN": "linker-fake-load-unwrapper"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/linker-fake-load-unwrapper/icon.png",
+      "description": "Recovering Android AArch64 ELF files wrapped by a linker-style fake PT_LOAD: impossible high-address LOAD segments, entry-point translation, XOR runtime decryptors, carved embedded ELF stages and custom mmap/mprotect loaders — with both static and dynamic workflows to reach the real image.",
+      "description_i18n": {
+        "zh-CN": "处理被 linker 风格假 PT_LOAD 包裹的 Android AArch64 ELF：虚高地址 LOAD 段、入口点偏移、XOR 运行期解密、内嵌 ELF 分阶段、自研 mmap/mprotect loader——提供静态与动态两条路走到真实镜像。"
+      },
+      "category": "developer-tools",
+      "version": "1.0.0",
+      "author": "JnmHub",
+      "source": "linker-fake-load-unwrapper",
+      "tags": [
+        "reverse-engineering",
+        "elf",
+        "unpacking",
+        "android"
+      ]
+    },
+    {
+      "name": "xigong-funk-hikari",
+      "displayName": "Xigong Funk Hikari",
+      "displayName_i18n": {
+        "zh-CN": "xigong-funk-hikari"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/xigong-funk-hikari/icon.png",
+      "description": "Evidence-driven deobfuscation and plaintext recovery for Hikari-LLVM/OLLVM output: MBA rewriting, bogus control flow, opaque predicates, relocation-backed BR/BLR dispatch, function wrappers, runtime string decoding, high-entropy containers, flat anonymous RX/RO/RW inner images and custom loaders — mainly Android/Linux AArch64 PIE and SO.",
+      "description_i18n": {
+        "zh-CN": "针对 Hikari-LLVM/OLLVM 的实证式去混淆与明文还原：MBA 重写、虚假控制流、不透明谓词、基于重定位的 BR/BLR 分发、函数包装（FCO）、运行期字符串解密、高熵容器、扁平匿名 RX/RO/RW 内层镜像与自研 loader——主要面向 Android/Linux AArch64 PIE 与 SO。"
+      },
+      "category": "developer-tools",
+      "version": "1.0.0",
+      "author": "西宫 (xigong)",
+      "source": "xigong-funk-hikari",
+      "tags": [
+        "reverse-engineering",
+        "deobfuscation",
+        "llvm",
+        "elf"
+      ]
+    },
+    {
+      "name": "yingan-tuoxiu",
+      "displayName": "Yingan Tuoxiu",
+      "displayName_i18n": {
+        "zh-CN": "yingan-tuoxiu"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/yingan-tuoxiu/icon.png",
+      "description": "Evidence-driven rehydration of YingAn/YingPo shelled Android APKs: abnormal or tiny root DEX, v.m.p / abcd655xx shell callbacks, libabcd and lib*shellservice_dex native loaders, runtime-loaded DEX images and native lifecycle wrappers — rebuilt into a normally installable, signed multidex APK while leaving login, entitlement and backend behaviour untouched.",
+      "description_i18n": {
+        "zh-CN": "影安/影婆加固 APK 的实证式脱壳与稳定重建：根 DEX 异常或极小、v.m.p / abcd655xx 壳回调、libabcd 与 lib*shellservice_dex 原生 loader、运行期加载的 DEX 镜像、原生生命周期包装——产出可正常安装并签名的 multidex APK，且不改动登录、授权与后端行为。"
+      },
+      "category": "developer-tools",
+      "version": "1.0.0",
+      "author": "西宫影安",
+      "source": "yingan-tuoxiu",
+      "tags": [
+        "reverse-engineering",
+        "android",
+        "unpacking",
+        "apk"
+      ]
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "key": "device-fingerprint",
+  "label": "Device fingerprint / risk control / Play Integrity",
+  "routeTrack": "device-fingerprint",
+  "signals": [
+    "device fingerprint",
+    "risk control",
+    "play integrity",
+    "key attestation",
+    "safetynet",
+    "device id",
+    "android id",
+    "imei",
+    "risk engine",
+    "warlock"
+  ],
+  "protocol": "references/device-fingerprint-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-device-fingerprint-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "medium",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/topic-packs/device-fingerprint/run/device-fingerprint-notes.md"
+  ],
+  "historicalMaturity": "guided"
+}

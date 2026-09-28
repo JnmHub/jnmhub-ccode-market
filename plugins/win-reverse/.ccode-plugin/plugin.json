@@ -1,0 +1,9 @@
+{
+  "name": "win-reverse",
+  "version": "0.2.0",
+  "description": "Advanced Windows reverse-engineering framework covering PE/EXE/DLL/SYS, .NET/CLR/C++-CLI, WOW64, VMP/Themida/Enigma packing, x64dbg/IDA/WinDbg/Frida/dnSpy/ILSpy, COM/RPC/ALPC/named pipes, services and WMI, minidumps and VAD — with topic tracks, drills and a task-local execution contract with phase gates. — Windows 高级逆向工程框架：覆盖 PE/EXE/DLL/SYS、.NET/CLR/C++-CLI、WOW64、VMP/Themida/Enigma 壳、x64dbg/IDA/WinDbg/Frida/dnSpy/ILSpy、COM/RPC/ALPC/命名管道、服务与 WMI、Minidump/VAD；含专题库、演练与带阶段门禁的 task-local 执行契约。",
+  "author": {
+    "name": "JnmHub"
+  },
+  "skills": "skills"
+}

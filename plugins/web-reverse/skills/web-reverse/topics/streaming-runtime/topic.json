@@ -1,0 +1,53 @@
+{
+  "key": "streaming-runtime",
+  "label": "Streaming runtime / incremental execution",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "streaming-runtime",
+  "signals": [
+    "ReadableStream",
+    "TransformStream",
+    "TextDecoderStream",
+    "incremental decode",
+    "stream pipeline"
+  ],
+  "protocol": "references/streaming-runtime-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-streaming-runtime-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "ReadableStream",
+    "TransformStream",
+    "run/streaming-runtime-notes.md",
+    "run/stream-pipeline.json"
+  ],
+  "synthetic": {
+    "id": "synthetic-streaming-runtime",
+    "artifactSeeds": [
+      {
+        "path": "run/streaming-runtime-notes.md",
+        "text": "# streaming runtime notes\n\n- fetch body -> TextDecoderStream -> TransformStream -> sink\n"
+      },
+      {
+        "path": "run/stream-pipeline.json",
+        "json": {
+          "source": "fetch body",
+          "transforms": [
+            "TextDecoderStream",
+            "TransformStream"
+          ],
+          "sink": "challenge parser"
+        }
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

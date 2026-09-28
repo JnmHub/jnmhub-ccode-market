@@ -1,0 +1,9 @@
+{
+  "name": "ida-reverse",
+  "version": "1.0.0",
+  "description": "IDA Pro analysis companion. Use when disassembling or analysing binaries — PE, ELF, APK, DLL, SO, Mach-O, SYS — including firmware images, malware and vulnerability research, string and crypto hunting, and function and call-graph recovery. — IDA Pro 逆向分析辅助技能。用于反汇编与分析各类二进制：PE/ELF/APK/DLL/SO/Mach-O/SYS，含固件镜像、恶意样本与漏洞分析、字符串与加密线索定位、函数与调用图还原。",
+  "author": {
+    "name": "JnmHub"
+  },
+  "skills": "skills"
+}

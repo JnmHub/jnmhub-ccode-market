@@ -1,0 +1,23 @@
+{
+  "key": "dex-loader",
+  "label": "Dex loader / shell / dynamic code",
+  "routeTrack": "dex-loader",
+  "signals": [
+    "dexclassloader",
+    "inmemorydexclassloader",
+    "stub application",
+    "shell",
+    "dump"
+  ],
+  "protocol": "references/dex-loader-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-dex-loader-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "high",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/class-loader-trace.js",
+    "artifacts/tasks/_TEMPLATE/run/dex-loader-dump-notes.md"
+  ],
+  "historicalMaturity": "synthetic-e2e"
+}

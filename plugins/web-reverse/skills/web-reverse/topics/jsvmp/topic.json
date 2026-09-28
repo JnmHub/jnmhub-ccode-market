@@ -1,0 +1,112 @@
+{
+  "key": "jsvmp",
+  "label": "JS-VMP / custom VM",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "jsvmp",
+  "signals": [
+    "dispatcher",
+    "opcode",
+    "bytecode",
+    "handler table"
+  ],
+  "protocol": "references/vmp-playbook.md",
+  "extendedProtocols": [
+    "references/vm-generic-reverse-template.md",
+    "references/vmp-semantic-lifting-playbook.md",
+    "references/vmp-advanced-playbook.md",
+    "references/vmp-dynamic-bytecode-playbook.md",
+    "references/wasm-jsvmp-bridge-playbook.md",
+    "references/browser-controlled-reuse-playbook.md",
+    "references/composite-protection-playbook.md",
+    "references/websearch-escalation-playbook.md"
+  ],
+  "caseFiles": [
+    "scripts/cases/web-vm-generic-template-workflow.mjs",
+    "scripts/cases/web-jsvmp-devirtualization-workflow.mjs",
+    "scripts/cases/web-vm-wasm-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "VM boundary",
+    "opcode",
+    "run/vm-opcodes.txt",
+    "run/dispatcher-map.md"
+  ],
+  "synthetic": {
+    "id": "synthetic-jsvmp",
+    "artifactSeeds": [
+      {
+        "path": "run/vm-opcodes.txt",
+        "text": "0x01 -> PUSH\n0x02 -> CALL\n"
+      },
+      {
+        "path": "run/vm-trace.jsonl",
+        "text": "{\"pc\":0,\"opcode\":\"0x01\"}\n"
+      },
+      {
+        "path": "run/dispatcher-map.md",
+        "text": "# dispatcher\n\n- 0x01 -> handler_push\n"
+      },
+      {
+        "path": "run/vm-decode-notes.md",
+        "text": "# vm decode\n\nboundary located\n"
+      },
+      {
+        "path": "run/vm-handler-clusters.md",
+        "text": "# clusters\n\n- arithmetic\n"
+      },
+      {
+        "path": "run/vm-env-reads.json",
+        "json": {
+          "readPoints": [
+            {
+              "property": "navigator.userAgent",
+              "pc": "0x10",
+              "opcode": "0x21",
+              "handler": "handler_env",
+              "count": 1,
+              "notes": "synthetic"
+            }
+          ],
+          "transformChains": [],
+          "consumeTargets": [],
+          "swapMatrix": [],
+          "unknowns": []
+        }
+      },
+      {
+        "path": "run/vm-bytecode-lifecycle.md",
+        "text": "# vm bytecode lifecycle\n\n- carrier: synthetic\n"
+      },
+      {
+        "path": "run/vm-nesting-map.md",
+        "text": "# vm nesting map\n\n| Layer | Boundary | Dispatcher | Bytecode Source | Goal | Notes |\n|---|---|---|---|---|---|\n| L1 | synthetic | synthetic | synthetic | synthetic | synthetic |\n"
+      },
+      {
+        "path": "run/vm-template-profile.json",
+        "json": {
+          "loader_pattern": "synthetic-loader",
+          "entry_call_pattern": "synthetic-entry",
+          "dispatcher_pattern": "synthetic-dispatcher",
+          "handler_table_pattern": "synthetic-handlers",
+          "bytecode_carrier_pattern": "synthetic-carrier",
+          "dynamic_param_extractors": [],
+          "env_profile": "pc-chrome",
+          "graphics_profile": "fixed-webgl-min",
+          "time_strategy": "captured",
+          "random_strategy": "captured",
+          "notes": [
+            "synthetic"
+          ]
+        }
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e",
+    "check:algo-selfcheck"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "key": "kernel-assisted-re",
+  "label": "Kernel-assisted reverse engineering (eBPF, HWBP, seccomp for app RE)",
+  "routeTrack": "kernel-assisted-re",
+  "signals": [
+    "ebpf",
+    "hardware breakpoint",
+    "hwbp",
+    "pte hook",
+    "seccomp",
+    "svc monitor",
+    "dex dump kernel",
+    "edbg",
+    "kernel module",
+    "kpm"
+  ],
+  "protocol": "references/kernel-assisted-re-playbook.md",
+  "caseFiles": [],
+  "owner": "android-reverse-core",
+  "riskLevel": "high",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/topic-packs/kernel-assisted-re/run/kernel-assisted-re-notes.md"
+  ],
+  "historicalMaturity": "guided"
+}

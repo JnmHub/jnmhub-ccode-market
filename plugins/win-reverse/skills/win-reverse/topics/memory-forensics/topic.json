@@ -1,0 +1,102 @@
+{
+  "key": "memory-forensics",
+  "label": "Memory forensics / VAD / minidump reconstruction",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "memory-forensics",
+  "signals": [
+    "vad",
+    "minidump",
+    "pesieve",
+    "hollowfind",
+    "modulemap",
+    "dumpmem"
+  ],
+  "protocol": "references/memory-forensics-playbook.md",
+  "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/memory-forensics.json",
+  "taskInit": {
+    "aliases": [
+      "memory-dump",
+      "forensics"
+    ],
+    "baseProtectionTier": "T1",
+    "combinationProtectionTiers": [
+      {
+        "withTopics": [
+          "loader-injection"
+        ],
+        "tier": "T2"
+      },
+      {
+        "withTopics": [
+          "packer-unpack"
+        ],
+        "tier": "T2"
+      },
+      {
+        "withTopics": [
+          "protection-bypass"
+        ],
+        "tier": "T4"
+      }
+    ]
+  },
+  "taskSemantics": {
+    "presentPath": "memoryForensics.present",
+    "versionPath": "memoryForensics.version",
+    "artifactsPath": "memoryForensics.artifacts",
+    "minArtifacts": 2,
+    "arrayPaths": [
+      "memoryForensics.keyFindings",
+      "memoryForensics.suspiciousRegions"
+    ]
+  },
+  "formalValidation": {
+    "presentPath": "memoryForensics.present",
+    "requirementsAll": [
+      {
+        "message": "memoryForensics.present=true but status is still not-started",
+        "path": "memoryForensics.status",
+        "disallow": [
+          "not-started"
+        ]
+      },
+      {
+        "message": "memoryForensics.present=true but keyFindings is still empty",
+        "path": "memoryForensics.keyFindings",
+        "minLength": 1
+      },
+      {
+        "message": "memoryForensics.present=true 但 report.md 缺少「Memory forensics / VAD / minidump reconstruction」专题小节",
+        "reportSection": "内存|取证|dump|VAD|Minidump",
+        "minChars": 120
+      }
+    ]
+  },
+  "caseFiles": [
+    "scripts/cases/win-memory-forensics-workflow.mjs"
+  ],
+  "templateArtifacts": [],
+  "qaFiles": [
+    {
+      "path": "tools/task/validation.mjs",
+      "needles": [
+        "evaluateTopicFormalValidation",
+        "evaluateTopicPhaseGuards"
+      ]
+    }
+  ],
+  "outputNeedles": [
+    "VAD",
+    "minidump",
+    "report.md 专题发现"
+  ],
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:operating-contracts",
+    "check:deliverables"
+  ],
+  "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/memory-forensics"
+}

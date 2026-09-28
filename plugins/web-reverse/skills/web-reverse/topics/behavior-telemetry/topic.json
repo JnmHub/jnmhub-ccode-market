@@ -1,0 +1,61 @@
+{
+  "key": "behavior-telemetry",
+  "label": "Behavior telemetry / interaction traces",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "behavior-telemetry",
+  "signals": [
+    "mousemove",
+    "scroll cadence",
+    "focus",
+    "visibilitychange",
+    "input rhythm"
+  ],
+  "protocol": "references/behavior-telemetry-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-behavior-telemetry-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "mousemove",
+    "visibilitychange",
+    "run/behavior-telemetry-notes.md",
+    "run/telemetry-profile.json"
+  ],
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ],
+  "synthetic": {
+    "id": "synthetic-behavior-telemetry",
+    "artifactSeeds": [
+      {
+        "path": "run/behavior-telemetry-notes.md",
+        "text": "# behavior telemetry notes\n\n- channels: mousemove, scroll, focus, visibilitychange\n- normalization: event-driven sampling\n- binding: challenge-bound\n- decision points: cadence, rhythm, focus pattern\n"
+      },
+      {
+        "path": "run/telemetry-profile.json",
+        "json": {
+          "channels": [
+            "mousemove",
+            "scroll",
+            "focus",
+            "visibilitychange"
+          ],
+          "sampling": "event-driven",
+          "normalization": "relative-delta",
+          "binding": "challenge-bound",
+          "features": [
+            "cadence",
+            "rhythm",
+            "focus-pattern"
+          ]
+        }
+      }
+    ]
+  },
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

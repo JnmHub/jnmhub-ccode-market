@@ -1,0 +1,27 @@
+{
+  "key": "unidbg-simulation",
+  "label": "Unidbg / Unicorn / QBDI / angr simulation",
+  "routeTrack": "unidbg-simulation",
+  "signals": [
+    "unidbg",
+    "unicorn",
+    "qbdi",
+    "angr",
+    "emulation",
+    "simulation",
+    "environment patching",
+    "jni patch",
+    "deterministic",
+    "生产化"
+  ],
+  "protocol": "references/unidbg-simulation-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-unidbg-simulation-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "medium",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/topic-packs/unidbg-simulation/run/unidbg-simulation-notes.md"
+  ],
+  "historicalMaturity": "guided"
+}

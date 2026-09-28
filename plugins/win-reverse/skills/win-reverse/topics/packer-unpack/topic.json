@@ -1,0 +1,111 @@
+{
+  "key": "packer-unpack",
+  "label": "Packer / OEP / dump / IAT rebuild",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "packer-unpack",
+  "signals": [
+    "packer",
+    "vmp",
+    "vmprotect",
+    "oep",
+    "dump",
+    "iat",
+    "vm entry",
+    "dispatcher",
+    "thunk",
+    "devirtualization",
+    "stub",
+    "rwx"
+  ],
+  "protocol": "references/packers.md",
+  "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/packer-unpack.json",
+  "taskInit": {
+    "aliases": [
+      "unpack"
+    ],
+    "baseProtectionTier": "T0"
+  },
+  "taskSemantics": {
+    "presentPath": "packerUnpack.present",
+    "versionPath": "packerUnpack.version",
+    "artifactsPath": "packerUnpack.artifacts",
+    "minArtifacts": 2,
+    "arrayPaths": [
+      "packerUnpack.keyFindings"
+    ]
+  },
+  "formalValidation": {
+    "presentPath": "packerUnpack.present",
+    "requirementsAll": [
+      {
+        "message": "packerUnpack.present=true but status is still not-started",
+        "path": "packerUnpack.status",
+        "disallow": [
+          "not-started"
+        ]
+      },
+      {
+        "message": "packerUnpack.present=true but keyFindings is still empty",
+        "path": "packerUnpack.keyFindings",
+        "minLength": 1
+      },
+      {
+        "message": "packerUnpack.present=true 但 report.md 缺少「Packer / OEP / dump / IAT rebuild」专题小节",
+        "reportSection": "脱壳|Unpack|OEP",
+        "minChars": 120
+      }
+    ]
+  },
+  "caseFiles": [
+    "scripts/cases/win-packer-unpack-workflow.mjs"
+  ],
+  "templateArtifacts": [
+    "artifacts/tasks/_TEMPLATE/topic-packs/packer-unpack/run/dump-manifest.json",
+    "artifacts/tasks/_TEMPLATE/topic-packs/packer-unpack/run/crash-diagnostics.md"
+  ],
+  "qaFiles": [
+    {
+      "path": "tools/task/validation.mjs",
+      "needles": [
+        "evaluateTopicFormalValidation",
+        "evaluateTopicPhaseGuards",
+        "validatePackerUnpackEvidence",
+        "toolRoutes",
+        "specialRegisters"
+      ]
+    },
+    {
+      "path": "references/vmp-unpack-playbook.md",
+      "needles": [
+        "Runtime 依赖分类",
+        "工具路线矩阵",
+        "run/crash-diagnostics.md"
+      ]
+    },
+    {
+      "path": "references/vmp-devirt-playbook.md",
+      "needles": [
+        "specialRegisters",
+        "VRLIMIT",
+        "handlerSegmentation",
+        "blackbox-boundary"
+      ]
+    }
+  ],
+  "outputNeedles": [
+    "OEP",
+    "IAT",
+    "run/dump-manifest.json",
+    "run/crash-diagnostics.md",
+    "report.md 专题发现"
+  ],
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:operating-contracts",
+    "check:deliverables"
+  ],
+  "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/packer-unpack"
+}

@@ -1,0 +1,102 @@
+{
+  "$comment": [
+    "R2-G03（round2）：E:\\Skill_Test 现场脏形态的脱敏资产化副本——vmp.present:true +",
+    "mode:\"marker-only\" + dump-manifest 实质化的任务骨架。",
+    "report-only 改造注记：vmp-triage-notes / oep-proof 文件义务已退役，",
+    "验收载体迁移为 report.md 的脱壳/VMP 专题小节（见消费场景内的夹具小节）。",
+    "脱敏口径：移除真实样本名、字节地址、注册码公式、事件处理名等个案细节，仅保留结构形态；",
+    "污染数据变测试资产——本夹具用于回归锁「marker-only 形态在修正后门禁下零 error 通过」。",
+    "消费方式见 tools/qa/check-task-behavior.mjs 的 scenarioVmpCoercedDirtyFixture。"
+  ],
+  "taskId": "qa-vmp-coerced-dirty",
+  "deliverableTier": "evidence",
+  "packerUnpack": {
+    "version": 4,
+    "present": true,
+    "status": "done",
+    "keyFindings": [
+      "标准压缩壳（壳节魔数齐全），通用脱壳工具一次完整还原",
+      "纯 native PE32；导入表由脱壳器完整重建未损；加载基址无重定位"
+    ],
+    "blockers": [],
+    "notes": [],
+    "vmp": {
+      "present": true,
+      "mode": "marker-only",
+      "version": "unknown-marker-only-no-virtualization",
+      "versionEvidence": [
+        "壳层标记串位于非常规节且被相邻跳转越过，未参与执行（QA 夹具占位描述）",
+        "无 dispatcher/handler/vm entry 结构；标准直线代码；详见 run/vmp-triage-notes.md"
+      ],
+      "antiDebug": {
+        "status": "classified-not-present",
+        "checks": [],
+        "bypassPlan": "无需绕过：无反调试导入面亦无内联检查"
+      },
+      "oep": {
+        "status": "classified",
+        "va": "0x00000000",
+        "evidence": ["入口节区回溯记录（QA 夹具占位）", "run/oep-proof.md 行为级证明"]
+      },
+      "dump": {
+        "status": "classified",
+        "files": ["sample.unpacked.out.exe", "sample.unpacked.clean.bak"],
+        "timing": "static unpack, no runtime dump needed",
+        "validation": ["节表完整恢复", "patched 副本可运行并完成全部交互"]
+      },
+      "iat": {
+        "status": "rebuilt-by-unpacker",
+        "range": ".idata（QA 夹具占位区间）",
+        "resolvedImports": 0,
+        "evidence": ["导入名明文可读", "运行时弹窗端到端验证"]
+      },
+      "runtimeDependency": {
+        "status": "classified-not-present",
+        "thunkCount": 0,
+        "sections": [],
+        "evidence": ["导入表明文完整，无模拟层"]
+      },
+      "toolRoutes": [
+        {
+          "route": "anti-debug-to-oep",
+          "candidates": [],
+          "status": "not-required",
+          "decision": "无反调试面，直接静态脱壳即可",
+          "evidence": []
+        },
+        {
+          "route": "static-unpack-first-pass",
+          "candidates": ["generic-static-unpacker"],
+          "status": "done",
+          "decision": "标准压缩壳一次完整还原",
+          "evidence": ["run/unpack-notes.md", "run/dump-manifest.json"]
+        },
+        {
+          "route": "dynamic-import-fix",
+          "candidates": [],
+          "status": "not-required",
+          "decision": "导入表由脱壳器完整重建未损（env-capability 声明不适用）",
+          "evidence": ["run/iat-rebuild-notes.md"]
+        }
+      ],
+      "devirtualization": {
+        "required": false,
+        "reason": "",
+        "toolsConsidered": [],
+        "status": "not-started",
+        "scope": "",
+        "traceFiles": [],
+        "protectedEntrypoints": [],
+        "specialRegisters": { "vpc": "", "vsp": "", "vkey": "", "vbase": "", "evidence": [] },
+        "vrLimit": "",
+        "virtualRegisters": [],
+        "handlerSegmentation": { "status": "unknown", "handlerCount": 0, "evidence": [] },
+        "semanticsRecovered": [],
+        "flagsRecovered": [],
+        "branchTargets": [],
+        "validationEvidence": [],
+        "fallbackBoundary": ""
+      }
+    }
+  }
+}

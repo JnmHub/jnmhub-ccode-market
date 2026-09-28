@@ -1,0 +1,98 @@
+{
+  "key": "miniapp",
+  "label": "Miniapp（小程序）逆向：包获取/解密解包、双线程运行时取证、接口与签名复现（微信为主战场，支付宝/抖音/百度/QQ 矩阵化覆盖）",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "miniapp",
+  "signals": [
+    "小程序",
+    "miniapp",
+    "miniprogram",
+    "mini-program",
+    "wxapkg",
+    "V1MMWX",
+    "app-service.js",
+    "app-config.json",
+    "AppService",
+    "subPackages",
+    "getApp",
+    "requirePlugin",
+    "plugin-private",
+    "page-frame.html",
+    "servicewechat.com",
+    "wx.request",
+    "wx.login",
+    "xwechat",
+    "appbrand",
+    "WMPF",
+    "RadiumWMPF",
+    "mmtls",
+    "合法域名",
+    "支付宝小程序",
+    "my.request",
+    "axml",
+    "抖音小程序",
+    "tt.request",
+    "TPKG",
+    "ttpkg",
+    "百度智能小程序",
+    "swan.request",
+    "QQ小程序",
+    "qq.request",
+    "KillWxapkg",
+    "unveilr",
+    "wxappUnpacker",
+    "wx-mp",
+    "miniapp-cdp",
+    "WMPFDebugger"
+  ],
+  "protocol": "references/miniapp-playbook.md",
+  "extendedProtocols": [
+    "references/wechat-miniprogram-playbook.md",
+    "references/browser-mcp-capability-map.md",
+    "references/signature-playbook.md",
+    "references/closure-extraction-playbook.md",
+    "references/composite-triage-playbook.md",
+    "references/vmp-playbook.md"
+  ],
+  "caseFiles": [
+    "scripts/cases/web-miniapp-workflow.mjs",
+    "scripts/cases/web-miniapp-sign-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "交付物与复现",
+    "复现命令",
+    "pure-",
+    "fixtures.json"
+  ],
+  "synthetic": {
+    "id": "synthetic-miniapp",
+    "artifactSeeds": [
+      {
+        "path": "run/miniapp-acquisition-map.md",
+        "text": "# 样本获取与包形态速查（synthetic 种子）\n\n- 微信 PC 4.x 缓存：%APPDATA%/Tencent/xwechat/radium/users/<uid>/applet/packages/<appid>/<version>/__APP__.wxapkg\n- 加密头 V1MMWX：PBKDF2(appid,'saltiest',1000,32,sha1) → AES-256-CBC（iv 'the iv: 16 bytes'）解前 1024 字节取前 1023；余部 XOR（key = appid 倒数第二字符 charCode）\n- 明文包首字节 0xBE；解密后先校验魔数再解包\n- 定性顺序：crypto 扫描 → 封装函数 grep → 负面测试探针\n"
+      },
+      {
+        "path": "run/signature-fixtures.json",
+        "json": {
+          "taskId": "synthetic-miniapp",
+          "algorithmFamily": "sha256-concat",
+          "signFields": ["appId", "timestamp", "nonce", "sign"],
+          "canonical": "sortedQuery + jsonBody + sorted({appId,nonce,timestamp}) k=v& + secret（密钥可能由免签名配置接口自举下发）",
+          "carrierMap": { "sign": "header", "appId": "header", "timestamp": "header", "nonce": "header" },
+          "saltOrKey": "bootstrap-config",
+          "countermeasure": "none",
+          "expected": "server-acceptance-code",
+          "acceptance": "服务端业务成功码 + 真实数据非空"
+        }
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e",
+    "check:algo-selfcheck"
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "key": "app-protocol",
+  "label": "Application protocol / signature algorithm recovery",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "app-protocol",
+  "signals": [
+    "sign",
+    "signature",
+    "token",
+    "protobuf",
+    "protocol",
+    "ssl-pinning",
+    "api-sign",
+    "license",
+    "协议",
+    "签名",
+    "加密字段"
+  ],
+  "protocol": "references/app-protocol.md",
+  "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/app-protocol.json",
+  "taskInit": {
+    "aliases": [
+      "app-protocol",
+      "signature",
+      "sign-algorithm",
+      "protocol",
+      "app-reverse"
+    ],
+    "baseProtectionTier": "T1",
+    "combinationProtectionTiers": [
+      {
+        "withTopics": [
+          "tls-network"
+        ],
+        "tier": "T2"
+      },
+      {
+        "withTopics": [
+          "config-recovery"
+        ],
+        "tier": "T2"
+      },
+      {
+        "withTopics": [
+          "protection-bypass"
+        ],
+        "tier": "T3"
+      }
+    ]
+  },
+  "taskSemantics": {
+    "presentPath": "appProtocol.present",
+    "versionPath": "appProtocol.version",
+    "artifactsPath": "appProtocol.artifacts",
+    "minArtifacts": 4,
+    "arrayPaths": [
+      "appProtocol.keyFindings",
+      "appProtocol.signFields",
+      "appProtocol.protocolFields"
+    ]
+  },
+  "formalValidation": {
+    "presentPath": "appProtocol.present",
+    "requirementsAll": [
+      {
+        "message": "appProtocol.present=true but status is still not-started",
+        "path": "appProtocol.status",
+        "disallow": [
+          "not-started"
+        ]
+      },
+      {
+        "message": "appProtocol.present=true but keyFindings is still empty",
+        "path": "appProtocol.keyFindings",
+        "minLength": 1
+      },
+      {
+        "message": "appProtocol.present=true 但 report.md 缺少「Application protocol / signature algorithm recovery」专题小节",
+        "reportSection": "协议|sign|签名|protobuf",
+        "minChars": 120
+      }
+    ],
+    "requirementsAny": [
+      {
+        "message": "appProtocol.present=true 但 report.md 专题小节缺少Application protocol / signature algorithm recovery的实现/证据细节",
+        "checks": [
+          {
+            "reportSection": "sign|签名|加密|encrypt",
+            "minChars": 80
+          }
+        ]
+      }
+    ]
+  },
+  "caseFiles": [
+    "scripts/cases/win-app-protocol-workflow.mjs"
+  ],
+  "templateArtifacts": [],
+  "qaFiles": [
+    {
+      "path": "tools/task/validation.mjs",
+      "needles": [
+        "evaluateTopicFormalValidation",
+        "evaluateTopicPhaseGuards"
+      ]
+    }
+  ],
+  "outputNeedles": [
+    "签名算法",
+    "协议结构",
+    "加密边界",
+    "report.md 专题发现"
+  ],
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:operating-contracts",
+    "check:deliverables"
+  ],
+  "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/app-protocol"
+}

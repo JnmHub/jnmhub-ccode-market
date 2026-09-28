@@ -1,0 +1,57 @@
+{
+  "key": "instrumentation-hooking",
+  "label": "Instrumentation / hooking / trace",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "instrumentation-hooking",
+  "signals": [
+    "fetch",
+    "XHR",
+    "WebSocket",
+    "sendBeacon",
+    "eval",
+    "Function",
+    "postMessage",
+    "cookie setter"
+  ],
+  "protocol": "references/instrumentation.md",
+  "caseFiles": [
+    "scripts/cases/web-instrumentation-hooking-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "run/preload.js",
+    "run/runtime-hooks.js",
+    "run/hook-events.jsonl",
+    "run/hook-safety-notes.md"
+  ],
+  "synthetic": {
+    "id": "synthetic-instrumentation-hooking",
+    "artifactSeeds": [
+      {
+        "path": "run/preload.js",
+        "text": "// preload hook script\nconsole.log('preload hook active');\n"
+      },
+      {
+        "path": "run/runtime-hooks.js",
+        "text": "// runtime hooks\nconsole.log('runtime hooks active');\n"
+      },
+      {
+        "path": "run/hook-events.jsonl",
+        "text": "{\"event\": \"cookie-set\", \"target\": \"document.cookie\"}\n"
+      },
+      {
+        "path": "run/hook-safety-notes.md",
+        "text": "# Hook Safety Notes\n\n- document.cookie: safe\n- fetch: safe\n"
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

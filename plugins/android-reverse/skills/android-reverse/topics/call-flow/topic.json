@@ -1,0 +1,23 @@
+{
+  "key": "call-flow",
+  "label": "Call flow / Activity / ViewModel / Repository tracing",
+  "routeTrack": "call-flow",
+  "signals": [
+    "activity",
+    "fragment",
+    "viewmodel",
+    "repository",
+    "onclick",
+    "observer"
+  ],
+  "protocol": "references/call-flow-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-call-flow-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "medium",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/call-chain.md"
+  ],
+  "historicalMaturity": "closed-loop"
+}

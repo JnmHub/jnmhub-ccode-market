@@ -1,0 +1,54 @@
+{
+  "key": "graphql-rpc",
+  "label": "GraphQL / persisted query / APQ",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "graphql-rpc",
+  "signals": [
+    "/graphql",
+    "query",
+    "mutation",
+    "operationName",
+    "extensions.persistedQuery",
+    "sha256Hash"
+  ],
+  "protocol": "references/graphql-rpc-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-graphql-rpc-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "operationName",
+    "run/graphql-ops.json",
+    "run/query-map.md"
+  ],
+  "synthetic": {
+    "id": "synthetic-graphql-rpc",
+    "artifactSeeds": [
+      {
+        "path": "run/graphql-ops.json",
+        "json": {
+          "transport": "post-json",
+          "operations": [
+            {
+              "operationName": "LoginMutation",
+              "persistedQuery": true
+            }
+          ]
+        }
+      },
+      {
+        "path": "run/query-map.md",
+        "text": "# query map\n\n- LoginMutation -> persisted query sha256 -> login flow\n"
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "key": "microfrontend-runtime",
+  "label": "Microfrontend runtime / remote loader",
+  "maturity": "closed-loop",
+  "routeTrack": "microfrontend-runtime",
+  "signals": [
+    "System.import",
+    "importmap",
+    "single-spa",
+    "qiankun",
+    "remote manifest",
+    "subapp mount"
+  ],
+  "protocol": "references/microfrontend-runtime-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-microfrontend-runtime-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "single-spa",
+    "run/runtime-map.json",
+    "run/remote-deps.md"
+  ],
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

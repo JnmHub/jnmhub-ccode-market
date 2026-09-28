@@ -1,0 +1,23 @@
+{
+  "key": "smali-patching",
+  "label": "Smali patch / rebuild / resign / install verify",
+  "routeTrack": "smali-patching",
+  "signals": [
+    "smali",
+    "patch",
+    "rebuild",
+    "resign",
+    "apktool",
+    "install verify"
+  ],
+  "protocol": "references/smali-patching-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-smali-patching-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "medium",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/smali-patch-notes.md"
+  ],
+  "historicalMaturity": "closed-loop"
+}

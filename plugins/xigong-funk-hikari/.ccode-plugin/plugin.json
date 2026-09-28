@@ -1,0 +1,9 @@
+{
+  "name": "xigong-funk-hikari",
+  "version": "1.0.0",
+  "description": "Evidence-driven deobfuscation and plaintext recovery for Hikari-LLVM/OLLVM output: MBA rewriting, bogus control flow, opaque predicates, relocation-backed BR/BLR dispatch, function wrappers, runtime string decoding, high-entropy containers, flat anonymous RX/RO/RW inner images and custom loaders — mainly Android/Linux AArch64 PIE and SO. — 针对 Hikari-LLVM/OLLVM 的实证式去混淆与明文还原：MBA 重写、虚假控制流、不透明谓词、基于重定位的 BR/BLR 分发、函数包装（FCO）、运行期字符串解密、高熵容器、扁平匿名 RX/RO/RW 内层镜像与自研 loader——主要面向 Android/Linux AArch64 PIE 与 SO。",
+  "author": {
+    "name": "西宫 (xigong)"
+  },
+  "skills": "skills"
+}

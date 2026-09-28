@@ -1,0 +1,42 @@
+{
+  "key": "ast-deobfuscation",
+  "label": "AST deobfuscation / semantic recovery",
+  "maturity": "closed-loop",
+  "routeTrack": "ast-deobfuscation",
+  "signals": [
+    "while(true)+switch",
+    "string array",
+    "_0x",
+    "eval(pack)",
+    "rotator",
+    "dispatcher object",
+    "control flow flattening",
+    "string array rotator",
+    "dead code injection",
+    "hexadecimal string literals",
+    "self-defending",
+    "console output disabled"
+  ],
+  "protocol": "references/ast-deobfuscation.md",
+  "extendedProtocols": [
+    "references/control-flow-flattening-playbook.md",
+    "references/string-array-deobfuscation-playbook.md",
+    "references/dead-code-elimination-playbook.md",
+    "references/websearch-escalation-playbook.md"
+  ],
+  "caseFiles": [
+    "scripts/cases/web-ast-deobfuscation-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "run/before.js",
+    "run/after.js",
+    "run/deobf-rules.md",
+    "run/ast-transform.mjs"
+  ],
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage"
+  ]
+}

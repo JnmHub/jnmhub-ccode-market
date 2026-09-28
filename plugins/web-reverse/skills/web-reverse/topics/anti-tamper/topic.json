@@ -1,0 +1,34 @@
+{
+  "key": "anti-tamper",
+  "label": "Integrity / Trusted Types / hook resistance",
+  "maturity": "closed-loop",
+  "routeTrack": "anti-tamper",
+  "signals": [
+    "integrity",
+    "self-check",
+    "Trusted Types",
+    "CSP",
+    "SRI",
+    "hook seal"
+  ],
+  "protocol": "references/anti-tamper-playbook.md",
+  "extendedProtocols": [
+    "references/composite-protection-playbook.md",
+    "references/websearch-escalation-playbook.md"
+  ],
+  "caseFiles": [
+    "scripts/cases/web-anti-tamper-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "Trusted Types",
+    "CSP",
+    "run/anti-tamper-notes.md",
+    "run/integrity-surface.json"
+  ],
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage"
+  ]
+}

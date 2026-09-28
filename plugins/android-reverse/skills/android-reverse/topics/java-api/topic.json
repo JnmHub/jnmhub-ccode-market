@@ -1,0 +1,23 @@
+{
+  "key": "java-api",
+  "label": "Java API / client / endpoint extraction",
+  "routeTrack": "java-api",
+  "signals": [
+    "retrofit",
+    "okhttp",
+    "volley",
+    "baseurl",
+    "api",
+    "endpoint"
+  ],
+  "protocol": "references/java-api-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-java-api-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "medium",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/api-map.md"
+  ],
+  "historicalMaturity": "closed-loop"
+}

@@ -1,0 +1,24 @@
+{
+  "key": "static-triage",
+  "label": "Static triage / manifest / packaging",
+  "routeTrack": "static-triage",
+  "signals": [
+    "manifest",
+    "exported",
+    "permission",
+    "component",
+    "asset",
+    "resource"
+  ],
+  "protocol": "references/static-triage-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-apk-triage-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "high",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/static-triage-notes.md",
+    "artifacts/tasks/_TEMPLATE/run/component-map.md"
+  ],
+  "historicalMaturity": "synthetic-e2e"
+}

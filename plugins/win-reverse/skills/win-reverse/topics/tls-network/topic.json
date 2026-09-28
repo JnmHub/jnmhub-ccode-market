@@ -1,0 +1,93 @@
+{
+  "key": "tls-network",
+  "label": "TLS / network / protocol",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "tls-network",
+  "signals": [
+    "winhttp",
+    "wininet",
+    "schannel",
+    "openssl",
+    "socket",
+    "tls"
+  ],
+  "protocol": "references/tls-network-playbook.md",
+  "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/tls-network.json",
+  "taskInit": {
+    "aliases": [
+      "network"
+    ],
+    "baseProtectionTier": "T0"
+  },
+  "taskSemantics": {
+    "presentPath": "tlsNetwork.present",
+    "versionPath": "tlsNetwork.version",
+    "artifactsPath": "tlsNetwork.artifacts",
+    "minArtifacts": 2,
+    "arrayPaths": [
+      "tlsNetwork.keyFindings"
+    ]
+  },
+  "formalValidation": {
+    "presentPath": "tlsNetwork.present",
+    "requirementsAll": [
+      {
+        "message": "tlsNetwork.present=true but status is still not-started",
+        "path": "tlsNetwork.status",
+        "disallow": [
+          "not-started"
+        ]
+      },
+      {
+        "message": "tlsNetwork.present=true but keyFindings is still empty",
+        "path": "tlsNetwork.keyFindings",
+        "minLength": 1
+      },
+      {
+        "message": "tlsNetwork.present=true 但 report.md 缺少「TLS / network / protocol」专题小节",
+        "reportSection": "TLS|网络",
+        "minChars": 120
+      }
+    ],
+    "requirementsAny": [
+      {
+        "message": "tlsNetwork.present=true 但 report.md 专题小节缺少TLS / network / protocol的实现/证据细节",
+        "checks": [
+          {
+            "reportSection": "TLS|hook|协议",
+            "minChars": 80
+          }
+        ]
+      }
+    ]
+  },
+  "caseFiles": [
+    "scripts/cases/win-tls-network-workflow.mjs"
+  ],
+  "templateArtifacts": [
+    "references/templates/tls-hook-template.js"
+  ],
+  "qaFiles": [
+    {
+      "path": "tools/task/validation.mjs",
+      "needles": [
+        "evaluateTopicFormalValidation",
+        "evaluateTopicPhaseGuards"
+      ]
+    }
+  ],
+  "outputNeedles": [
+    "TLS",
+    "网络栈",
+    "report.md 专题发现"
+  ],
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:operating-contracts",
+    "check:deliverables"
+  ],
+  "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/tls-network"
+}

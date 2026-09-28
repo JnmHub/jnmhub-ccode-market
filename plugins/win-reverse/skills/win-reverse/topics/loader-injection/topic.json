@@ -1,0 +1,110 @@
+{
+  "key": "loader-injection",
+  "label": "Loader / injection / manual map",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "loader-injection",
+  "signals": [
+    "inject",
+    "manualmap",
+    "createremotethread",
+    "apc",
+    "hollowing",
+    "reflective"
+  ],
+  "protocol": "references/loader-injection.md",
+  "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/loader-injection.json",
+  "taskInit": {
+    "aliases": [
+      "inject",
+      "manual-map"
+    ],
+    "baseProtectionTier": "T1",
+    "combinationProtectionTiers": [
+      {
+        "withTopics": [
+          "anti-analysis"
+        ],
+        "tier": "T2"
+      },
+      {
+        "withTopics": [
+          "protection-bypass"
+        ],
+        "tier": "T4"
+      }
+    ]
+  },
+  "taskSemantics": {
+    "presentPath": "loaderInjection.present",
+    "versionPath": "loaderInjection.version",
+    "artifactsPath": "loaderInjection.artifacts",
+    "minArtifacts": 3,
+    "arrayPaths": [
+      "loaderInjection.keyFindings",
+      "loaderInjection.techniques",
+      "loaderInjection.remoteModules"
+    ]
+  },
+  "formalValidation": {
+    "presentPath": "loaderInjection.present",
+    "requirementsAll": [
+      {
+        "message": "loaderInjection.present=true but status is still not-started",
+        "path": "loaderInjection.status",
+        "disallow": [
+          "not-started"
+        ]
+      },
+      {
+        "message": "loaderInjection.present=true but keyFindings is still empty",
+        "path": "loaderInjection.keyFindings",
+        "minLength": 1
+      },
+      {
+        "message": "loaderInjection.present=true 但 report.md 缺少「Loader / injection / manual map」专题小节",
+        "reportSection": "Loader|注入|manual.?map",
+        "minChars": 120
+      }
+    ],
+    "requirementsAny": [
+      {
+        "message": "loaderInjection.present=true 但 report.md 专题小节缺少Loader / injection / manual map的实现/证据细节",
+        "checks": [
+          {
+            "reportSection": "Loader|注入|manual.?map",
+            "minChars": 80
+          }
+        ]
+      }
+    ]
+  },
+  "caseFiles": [
+    "scripts/cases/win-loader-injection-workflow.mjs"
+  ],
+  "templateArtifacts": [
+    "references/templates/loader-hook-template.js"
+  ],
+  "qaFiles": [
+    {
+      "path": "tools/task/validation.mjs",
+      "needles": [
+        "evaluateTopicFormalValidation",
+        "evaluateTopicPhaseGuards"
+      ]
+    }
+  ],
+  "outputNeedles": [
+    "CreateRemoteThread",
+    "manual map",
+    "report.md 专题发现"
+  ],
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:operating-contracts",
+    "check:deliverables"
+  ],
+  "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/loader-injection"
+}

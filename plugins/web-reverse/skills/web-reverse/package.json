@@ -1,0 +1,39 @@
+{
+  "name": "web-reverse-skill-framework",
+  "private": true,
+  "version": "0.2.0",
+  "description": "web-reverse：方法论知识库 + 极简任务契约（task-init 建目录、过程零强制记录、收尾 report.md 全面总结）的 Web 前端逆向 SKILL 仓库",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "check": "node tools/qa/check-all.mjs --group=all",
+    "check:all": "node tools/qa/check-all.mjs --group=all",
+    "check:fast": "node tools/qa/check-all.mjs --group=fast",
+    "check:full": "node tools/qa/check-all.mjs --group=full",
+    "check:deep": "node tools/qa/check-all.mjs --group=deep",
+    "check:profile": "node tools/qa/check-all.mjs --group=deep --jobs=1 --profile",
+    "check:maturity": "node tools/qa/check-maturity-consistency.mjs",
+    "check:skill-contract": "node tools/qa/check-skill-contract.mjs",
+    "check:algo-selfcheck": "node tools/qa/check-algo-selfcheck.mjs",
+    "check:utf8": "node tools/qa/check-utf8.mjs",
+    "check:naming": "node tools/qa/check-naming.mjs",
+    "check:bridge-docs": "node tools/qa/check-bridge-docs.mjs",
+    "check:websearch-contract": "node tools/qa/check-websearch-contract.mjs",
+    "check:prompt-coverage": "node tools/qa/check-prompt-coverage.mjs",
+    "check:topic-manifests": "node tools/qa/check-topic-manifest-sync.mjs",
+    "check:doc-facts": "node tools/qa/check-doc-fact-sync.mjs",
+    "check:operating-contracts": "node tools/qa/check-operating-contracts.mjs",
+    "check:capability-coverage": "node tools/qa/check-capability-coverage.mjs",
+    "check:synthetic-e2e": "node tools/qa/check-synthetic-e2e.mjs",
+    "lint:cases": "node tools/qa/lint-cases.mjs",
+    "sync:topics": "node tools/topic/generate-topic-docs.mjs",
+    "build:topics": "node tools/topic/generate-topic-docs.mjs",
+    "build:doc-facts": "node tools/docs/sync-doc-facts.mjs",
+    "release:prep": "npm run sync:topics && npm run check:fast && npm run check:full",
+    "vm:trace-hook": "node tools/vm/trace-runtime.mjs",
+    "vm:replay": "node tools/vm/replay-vm.mjs",
+    "vm:diff": "node tools/vm/diff-run.mjs",
+    "task:init": "node tools/task/task-init.mjs"
+  }
+}

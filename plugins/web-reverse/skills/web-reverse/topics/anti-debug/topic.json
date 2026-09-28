@@ -1,0 +1,49 @@
+{
+  "key": "anti-debug",
+  "label": "Anti-debug",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "anti-debug",
+  "signals": [
+    "debugger",
+    "DevTools",
+    "preload",
+    "runtime"
+  ],
+  "protocol": "references/anti-debug-playbook.md",
+  "extendedProtocols": [
+    "references/composite-protection-playbook.md",
+    "references/websearch-escalation-playbook.md"
+  ],
+  "caseFiles": [
+    "scripts/cases/web-anti-debug-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "anti-debug",
+    "run/anti-debug-preload.js",
+    "run/anti-debug-runtime.js"
+  ],
+  "synthetic": {
+    "id": "synthetic-anti-debug",
+    "artifactSeeds": [
+      {
+        "path": "run/anti-debug-preload.js",
+        "text": "window.__antiDebugPreload = true;\n"
+      },
+      {
+        "path": "run/anti-debug-runtime.js",
+        "text": "window.__antiDebugRuntime = true;\n"
+      },
+      {
+        "path": "run/anti-debug-snippets.js",
+        "text": "debugger;\n"
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ]
+}

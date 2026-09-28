@@ -1,0 +1,26 @@
+{
+  "key": "vmp-analysis",
+  "label": "VMP / VM interpreter / opcode restoration",
+  "routeTrack": "vmp-analysis",
+  "signals": [
+    "vmp",
+    "vm interpreter",
+    "handler table",
+    "opcode mapping",
+    "bytecode restoration",
+    "dispatcher",
+    "virtual machine protection",
+    "dexprotector",
+    "liapp"
+  ],
+  "protocol": "references/vmp-analysis-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-vmp-analysis-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "high",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/topic-packs/vmp-analysis/run/vmp-analysis-notes.md"
+  ],
+  "historicalMaturity": "guided"
+}

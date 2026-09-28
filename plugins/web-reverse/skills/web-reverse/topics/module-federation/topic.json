@@ -1,0 +1,52 @@
+{
+  "key": "module-federation",
+  "label": "Module federation / remote runtime",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "module-federation",
+  "signals": [
+    "remoteEntry.js",
+    "__webpack_init_sharing__",
+    "container.get",
+    "share scope",
+    "remote module"
+  ],
+  "protocol": "references/module-federation-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-module-federation-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "remoteEntry",
+    "share scope",
+    "run/module-federation-notes.md",
+    "run/remote-entry-map.json"
+  ],
+  "synthetic": {
+    "id": "synthetic-module-federation",
+    "artifactSeeds": [
+      {
+        "path": "run/module-federation-notes.md",
+        "text": "# module federation notes\n\n- remoteEntry: checkoutRemote\n- remote module: checkout/signer\n"
+      },
+      {
+        "path": "run/remote-entry-map.json",
+        "json": {
+          "remoteEntry": "checkoutRemote",
+          "shareScope": "default",
+          "remoteModules": [
+            "checkout/signer"
+          ]
+        }
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

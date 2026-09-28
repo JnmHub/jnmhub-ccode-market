@@ -1,0 +1,25 @@
+{
+  "key": "ctf",
+  "label": "Windows CTF / crackme solving",
+  "maturity": "reference-only",
+  "routeTrack": "ctf",
+  "signals": [
+    "ctf",
+    "crackme",
+    "keygen",
+    "z3",
+    "angr",
+    "flag"
+  ],
+  "protocol": "references/ctf.md",
+  "taskInit": {
+    "aliases": [
+      "windows-ctf",
+      "crackme"
+    ],
+    "baseProtectionTier": "T1"
+  },
+  "owner": "win-reverse-core",
+  "riskLevel": "medium",
+  "requiredChecks": []
+}

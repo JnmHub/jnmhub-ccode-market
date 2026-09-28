@@ -1,0 +1,31 @@
+{
+  "key": "webrtc-datachannel",
+  "label": "WebRTC / signaling / datachannel",
+  "maturity": "closed-loop",
+  "routeTrack": "webrtc-datachannel",
+  "signals": [
+    "RTCPeerConnection",
+    "createOffer",
+    "setLocalDescription",
+    "ICE",
+    "RTCDataChannel"
+  ],
+  "protocol": "references/webrtc-datachannel-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-webrtc-datachannel-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "RTCPeerConnection",
+    "run/signaling-map.md",
+    "run/channel-frames.jsonl"
+  ],
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

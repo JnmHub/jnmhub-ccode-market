@@ -1,0 +1,35 @@
+{
+  "key": "deobfuscation",
+  "label": "OLLVM / FLA / BR / SUB / BCF / deobfuscation",
+  "routeTrack": "deobfuscation",
+  "signals": [
+    "ollvm",
+    "fla",
+    "control flow flattening",
+    "bogus control flow",
+    "bcf",
+    "instruction substitution",
+    "mba",
+    "dispatcher",
+    "deobfuscation",
+    "arkari",
+    "blackobfuscator",
+    "hikari",
+    "goron",
+    "blr obfuscation"
+  ],
+  "protocol": "references/deobfuscation-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-deobfuscation-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "high",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/topic-packs/deobfuscation/run/fla-state-machine-template.py",
+    "artifacts/tasks/_TEMPLATE/topic-packs/deobfuscation/run/fla-angr-template.py",
+    "artifacts/tasks/_TEMPLATE/topic-packs/deobfuscation/run/fla-unicorn-template.py",
+    "artifacts/tasks/_TEMPLATE/topic-packs/deobfuscation/run/br-patch-template.py",
+    "artifacts/tasks/_TEMPLATE/topic-packs/deobfuscation/run/bcf-bss-patch-template.py"
+  ],
+  "historicalMaturity": "guided"
+}

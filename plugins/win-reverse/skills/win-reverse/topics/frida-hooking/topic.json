@@ -1,0 +1,82 @@
+{
+  "key": "frida-hooking",
+  "label": "Frida runtime / API / crypto hook",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "frida-hooking",
+  "signals": [
+    "frida",
+    "interceptor",
+    "stalker",
+    "cryptoapi",
+    "bcrypt",
+    "hook"
+  ],
+  "protocol": "references/frida.md",
+  "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/frida-hooking.json",
+  "taskInit": {
+    "aliases": [
+      "frida"
+    ],
+    "baseProtectionTier": "T0"
+  },
+  "taskSemantics": {
+    "presentPath": "fridaHooking.present",
+    "versionPath": "fridaHooking.version",
+    "artifactsPath": "fridaHooking.artifacts",
+    "minArtifacts": 2,
+    "arrayPaths": [
+      "fridaHooking.keyFindings"
+    ]
+  },
+  "formalValidation": {
+    "presentPath": "fridaHooking.present",
+    "requirementsAll": [
+      {
+        "message": "fridaHooking.present=true but status is still not-started",
+        "path": "fridaHooking.status",
+        "disallow": [
+          "not-started"
+        ]
+      },
+      {
+        "message": "fridaHooking.present=true but keyFindings is still empty",
+        "path": "fridaHooking.keyFindings",
+        "minLength": 1
+      },
+      {
+        "message": "fridaHooking.present=true 但 report.md 缺少「Frida runtime / API / crypto hook」专题小节",
+        "reportSection": "Frida|hook",
+        "minChars": 120
+      }
+    ]
+  },
+  "caseFiles": [
+    "scripts/cases/win-frida-hook-workflow.mjs"
+  ],
+  "templateArtifacts": [
+    "references/templates/frida-hook-template.js"
+  ],
+  "qaFiles": [
+    {
+      "path": "tools/task/validation.mjs",
+      "needles": [
+        "evaluateTopicFormalValidation",
+        "evaluateTopicPhaseGuards"
+      ]
+    }
+  ],
+  "outputNeedles": [
+    "Frida",
+    "Hook",
+    "report.md 专题发现"
+  ],
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:operating-contracts",
+    "check:deliverables"
+  ],
+  "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/frida-hooking"
+}

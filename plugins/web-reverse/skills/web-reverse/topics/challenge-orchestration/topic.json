@@ -1,0 +1,81 @@
+{
+  "key": "challenge-orchestration",
+  "label": "Challenge routing / token orchestration",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "challenge-orchestration",
+  "signals": [
+    "challenge token",
+    "captcha",
+    "turnstile",
+    "risk route",
+    "silent challenge"
+  ],
+  "protocol": "references/challenge-orchestration-playbook.md",
+  "extendedProtocols": [
+    "references/captcha-slider-playbook.md",
+    "references/commercial-protection-playbook.md",
+    "references/browser-controlled-reuse-playbook.md",
+    "references/composite-protection-playbook.md",
+    "references/websearch-escalation-playbook.md"
+  ],
+  "caseFiles": [
+    "scripts/cases/web-challenge-orchestration-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "challenge token",
+    "captcha",
+    "run/challenge-route-notes.md",
+    "run/challenge-state-machine.json"
+  ],
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e",
+    "check:algo-selfcheck"
+  ],
+  "synthetic": {
+    "id": "synthetic-challenge-orchestration",
+    "artifactSeeds": [
+      {
+        "path": "run/challenge-route-notes.md",
+        "text": "# challenge route notes\n\n- silent challenge -> visible captcha -> refresh route\n- decision points: risk-score, device-trust, behavior-score\n- token carrier: cookie + header\n- refresh: on-session-expiry\n"
+      },
+      {
+        "path": "run/challenge-state-machine.json",
+        "json": {
+          "states": [
+            "initial",
+            "silent-challenge",
+            "visible-captcha",
+            "refresh",
+            "success"
+          ],
+          "transitions": [
+            {
+              "from": "initial",
+              "to": "silent-challenge",
+              "guard": "risk-score"
+            },
+            {
+              "from": "silent-challenge",
+              "to": "visible-captcha",
+              "guard": "device-trust-fail"
+            },
+            {
+              "from": "silent-challenge",
+              "to": "success",
+              "guard": "device-trust-pass"
+            }
+          ],
+          "tokenCarrier": [
+            "cookie",
+            "header"
+          ],
+          "refreshPolicy": "on-session-expiry"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "key": "exception-runtime",
+  "label": "TLS callback / SEH / VEH / startup chain",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "exception-runtime",
+  "signals": [
+    "seh",
+    "veh",
+    "tlscallback",
+    "unhandledexceptionfilter",
+    "cfg",
+    "cet"
+  ],
+  "protocol": "references/exception-runtime-playbook.md",
+  "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/exception-runtime.json",
+  "taskInit": {
+    "aliases": [
+      "seh-veh",
+      "tls-callback"
+    ],
+    "baseProtectionTier": "T1",
+    "combinationProtectionTiers": [
+      {
+        "withTopics": [
+          "anti-analysis"
+        ],
+        "tier": "T2"
+      },
+      {
+        "withTopics": [
+          "packer-unpack"
+        ],
+        "tier": "T2"
+      },
+      {
+        "withTopics": [
+          "protection-bypass"
+        ],
+        "tier": "T3"
+      }
+    ]
+  },
+  "taskSemantics": {
+    "presentPath": "exceptionRuntime.present",
+    "versionPath": "exceptionRuntime.version",
+    "artifactsPath": "exceptionRuntime.artifacts",
+    "minArtifacts": 2,
+    "arrayPaths": [
+      "exceptionRuntime.keyFindings",
+      "exceptionRuntime.entryEdges"
+    ]
+  },
+  "formalValidation": {
+    "presentPath": "exceptionRuntime.present",
+    "requirementsAll": [
+      {
+        "message": "exceptionRuntime.present=true but status is still not-started",
+        "path": "exceptionRuntime.status",
+        "disallow": [
+          "not-started"
+        ]
+      },
+      {
+        "message": "exceptionRuntime.present=true but keyFindings is still empty",
+        "path": "exceptionRuntime.keyFindings",
+        "minLength": 1
+      },
+      {
+        "message": "exceptionRuntime.present=true 但 report.md 缺少「TLS callback / SEH / VEH / startup chain」专题小节",
+        "reportSection": "异常|启动链|exception",
+        "minChars": 120
+      }
+    ]
+  },
+  "caseFiles": [
+    "scripts/cases/win-exception-runtime-workflow.mjs"
+  ],
+  "templateArtifacts": [],
+  "qaFiles": [
+    {
+      "path": "tools/task/validation.mjs",
+      "needles": [
+        "evaluateTopicFormalValidation",
+        "evaluateTopicPhaseGuards"
+      ]
+    }
+  ],
+  "outputNeedles": [
+    "TLS callback",
+    "SEH",
+    "report.md 专题发现"
+  ],
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:operating-contracts",
+    "check:deliverables"
+  ],
+  "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/exception-runtime"
+}

@@ -1,0 +1,23 @@
+{
+  "key": "jni-bridge",
+  "label": "JNI bridge / RegisterNatives mapping",
+  "routeTrack": "jni-bridge",
+  "signals": [
+    "jni_onload",
+    "registernatives",
+    "system.loadlibrary",
+    "java_",
+    "native"
+  ],
+  "protocol": "references/jni-bridge-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-jni-bridge-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "high",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/register-natives-trace.js",
+    "artifacts/tasks/_TEMPLATE/run/jni-bridge-map.md"
+  ],
+  "historicalMaturity": "synthetic-e2e"
+}

@@ -1,0 +1,46 @@
+{
+  "key": "dynamic-code",
+  "label": "Dynamic code / eval unpacking",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "dynamic-code",
+  "signals": [
+    "eval",
+    "Function",
+    "string timer",
+    "dynamic import"
+  ],
+  "protocol": "references/dynamic-code-playbook.md",
+  "extendedProtocols": [
+    "references/composite-protection-playbook.md",
+    "references/websearch-escalation-playbook.md"
+  ],
+  "caseFiles": [
+    "scripts/cases/web-dynamic-code-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "eval",
+    "Function",
+    "dynamic import",
+    "run/dynamic-code-notes.md"
+  ],
+  "synthetic": {
+    "id": "synthetic-dynamic-code",
+    "artifactSeeds": [
+      {
+        "path": "run/dynamic-code-capture-template.js",
+        "text": "export const surface = 'eval';\n"
+      },
+      {
+        "path": "run/dynamic-code-notes.md",
+        "text": "# dynamic code\n\neval boundary captured\n"
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ]
+}

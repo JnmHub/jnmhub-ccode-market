@@ -1,0 +1,110 @@
+{
+  "key": "mixed-mode-interop",
+  "label": "Mixed-mode / COM interop / CLR hosting",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "mixed-mode-interop",
+  "signals": [
+    "cxxcli",
+    "mixedmode",
+    "ijw",
+    "pinvoke",
+    "cominterop",
+    "clrhost"
+  ],
+  "protocol": "references/mixed-mode-interop-playbook.md",
+  "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/mixed-mode-interop.json",
+  "taskInit": {
+    "aliases": [
+      "mixed-mode",
+      "interop"
+    ],
+    "baseProtectionTier": "T1",
+    "combinationProtectionTiers": [
+      {
+        "withTopics": [
+          "dotnet"
+        ],
+        "tier": "T2"
+      },
+      {
+        "withTopics": [
+          "loader-injection"
+        ],
+        "tier": "T2"
+      }
+    ]
+  },
+  "taskSemantics": {
+    "presentPath": "mixedModeInterop.present",
+    "versionPath": "mixedModeInterop.version",
+    "artifactsPath": "mixedModeInterop.artifacts",
+    "minArtifacts": 3,
+    "arrayPaths": [
+      "mixedModeInterop.keyFindings",
+      "mixedModeInterop.bridgeEdges",
+      "mixedModeInterop.hostTypes"
+    ]
+  },
+  "formalValidation": {
+    "presentPath": "mixedModeInterop.present",
+    "requirementsAll": [
+      {
+        "message": "mixedModeInterop.present=true but status is still not-started",
+        "path": "mixedModeInterop.status",
+        "disallow": [
+          "not-started"
+        ]
+      },
+      {
+        "message": "mixedModeInterop.present=true but keyFindings is still empty",
+        "path": "mixedModeInterop.keyFindings",
+        "minLength": 1
+      },
+      {
+        "message": "mixedModeInterop.present=true 但 report.md 缺少「Mixed-mode / COM interop / CLR hosting」专题小节",
+        "reportSection": "混合|interop|托管|CLR",
+        "minChars": 120
+      }
+    ],
+    "requirementsAny": [
+      {
+        "message": "mixedModeInterop.present=true 但 report.md 专题小节缺少Mixed-mode / COM interop / CLR hosting的实现/证据细节",
+        "checks": [
+          {
+            "reportSection": "interop|桥|混合|CLR",
+            "minChars": 80
+          }
+        ]
+      }
+    ]
+  },
+  "caseFiles": [
+    "scripts/cases/win-mixed-mode-interop-workflow.mjs"
+  ],
+  "templateArtifacts": [
+    "references/templates/interop-hook-template.js"
+  ],
+  "qaFiles": [
+    {
+      "path": "tools/task/validation.mjs",
+      "needles": [
+        "evaluateTopicFormalValidation",
+        "evaluateTopicPhaseGuards"
+      ]
+    }
+  ],
+  "outputNeedles": [
+    "C++/CLI",
+    "P/Invoke",
+    "report.md 专题发现"
+  ],
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:operating-contracts",
+    "check:deliverables"
+  ],
+  "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/mixed-mode-interop"
+}

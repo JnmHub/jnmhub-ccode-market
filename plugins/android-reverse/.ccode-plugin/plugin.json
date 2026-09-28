@@ -1,0 +1,9 @@
+{
+  "name": "android-reverse",
+  "version": "0.3.0",
+  "description": "Android app reverse-engineering framework covering static triage, Java API and call-chain tracing, JNI/native analysis, Frida instrumentation, protection bypass, dynamic DEX, split delivery, Flutter/Hermes/Unity, native TLS, storage and IPC, WebView hybrids, smali patching, protocol and crypto recovery, and Android CTF — across APK/APKS/AAB/XAPK/DEX/JAR/AAR/SO and the IDA / JADX / JEB toolchain. — Android 应用逆向工程技能框架：覆盖静态分诊、Java API 与调用链还原、JNI/Native 分析、Frida 动态插桩、保护绕过、动态 DEX、Split Delivery、Flutter/Hermes/Unity、Native TLS、Storage/IPC、WebView 混合、Smali 改动、协议与加解密还原、Android CTF；面向 APK/APKS/AAB/XAPK/DEX/JAR/AAR/SO 与 IDA、JADX、JEB 工具链。",
+  "author": {
+    "name": "JnmHub"
+  },
+  "skills": "skills"
+}

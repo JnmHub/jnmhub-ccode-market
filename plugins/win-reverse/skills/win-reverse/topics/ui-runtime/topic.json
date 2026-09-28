@@ -1,0 +1,80 @@
+{
+  "key": "ui-runtime",
+  "label": "UI runtime / WndProc / dialog flow",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "ui-runtime",
+  "signals": [
+    "wndproc",
+    "dialog",
+    "user32",
+    "message",
+    "subclass",
+    "custom-control"
+  ],
+  "protocol": "references/ui.md",
+  "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/ui-runtime.json",
+  "taskInit": {
+    "aliases": [
+      "wndproc"
+    ],
+    "baseProtectionTier": "T0"
+  },
+  "taskSemantics": {
+    "presentPath": "uiRuntime.present",
+    "versionPath": "uiRuntime.version",
+    "artifactsPath": "uiRuntime.artifacts",
+    "minArtifacts": 2,
+    "arrayPaths": [
+      "uiRuntime.keyFindings"
+    ]
+  },
+  "formalValidation": {
+    "presentPath": "uiRuntime.present",
+    "requirementsAll": [
+      {
+        "message": "uiRuntime.present=true but status is still not-started",
+        "path": "uiRuntime.status",
+        "disallow": [
+          "not-started"
+        ]
+      },
+      {
+        "message": "uiRuntime.present=true but keyFindings is still empty",
+        "path": "uiRuntime.keyFindings",
+        "minLength": 1
+      },
+      {
+        "message": "uiRuntime.present=true 但 report.md 缺少「UI runtime / WndProc / dialog flow」专题小节",
+        "reportSection": "UI|消息流|消息",
+        "minChars": 120
+      }
+    ]
+  },
+  "caseFiles": [
+    "scripts/cases/win-ui-runtime-workflow.mjs"
+  ],
+  "templateArtifacts": [],
+  "qaFiles": [
+    {
+      "path": "tools/task/validation.mjs",
+      "needles": [
+        "evaluateTopicFormalValidation",
+        "evaluateTopicPhaseGuards"
+      ]
+    }
+  ],
+  "outputNeedles": [
+    "WndProc",
+    "消息",
+    "report.md 专题发现"
+  ],
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:operating-contracts",
+    "check:deliverables"
+  ],
+  "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/ui-runtime"
+}

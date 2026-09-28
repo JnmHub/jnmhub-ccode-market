@@ -1,0 +1,55 @@
+{
+  "key": "binary-codec",
+  "label": "Binary codec / schema reconstruction",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "binary-codec",
+  "signals": [
+    "protobuf",
+    "msgpack",
+    "cbor",
+    "flatbuffers",
+    "varint"
+  ],
+  "protocol": "references/binary-codec-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-binary-codec-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "protobuf",
+    "msgpack",
+    "run/binary-codec-notes.md",
+    "run/binary-samples.json"
+  ],
+  "synthetic": {
+    "id": "synthetic-binary-codec",
+    "artifactSeeds": [
+      {
+        "path": "run/binary-codec-notes.md",
+        "text": "# binary codec notes\n\n- codec: protobuf\n- message: AuthRequest\n"
+      },
+      {
+        "path": "run/binary-samples.json",
+        "json": {
+          "codecFamily": "protobuf",
+          "sampleKinds": [
+            "request",
+            "response"
+          ],
+          "messageTypes": [
+            "AuthRequest"
+          ]
+        }
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

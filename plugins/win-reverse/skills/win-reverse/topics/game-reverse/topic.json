@@ -1,0 +1,28 @@
+{
+  "key": "game-reverse",
+  "label": "Windows game reverse engineering",
+  "maturity": "reference-only",
+  "routeTrack": "game-reverse",
+  "signals": [
+    "ue4",
+    "ue5",
+    "unity",
+    "il2cpp",
+    "cocos",
+    "gobjects",
+    "gnames",
+    "anti-cheat"
+  ],
+  "protocol": "references/game-reverse.md",
+  "taskInit": {
+    "aliases": [
+      "game",
+      "ue",
+      "unity-game"
+    ],
+    "baseProtectionTier": "T3"
+  },
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": []
+}

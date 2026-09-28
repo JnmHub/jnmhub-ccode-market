@@ -1,0 +1,68 @@
+{
+  "key": "worker",
+  "label": "Worker / Service Worker",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "worker",
+  "signals": [
+    "worker",
+    "service worker",
+    "postMessage",
+    "Blob",
+    "createObjectURL",
+    "importScripts",
+    "workbox",
+    "fetch event",
+    "navigation preload",
+    "clients.claim",
+    "skipWaiting"
+  ],
+  "protocol": "references/worker-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-worker-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "worker 类型与脚本 URL",
+    "Blob 来源与创建点",
+    "main thread -> worker -> output -> request field",
+    "worker 在整体链路中的职责",
+    "service worker fetch/caching 角色",
+    "run/worker-notes.md"
+  ],
+  "synthetic": {
+    "id": "synthetic-worker",
+    "artifactSeeds": [
+      {
+        "path": "run/worker-notes.md",
+        "text": "# worker notes\n\n- service worker: Workbox fetch routing\n- dedicated worker: signed payload message pump\n"
+      },
+      {
+        "path": "run/worker-inspector-template.js",
+        "text": "export const workerRoles = ['service-worker', 'dedicated-worker'];\n"
+      },
+      {
+        "path": "run/storage-snapshot.json",
+        "json": {
+          "cacheStorage": [
+            "runtime-v1"
+          ],
+          "indexedDB": [],
+          "localStorage": []
+        }
+      },
+      {
+        "path": "run/storage-notes.md",
+        "text": "# storage notes\n\n- CacheStorage: runtime-v1 managed by service worker route\n"
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "medium",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

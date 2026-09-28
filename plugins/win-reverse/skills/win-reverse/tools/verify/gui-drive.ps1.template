@@ -1,0 +1,400 @@
+<#
+.SYNOPSIS
+    GUI 动态验证线束模板 v3（round2 双层反转就地重写 + round3 就地增量：弹窗排空 /
+    标签锚定 / -SuccessProbe 探针挂点；继承 round1 P1-8 参数化与 S1 教训）。
+.DESCRIPTION
+    双层反转设计（round2 F-09 返工）：合成事件（UIAutomation ValuePattern 写入 +
+    InvokePattern 点击）为主路径；真实键鼠（keybd_event/mouse_event 序列）仅在合成路径
+    连续 -SyntheticRetryLimit 次失败后作为保底升级。五断言固化：
+      ① 启动后 MoveWindow 把主窗拉回主屏可视区；
+      ② 真实鼠标点标题栏激活 + GetForegroundWindow()==目标主窗 断言；
+      ③ 控件按 BoundingRectangle/Y 序定位身份 + 写入后读回校验（禁枚举序假设；
+         注：Name 属性读回系 VCL 特性，其他框架请适配各自读回通道）；
+      ④ 合成触发连续 N 次失败强制切真实键鼠保底；
+      ⑤ 弹窗检测 EnumWindows 找 #32770 读 Static 正文；全程 STEP 日志。
+    适用边界：本模板面向 Win32/VCL/简单对话框类目标（user/sn + 按钮 + MessageBox 形态）。
+    WPF/Electron 等 UIA 原生支持更好的框架，复制后可优先纯 UIA 路径并适配读回通道，
+    勿过早弃用合成路径。禁止把单个目标的控件定位细节写回本模板——模板只保留参数化骨架。
+    指针（round3 v3）：对话框尚未打开时的「菜单/前置导航助手」与 outcome 成功信号目录
+    见 references/ui.md——模板只保留执行协议，不写死任何菜单标题或成功信号语义。
+.NOTES
+    S1 教训内置（原样保留）：
+    1) STA 由调用方以 "pwsh -STA" 保证；本脚本启动时自检并在非 STA 下给出降级提示。
+    2) Mandatory 策略：ExePath 必填；User/Sn/ShotOut 可空并走默认值（避免交互式提示卡死无人值守会话）。
+    3) PWSH_EXE 环境变量模式：宿主仅有 Windows PowerShell 5 时，由外部以 PWSH_EXE=powershell.exe 调用；
+       本脚本不做二次 spawn，避免嵌套 STA 语义漂移。
+    保底路径局限：真实键鼠打字仅覆盖 ASCII；非 ASCII 输入需改走剪贴板粘贴或
+    SendInput Unicode 扩展（KEYEVENTF_UNICODE），本模板不内置。
+.EXAMPLE
+    pwsh -STA -File run/gui-drive.ps1 -ExePath C:\samples\target.exe -User user1 -Sn SN-001 -ShotOut run\shot.png
+#>
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory = $true)]
+    [ValidateScript({ Test-Path $_ })]
+    [string]$ExePath,
+    [Parameter(Mandatory = $false)]
+    [string]$User = "qa-user",
+    [Parameter(Mandatory = $false)]
+    [string]$Sn = "SN-0000",
+    [Parameter(Mandatory = $false)]
+    [string]$ShotOut = "",
+    # 合成事件失败升级阈值（round2 双层反转）：现场实测合成触发连续失败 >5 次才值得换路，
+    # N=2 已属宽容；WPF/Electron 类 UIA 通常首次即成，勿过早弃用合成路径。
+    [Parameter(Mandatory = $false)]
+    [ValidateRange(1, 10)]
+    [int]$SyntheticRetryLimit = 2,
+    # 输入控件类名匹配（通用启发：Win32 EDIT 与 VCL T*Edit 同族；禁写单个目标的特例值）。
+    [Parameter(Mandatory = $false)]
+    [string]$EditClassPattern = "Edit",
+    # 触发控件（按钮）类名匹配（覆盖 Win32 Button / VCL TButton 等）。
+    [Parameter(Mandatory = $false)]
+    [string]$TriggerClassPattern = "Button",
+    # 成功信号探针挂点（round3 v3）：触发提交并排空弹窗后执行该脚本，stdout 逐行记入
+    # STEP 日志。只定义执行协议，不定义信号语义——成功与否由 references/ui.md 的
+    # outcome 信号目录判读（模板不可能知道每个目标的"成功"长什么样）。
+    [Parameter(Mandatory = $false)]
+    [string]$SuccessProbe = "",
+    # 干跑分支：只做参数校验与环境自检，不启动进程（验收用）。
+    [switch]$ValidateOnly
+)
+
+Set-StrictMode -Version 2
+$ErrorActionPreference = "Stop"
+
+function Write-HarnessLine([string]$message) {
+    Write-Host "[gui-drive] $message"
+}
+function Write-Step([string]$stepName, [bool]$ok, [string]$detail = "") {
+    $suffix = if ($detail) { " ($detail)" } else { "" }
+    Write-Host ("[gui-drive] STEP {0}: {1}{2}" -f $stepName, $(if ($ok) { "ok" } else { "FAIL" }), $suffix)
+    if (-not $ok) { $script:stepFailures += 1 }
+}
+$script:stepFailures = 0
+
+# --- 参数校验 / 干跑分支 -------------------------------------------------
+if ($ValidateOnly) {
+    Write-HarnessLine "validate-only: parameter binding OK"
+    Write-HarnessLine "validate-only: ExePath=$ExePath User=$User Sn=$Sn ShotOut=$(if ($ShotOut) { $ShotOut } else { '<default temp>' }) SyntheticRetryLimit=$SyntheticRetryLimit SuccessProbe=$(if ($SuccessProbe) { $SuccessProbe } else { '<none>' })"
+    $psVersion = $PSVersionTable.PSVersion.ToString()
+    $isSta = try { [Threading.Thread]::CurrentThread.GetApartmentState() } catch { "unknown" }
+    Write-HarnessLine "validate-only: PSVersion=$psVersion ApartmentState=$isSta"
+    if ($isSta -ne "STA") {
+        Write-HarnessLine "WARN: 当前会话非 STA（建议以 'pwsh -STA' 重跑）；UIAutomation 在 MTA 下可能不稳定。"
+    }
+    exit 0
+}
+
+# --- 运行前置自检 --------------------------------------------------------
+$isStaRun = try { [Threading.Thread]::CurrentThread.GetApartmentState() } catch { "unknown" }
+if ($isStaRun -ne "STA") {
+    Write-HarnessLine "WARN: 非 STA 会话运行 UIAutomation（S1 教训：优先 'pwsh -STA'）。继续执行。"
+}
+$shotPath = if ($ShotOut) { $ShotOut } else { Join-Path $env:TEMP ("gui-drive-{0}.png" -f (Get-Date -Format "yyyyMMddHHmmss")) }
+
+Add-Type -AssemblyName UIAutomationClient
+Add-Type -AssemblyName UIAutomationTypes
+Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName System.Windows.Forms
+
+# --- 原生 API（真实键鼠保底 / 前台断言 / 弹窗枚举）------------------------
+if (-not ("GuiDriveNative" -as [type])) {
+    Add-Type -TypeDefinition @"
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
+
+public static class GuiDriveNative
+{
+    [DllImport("user32.dll")] public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+    [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+    [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hWnd);
+    [DllImport("user32.dll")] public static extern bool SetCursorPos(int X, int Y);
+    [DllImport("user32.dll")] public static extern void mouse_event(uint dwFlags, int dx, int dy, uint dwData, UIntPtr dwExtraInfo);
+    [DllImport("user32.dll")] public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+    [DllImport("user32.dll")] public static extern short VkKeyScanW(char ch);
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)] public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)] public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+    [DllImport("user32.dll")] public static extern bool IsWindowVisible(IntPtr hWnd);
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)] public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+    [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+    [DllImport("user32.dll")] public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+    [StructLayout(LayoutKind.Sequential)] public struct RECT { public int Left; public int Top; public int Right; public int Bottom; }
+    [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
+
+    public const uint MOUSEEVENTF_LEFTDOWN = 0x0002;
+    public const uint MOUSEEVENTF_LEFTUP = 0x0004;
+    public const uint KEYEVENTF_KEYUP = 0x0002;
+    public const uint WM_CLOSE = 0x0010;
+
+    public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+    [DllImport("user32.dll")] public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+
+    // 枚举属于目标进程且可见的 #32770 对话框句柄。
+    public static List<IntPtr> FindDialogsOfProcess(int processId)
+    {
+        var found = new List<IntPtr>();
+        EnumWindows((hWnd, lParam) =>
+        {
+            uint pid;
+            GetWindowThreadProcessId(hWnd, out pid);
+            if (pid != (uint)processId || !IsWindowVisible(hWnd)) return true;
+            var name = new StringBuilder(256);
+            GetClassName(hWnd, name, name.Capacity);
+            if (name.ToString() == "#32770") found.Add(hWnd);
+            return true;
+        }, IntPtr.Zero);
+        return found;
+    }
+
+    // 读对话框内全部 Static 子窗口正文（VCL/Delphi MessageBox 的文本载体）。
+    public static List<string> ReadStaticTexts(IntPtr dialogHandle)
+    {
+        var texts = new List<string>();
+        var child = IntPtr.Zero;
+        while (true)
+        {
+            child = FindWindowEx(dialogHandle, child, "Static", null);
+            if (child == IntPtr.Zero) break;
+            var buffer = new StringBuilder(1024);
+            GetWindowText(child, buffer, buffer.Capacity);
+            var value = buffer.ToString();
+            if (!string.IsNullOrEmpty(value)) texts.Add(value);
+        }
+        return texts;
+    }
+
+    public static void ClickAt(int x, int y)
+    {
+        SetCursorPos(x, y);
+        System.Threading.Thread.Sleep(60);
+        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, UIntPtr.Zero);
+        System.Threading.Thread.Sleep(40);
+        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, UIntPtr.Zero);
+    }
+
+    // 真实键鼠打字（仅 ASCII；VkKeyScanW 解析 Shift 态）。
+    public static void TypeAscii(string text)
+    {
+        foreach (char ch in text)
+        {
+            var scan = VkKeyScanW(ch);
+            if (scan == -1) throw new InvalidOperationException("non-ASCII char in fallback path: " + ch);
+            byte vk = (byte)(scan & 0xFF);
+            bool shift = (scan >> 8 & 1) != 0;
+            if (shift) keybd_event(0x10, 0, 0, UIntPtr.Zero);
+            keybd_event(vk, 0, 0, UIntPtr.Zero);
+            keybd_event(vk, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+            if (shift) keybd_event(0x10, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+            System.Threading.Thread.Sleep(20);
+        }
+    }
+}
+"@
+}
+
+# --- 启动目标进程 ---------------------------------------------------------
+$process = Start-Process -FilePath $ExePath -PassThru
+Write-HarnessLine "started pid=$($process.Id)"
+try {
+    # --- 断言①：等主窗口就绪并拉回主屏可视区 ------------------------------
+    $deadline = [DateTime]::UtcNow.AddSeconds(20)
+    do {
+        Start-Sleep -Milliseconds 400
+        $process.Refresh()
+        $mainHandle = $process.MainWindowHandle
+    } while ($mainHandle -eq [IntPtr]::Zero -and [DateTime]::UtcNow -lt $deadline)
+
+    if ($mainHandle -eq [IntPtr]::Zero) {
+        throw "target did not expose a main window within 20s"
+    }
+    $screenBounds = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
+    $margin = 24
+    $targetWidth = [Math]::Min(800, $screenBounds.Width - $margin * 2)
+    $targetHeight = [Math]::Min(600, $screenBounds.Height - $margin * 2)
+    $moved = [GuiDriveNative]::MoveWindow($mainHandle, $margin, $margin, $targetWidth, $targetHeight, $true)
+    Start-Sleep -Milliseconds 400
+    Write-Step "move-window-visible" $moved "rect=${margin},${margin},${targetWidth}x${targetHeight}"
+
+    # --- 断言②：真实鼠标点标题栏激活 + 前台断言 ---------------------------
+    [GuiDriveNative]::SetForegroundWindow($mainHandle) | Out-Null
+    Start-Sleep -Milliseconds 200
+    $titleClickY = $margin + 12
+    $titleClickX = $margin + [int]($targetWidth / 2)
+    [GuiDriveNative]::ClickAt($titleClickX, $titleClickY)
+    Start-Sleep -Milliseconds 300
+    $foreground = [GuiDriveNative]::GetForegroundWindow()
+    Write-Step "foreground-assert" ($foreground -eq $mainHandle) ("foreground=0x{0:X8}" -f $foreground.ToInt64())
+
+    $root = [System.Windows.Automation.AutomationElement]::FromHandle($mainHandle)
+    # 通用发现（禁枚举序/控件型假设）：VCL/MFC 等框架常把输入与按钮暴露为无 Pattern 的
+    # Pane（实测：TEdit/TButton 全部 ControlType=Pane 且零 UIA Pattern），按 ControlType
+    # 过滤必然扑空——改为类名模式发现，再按 BoundingRectangle/Y 序定位身份。
+    $allDescendants = @($root.FindAll([System.Windows.Automation.TreeScope]::Descendants, [System.Windows.Automation.Condition]::TrueCondition) | ForEach-Object { $_ })
+    $orderedEdits = @($allDescendants | Where-Object { $_.Current.ClassName -match $EditClassPattern } | Sort-Object { $_.Current.BoundingRectangle.Y })
+    $trigger = @($allDescendants | Where-Object { $_.Current.ClassName -match $TriggerClassPattern } | Sort-Object { $_.Current.BoundingRectangle.Y } | Select-Object -First 1)
+    Write-HarnessLine ("discovered: edits={0} trigger={1}" -f $orderedEdits.Count, $(if ($trigger) { $trigger.Current.ClassName } else { "<none>" }))
+    if ($orderedEdits.Count -lt 2 -or -not $trigger) {
+        throw "control discovery failed: need >=2 edit-like fields and one trigger-like control (adjust -EditClassPattern/-TriggerClassPattern)"
+    }
+
+    # --- 标签锚定（round3 v3）：邻近 Static/Label 文本绑定编辑框身份，Y 序降为自动兜底；
+    # 写入读回校验照旧；无标签布局静默退化 Y 序不硬性失败。禁止写死任何目标控件标题。
+    $staticLabels = @($allDescendants | Where-Object { $_.Current.ClassName -match "(Static|Label)" })
+    $anchorNames = @()
+    foreach ($edit in $orderedEdits) {
+        $er = $edit.Current.BoundingRectangle
+        $best = $null
+        $bestDist = [double]::MaxValue
+        foreach ($label in $staticLabels) {
+            if ($orderedEdits -contains $label) { continue }
+            $lr = $label.Current.BoundingRectangle
+            if (-not $lr -or $lr.IsEmpty -or $er.IsEmpty) { continue }
+            $above = ([Math]::Abs($lr.Bottom - $er.Y) -le 40) -and ($lr.X -lt ($er.X + $er.Width)) -and (($lr.X + $lr.Width) -gt $er.X)
+            $beside = ([Math]::Abs($lr.Right - $er.X) -le 120) -and ($lr.Bottom -gt $er.Y) -and ($lr.Y -lt $er.Bottom)
+            if (-not ($above -or $beside)) { continue }
+            $dist = [Math]::Abs($er.Y - $lr.Bottom) + [Math]::Abs($er.X - $lr.X)
+            if ($dist -lt $bestDist) { $bestDist = $dist; $best = $label }
+        }
+        $anchorName = if ($best) { "$($best.Current.Name)" } else { "" }
+        $anchorNames += $anchorName
+        Write-HarnessLine ("label-anchor edit@y{0}: '{1}'" -f [int]$er.Y, $(if ($anchorName) { $anchorName } else { "<y-order-fallback>" }))
+    }
+    $namedAnchors = @($anchorNames | Where-Object { $_ })
+    if ($namedAnchors.Count -gt 0 -and $namedAnchors.Count -ne (@($namedAnchors | Sort-Object -Unique)).Count) {
+        Write-HarnessLine "WARN: ambiguous label anchor (duplicate label text); field identity falls back to y-order"
+    }
+
+    # --- 断言③+④：Y 序定位写入 + 读回校验；合成整轮连败 N 次切真实键鼠 ------
+    # 单一提交动词纪律（round3 v3）：BM_CLICK 与 WM_COMMAND 禁止在同脚本并发双发（防双弹窗重复提交）。
+    # 断言③注记：以 ValuePattern.Value 读回比对；Name 属性读回系 VCL 特性，其他框架
+    # 请替换读回通道。无 Pattern 目标（如 VCL Pane）读回通道不可用时，写入正确性降级为
+    # 结果级验证（由断言⑤弹窗正文裁决），日志标注 outcome-level。
+    $values = @($User, $Sn)
+    $usedFallback = $false
+    for ($attempt = 1; $attempt -le $SyntheticRetryLimit; $attempt++) {
+        $passClean = $true
+        for ($i = 0; $i -lt [Math]::Min($values.Count, $orderedEdits.Count); $i++) {
+            $edit = $orderedEdits[$i]
+            $valuePattern = $null
+            try {
+                if (-not $edit.TryGetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern, [ref]$valuePattern)) {
+                    Write-HarnessLine ("synthetic write edit[{0}]: no ValuePattern (Pane-proxy target)" -f $i)
+                    $passClean = $false
+                    break
+                }
+                $valuePattern.SetValue($values[$i])
+                Start-Sleep -Milliseconds 150
+                $readBack = $valuePattern.Current.Value
+                $ok = ($readBack -eq $values[$i])
+                Write-Step ("write-edit-y{0}" -f $i) $ok ("attempt={0} expected={1} readback={2}" -f $attempt, $values[$i], $readBack)
+                if (-not $ok) { $passClean = $false }
+            } catch {
+                Write-HarnessLine ("synthetic write edit[{0}] threw: {1}" -f $i, $_.Exception.Message)
+                $passClean = $false
+            }
+        }
+        if ($passClean) {
+            $invokePattern = $null
+            try {
+                if (-not $trigger.TryGetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern, [ref]$invokePattern)) {
+                    Write-HarnessLine "synthetic trigger: no InvokePattern (Pane-proxy target)"
+                    $passClean = $false
+                } else {
+                    $invokePattern.Invoke()
+                    Write-HarnessLine ("synthetic invoke sent (attempt {0}/{1})" -f $attempt, $SyntheticRetryLimit)
+                }
+            } catch {
+                Write-HarnessLine ("synthetic invoke threw: {0}" -f $_.Exception.Message)
+                $passClean = $false
+            }
+        }
+        if ($passClean) {
+            break
+        }
+        Write-HarnessLine ("synthetic pass {0}/{1} incomplete" -f $attempt, $SyntheticRetryLimit)
+        Start-Sleep -Milliseconds 300
+        if ($attempt -eq $SyntheticRetryLimit) {
+            $usedFallback = $true
+            Write-HarnessLine ("synthetic path failed {0} time(s); escalating to REAL keyboard/mouse fallback (ASCII only)" -f $SyntheticRetryLimit)
+            [GuiDriveNative]::ClickAt($titleClickX, $titleClickY)
+            Start-Sleep -Milliseconds 200
+            for ($i = 0; $i -lt [Math]::Min($values.Count, $orderedEdits.Count); $i++) {
+                $rect = $orderedEdits[$i].Current.BoundingRectangle
+                [GuiDriveNative]::ClickAt([int]($rect.X + $rect.Width / 2), [int]($rect.Y + $rect.Height / 2))
+                Start-Sleep -Milliseconds 200
+                [GuiDriveNative]::TypeAscii($values[$i])
+                if ($i -lt [Math]::Min($values.Count, $orderedEdits.Count) - 1) {
+                    [GuiDriveNative]::keybd_event(0x09, 0, 0, [UIntPtr]::Zero)
+                    [GuiDriveNative]::keybd_event(0x09, 0, 0x0002, [UIntPtr]::Zero)
+                    Start-Sleep -Milliseconds 150
+                }
+            }
+            Start-Sleep -Milliseconds 200
+            $tRect = $trigger.Current.BoundingRectangle
+            [GuiDriveNative]::ClickAt([int]($tRect.X + $tRect.Width / 2), [int]($tRect.Y + $tRect.Height / 2))
+            Write-HarnessLine "real keyboard/mouse fallback sequence completed"
+        }
+    }
+    Write-Step "trigger-dispatch" $true ("path={0}" -f $(if ($usedFallback) { "real-km-fallback" } else { "synthetic-uia" }))
+
+    # --- 断言⑤：EnumWindows 找 #32770 弹窗并读 Static 正文 ----------------
+    $pollDeadline = [DateTime]::UtcNow.AddSeconds(10)
+    $dialogSeen = $false
+    while ([DateTime]::UtcNow -lt $pollDeadline -and -not $dialogSeen) {
+        Start-Sleep -Milliseconds 500
+        $dialogs = [GuiDriveNative]::FindDialogsOfProcess($process.Id)
+        foreach ($dialog in $dialogs) {
+            $staticTexts = [GuiDriveNative]::ReadStaticTexts($dialog)
+            $joined = [string]::Join(" | ", $staticTexts.ToArray())
+            Write-HarnessLine ("dialog detected: static='{0}'" -f $joined)
+            # 弹窗排空（round3 v3）：读毕 Static 正文即发 WM_CLOSE 关闭该对话框再继续（防模态阻塞复发）。
+            $drained = [GuiDriveNative]::PostMessage($dialog, [GuiDriveNative]::WM_CLOSE, [IntPtr]::Zero, [IntPtr]::Zero)
+            Write-Step "popup-drain" $drained ("hwnd=0x{0:X8}" -f $dialog.ToInt64())
+            Start-Sleep -Milliseconds 300
+            $dialogSeen = $true
+        }
+    }
+    Write-Step "dialog-poll" $true ("seen={0}" -f $dialogSeen)
+
+    # --- 成功信号探针挂点（round3 v3）：只执行协议不定义信号语义；stdout 逐行记 STEP，成败判读见 references/ui.md outcome 目录。
+    if ($SuccessProbe) {
+        if (-not (Test-Path $SuccessProbe)) {
+            Write-Step "success-probe" $false ("script not found: {0}" -f $SuccessProbe)
+        } else {
+            try {
+                $probeLines = @(& $SuccessProbe 2>&1 | ForEach-Object { "$_" })
+                foreach ($probeLine in $probeLines) {
+                    Write-HarnessLine ("success-probe| {0}" -f $probeLine)
+                }
+                Write-Step "success-probe" $true ("lines={0}" -f $probeLines.Count)
+            } catch {
+                Write-Step "success-probe" $false $_.Exception.Message
+            }
+        }
+    }
+}
+finally {
+    # --- 截图（先于退出，保证证据落盘）------------------------------------
+    try {
+        Start-Sleep -Milliseconds 600
+        $bounds = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
+        $bitmap = New-Object System.Drawing.Bitmap($bounds.Width, $bounds.Height)
+        $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
+        $graphics.CopyFromScreen($bounds.Location, [System.Drawing.Point]::Empty, $bounds.Size)
+        $bitmap.Save($shotPath, [System.Drawing.Imaging.ImageFormat]::Png)
+        $graphics.Dispose(); $bitmap.Dispose()
+        Write-HarnessLine "screenshot saved: $shotPath"
+    } catch {
+        Write-HarnessLine "WARN: screenshot failed: $($_.Exception.Message)"
+    }
+    if (-not $process.HasExited) {
+        Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+        Write-HarnessLine "target stopped"
+    }
+    Write-HarnessLine "summary: stepFailures=$($script:stepFailures)"
+    if ($script:stepFailures -gt 0) {
+        exit 1
+    }
+}

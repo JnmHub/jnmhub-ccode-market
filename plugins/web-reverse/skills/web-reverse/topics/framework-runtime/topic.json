@@ -1,0 +1,70 @@
+{
+  "key": "framework-runtime",
+  "label": "Framework runtime / SSR-CSR boundary",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "framework-runtime",
+  "signals": [
+    "Next.js",
+    "Nuxt",
+    "Remix",
+    "Vite",
+    "SvelteKit",
+    "Astro",
+    "__NEXT_DATA__",
+    "hydration",
+    "import.meta",
+    "modulepreload",
+    "island"
+  ],
+  "protocol": "references/framework-runtime-playbook.md",
+  "caseFiles": [
+    "scripts/cases/web-framework-runtime-workflow.mjs"
+  ],
+  "outputNeedles": [
+    "hydration",
+    "__NEXT_DATA__",
+    "modulepreload",
+    "run/framework-runtime-notes.md",
+    "run/framework-payload-map.json"
+  ],
+  "synthetic": {
+    "id": "synthetic-framework-runtime",
+    "artifactSeeds": [
+      {
+        "path": "run/framework-runtime-notes.md",
+        "text": "# framework runtime notes\n\n- runtime: vite\n- payload: island props\n- modulepreload: mapped\n"
+      },
+      {
+        "path": "run/framework-payload-map.json",
+        "json": {
+          "runtimeKind": "vite",
+          "payloadMode": "islands",
+          "loaderFamily": "native-esm",
+          "carriers": [
+            "html shell",
+            "modulepreload graph",
+            "island props"
+          ]
+        }
+      },
+      {
+        "path": "run/chunk-loader-notes.md",
+        "text": "# chunk loader notes\n\n- loader: vite-modulepreload\n- boundary: framework runtime before business modules\n"
+      },
+      {
+        "path": "run/preload-orchestrator.js",
+        "text": "export const preloadOrder = ['entry', 'modulepreload', 'island'];\n"
+      }
+    ]
+  },
+  "owner": "web-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:synthetic-e2e"
+  ],
+  "extendedProtocols": [
+    "references/websearch-escalation-playbook.md"
+  ]
+}

@@ -1,0 +1,13 @@
+# 措辞单源提示：开局链条 / 契约五字段 / tier 五枚举 / 续跑链的单源在 tools/docs/fact-sync.mjs 与 SKILL.md 的 GENERATED 块；
+# 本文件内容无 QA 锚定（check-skill-contract.mjs 仅查存在性），属手工维护副本——改措辞先改单源，再同步此处。
+interface:
+  display_name: "Windows 逆向"
+  short_description: "PE/.NET/壳/抗分析/注入/异常链/IPC/驱动/协议/内存取证 task-local 闭环"
+  default_prompt: >-
+    【硬约束】命中 Electron/CEF、壳/脱壳、协议/签名、多阶段验证、补丁或 hook 时：
+    (1) 第一步必须运行 `task-start` 建立 task-local（无历史文件时自动转发 `task-init`），未建 task-local 前禁止调用 IDA/radare2/x64dbg 等分析工具；
+    (2) `task-sync` 前锁定机器校验的契约五字段 `target / objective / deliverableTier / completionCriteria / boundaries`（deliverableTier 限 evidence / hook-script / patch / protocol-doc / pure-algorithm 五枚举），并裁定 `architecture / wow64 / managed / protectionTier`；
+    (3) 命中 `mixed-mode-interop`、`ipc-persistence`、`exception-runtime`、`memory-forensics` 等专题，先补读 `references/` 下对应 playbook；
+    (4) 无真实样本而要模拟真实高级 Windows 逆向场景：先 `task-drill --list` 再运行 `task:drill` 生成演练任务；
+    (5) 任务已存在则按 `task.json -> route-state.json -> route-plan/clues -> task-sync -> task-advance` 续跑（新任务默认 single 单 Agent 闭环，multi 协作为显式 opt-in）；`execution.status=ready-to-continue` 时继续执行 `nextExecutableAction`，不停在状态汇报；
+    (6) 正式收口前先 `task-close --dry-run` 预检，一次修完剩余 finding 再正式 `task-close`；说明与 `report.md` 统一使用中文。

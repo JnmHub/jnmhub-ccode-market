@@ -1,0 +1,81 @@
+{
+  "key": "config-recovery",
+  "label": "Config / blob / persistence recovery",
+  "maturity": "synthetic-e2e",
+  "routeTrack": "config-recovery",
+  "signals": [
+    "config",
+    "resourceblob",
+    "registry",
+    "service",
+    "blob",
+    "decryptor"
+  ],
+  "protocol": "references/config-recovery.md",
+  "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/config-recovery.json",
+  "taskInit": {
+    "aliases": [
+      "config",
+      "blob-recovery"
+    ],
+    "baseProtectionTier": "T1"
+  },
+  "taskSemantics": {
+    "presentPath": "configRecovery.present",
+    "versionPath": "configRecovery.version",
+    "artifactsPath": "configRecovery.artifacts",
+    "minArtifacts": 3,
+    "arrayPaths": [
+      "configRecovery.keyFindings"
+    ]
+  },
+  "formalValidation": {
+    "presentPath": "configRecovery.present",
+    "requirementsAll": [
+      {
+        "message": "configRecovery.present=true but status is still not-started",
+        "path": "configRecovery.status",
+        "disallow": [
+          "not-started"
+        ]
+      },
+      {
+        "message": "configRecovery.present=true but keyFindings is still empty",
+        "path": "configRecovery.keyFindings",
+        "minLength": 1
+      },
+      {
+        "message": "configRecovery.present=true 但 report.md 缺少「Config / blob / persistence recovery」专题小节",
+        "reportSection": "配置|资源恢复|config",
+        "minChars": 120
+      }
+    ]
+  },
+  "caseFiles": [
+    "scripts/cases/win-config-recovery-workflow.mjs"
+  ],
+  "templateArtifacts": [],
+  "qaFiles": [
+    {
+      "path": "tools/task/validation.mjs",
+      "needles": [
+        "evaluateTopicFormalValidation",
+        "evaluateTopicPhaseGuards"
+      ]
+    }
+  ],
+  "outputNeedles": [
+    "配置",
+    "资源",
+    "report.md 专题发现"
+  ],
+  "owner": "win-reverse-core",
+  "riskLevel": "high",
+  "requiredChecks": [
+    "check:topic-manifests",
+    "check:capability-coverage",
+    "check:operating-contracts",
+    "check:deliverables"
+  ],
+  "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/config-recovery"
+}

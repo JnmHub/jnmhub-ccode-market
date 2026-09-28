@@ -1,0 +1,2374 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-01T13:23:56.214Z",
+  "source": "topics/*/topic.json",
+  "topics": [
+    {
+      "key": "anti-analysis",
+      "label": "Anti-debug / anti-vm / anti-tamper",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "anti-analysis",
+      "signals": [
+        "debugger",
+        "timing",
+        "vm",
+        "checksum",
+        "exception",
+        "etw"
+      ],
+      "protocol": "references/anti-obf.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/anti-analysis.json",
+      "taskInit": {
+        "aliases": [
+          "anti-debug"
+        ],
+        "baseProtectionTier": "T0",
+        "combinationProtectionTiers": [
+          {
+            "withTopics": [
+              "protection-bypass"
+            ],
+            "tier": "T3"
+          }
+        ]
+      },
+      "taskSemantics": {
+        "presentPath": "antiAnalysis.present",
+        "versionPath": "antiAnalysis.version",
+        "artifactsPath": "antiAnalysis.artifacts",
+        "minArtifacts": 2,
+        "arrayPaths": [
+          "antiAnalysis.keyFindings"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "antiAnalysis.present",
+        "requirementsAll": [
+          {
+            "message": "antiAnalysis.present=true but status is still not-started",
+            "path": "antiAnalysis.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "antiAnalysis.present=true but keyFindings is still empty",
+            "path": "antiAnalysis.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "antiAnalysis.present=true 但 report.md 缺少「Anti-debug / anti-vm / anti-tamper」专题小节",
+            "reportSection": "反调试|anti.?debug|反分析|anti.?analysis",
+            "minChars": 120
+          }
+        ],
+        "requirementsAny": [
+          {
+            "message": "antiAnalysis.present=true 但 report.md 专题小节缺少Anti-debug / anti-vm / anti-tamper的实现/证据细节",
+            "checks": [
+              {
+                "reportSection": "反调试|anti.?debug|绕过|bypass",
+                "minChars": 80
+              }
+            ]
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-anti-analysis-workflow.mjs"
+      ],
+      "templateArtifacts": [
+        "references/templates/anti-analysis-hook.js"
+      ],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "反调试",
+        "检测面",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/anti-analysis",
+      "requiredSignals": [
+        "debugger",
+        "timing",
+        "vm",
+        "checksum",
+        "exception",
+        "etw"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "antiAnalysis.present",
+          "equals": true
+        },
+        {
+          "message": "antiAnalysis.present=true but status is still not-started",
+          "path": "antiAnalysis.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "antiAnalysis.present=true but keyFindings is still empty",
+          "path": "antiAnalysis.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": [
+        "references/templates/anti-analysis-hook.js"
+      ]
+    },
+    {
+      "key": "app-protocol",
+      "label": "Application protocol / signature algorithm recovery",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "app-protocol",
+      "signals": [
+        "sign",
+        "signature",
+        "token",
+        "protobuf",
+        "protocol",
+        "ssl-pinning",
+        "api-sign",
+        "license",
+        "协议",
+        "签名",
+        "加密字段"
+      ],
+      "protocol": "references/app-protocol.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/app-protocol.json",
+      "taskInit": {
+        "aliases": [
+          "app-protocol",
+          "signature",
+          "sign-algorithm",
+          "protocol",
+          "app-reverse"
+        ],
+        "baseProtectionTier": "T1",
+        "combinationProtectionTiers": [
+          {
+            "withTopics": [
+              "tls-network"
+            ],
+            "tier": "T2"
+          },
+          {
+            "withTopics": [
+              "config-recovery"
+            ],
+            "tier": "T2"
+          },
+          {
+            "withTopics": [
+              "protection-bypass"
+            ],
+            "tier": "T3"
+          }
+        ]
+      },
+      "taskSemantics": {
+        "presentPath": "appProtocol.present",
+        "versionPath": "appProtocol.version",
+        "artifactsPath": "appProtocol.artifacts",
+        "minArtifacts": 4,
+        "arrayPaths": [
+          "appProtocol.keyFindings",
+          "appProtocol.signFields",
+          "appProtocol.protocolFields"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "appProtocol.present",
+        "requirementsAll": [
+          {
+            "message": "appProtocol.present=true but status is still not-started",
+            "path": "appProtocol.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "appProtocol.present=true but keyFindings is still empty",
+            "path": "appProtocol.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "appProtocol.present=true 但 report.md 缺少「Application protocol / signature algorithm recovery」专题小节",
+            "reportSection": "协议|sign|签名|protobuf",
+            "minChars": 120
+          }
+        ],
+        "requirementsAny": [
+          {
+            "message": "appProtocol.present=true 但 report.md 专题小节缺少Application protocol / signature algorithm recovery的实现/证据细节",
+            "checks": [
+              {
+                "reportSection": "sign|签名|加密|encrypt",
+                "minChars": 80
+              }
+            ]
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-app-protocol-workflow.mjs"
+      ],
+      "templateArtifacts": [],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "签名算法",
+        "协议结构",
+        "加密边界",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/app-protocol",
+      "requiredSignals": [
+        "sign",
+        "signature",
+        "token",
+        "protobuf",
+        "protocol",
+        "ssl-pinning",
+        "api-sign",
+        "license",
+        "协议",
+        "签名",
+        "加密字段"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "appProtocol.present",
+          "equals": true
+        },
+        {
+          "message": "appProtocol.present=true but status is still not-started",
+          "path": "appProtocol.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "appProtocol.present=true but keyFindings is still empty",
+          "path": "appProtocol.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": []
+    },
+    {
+      "key": "config-recovery",
+      "label": "Config / blob / persistence recovery",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "config-recovery",
+      "signals": [
+        "config",
+        "resourceblob",
+        "registry",
+        "service",
+        "blob",
+        "decryptor"
+      ],
+      "protocol": "references/config-recovery.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/config-recovery.json",
+      "taskInit": {
+        "aliases": [
+          "config",
+          "blob-recovery"
+        ],
+        "baseProtectionTier": "T1",
+        "combinationProtectionTiers": []
+      },
+      "taskSemantics": {
+        "presentPath": "configRecovery.present",
+        "versionPath": "configRecovery.version",
+        "artifactsPath": "configRecovery.artifacts",
+        "minArtifacts": 3,
+        "arrayPaths": [
+          "configRecovery.keyFindings"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "configRecovery.present",
+        "requirementsAll": [
+          {
+            "message": "configRecovery.present=true but status is still not-started",
+            "path": "configRecovery.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "configRecovery.present=true but keyFindings is still empty",
+            "path": "configRecovery.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "configRecovery.present=true 但 report.md 缺少「Config / blob / persistence recovery」专题小节",
+            "reportSection": "配置|资源恢复|config",
+            "minChars": 120
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-config-recovery-workflow.mjs"
+      ],
+      "templateArtifacts": [],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "配置",
+        "资源",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/config-recovery",
+      "requiredSignals": [
+        "config",
+        "resourceblob",
+        "registry",
+        "service",
+        "blob",
+        "decryptor"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "configRecovery.present",
+          "equals": true
+        },
+        {
+          "message": "configRecovery.present=true but status is still not-started",
+          "path": "configRecovery.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "configRecovery.present=true but keyFindings is still empty",
+          "path": "configRecovery.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": []
+    },
+    {
+      "key": "dotnet",
+      "label": ".NET / CLR / IL patching",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "dotnet",
+      "signals": [
+        "clr",
+        "il",
+        "metadata",
+        "confuserex",
+        "delegate",
+        "dynamicmethod"
+      ],
+      "protocol": "references/dotnet.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/dotnet.json",
+      "taskInit": {
+        "aliases": [
+          "clr"
+        ],
+        "baseProtectionTier": "T0",
+        "combinationProtectionTiers": []
+      },
+      "taskSemantics": {
+        "presentPath": "dotnetAnalysis.present",
+        "versionPath": "dotnetAnalysis.version",
+        "artifactsPath": "dotnetAnalysis.artifacts",
+        "minArtifacts": 2,
+        "arrayPaths": [
+          "dotnetAnalysis.keyFindings"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "dotnetAnalysis.present",
+        "requirementsAll": [
+          {
+            "message": "dotnetAnalysis.present=true but status is still not-started",
+            "path": "dotnetAnalysis.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "dotnetAnalysis.present=true but keyFindings is still empty",
+            "path": "dotnetAnalysis.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "dotnetAnalysis.present=true 但 report.md 缺少「.NET / CLR / IL patching」专题小节",
+            "reportSection": "\\.NET|dotnet",
+            "minChars": 120
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-dotnet-workflow.mjs"
+      ],
+      "templateArtifacts": [],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        ".NET",
+        "CLR",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/dotnet",
+      "requiredSignals": [
+        "clr",
+        "il",
+        "metadata",
+        "confuserex",
+        "delegate",
+        "dynamicmethod"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "dotnetAnalysis.present",
+          "equals": true
+        },
+        {
+          "message": "dotnetAnalysis.present=true but status is still not-started",
+          "path": "dotnetAnalysis.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "dotnetAnalysis.present=true but keyFindings is still empty",
+          "path": "dotnetAnalysis.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": []
+    },
+    {
+      "key": "driver",
+      "label": "Kernel driver / dispatch / ioctl",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "driver",
+      "signals": [
+        "sys",
+        "driverentry",
+        "dispatch",
+        "ioctl",
+        "irp",
+        "deviceiocontrol"
+      ],
+      "protocol": "references/driver.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/driver.json",
+      "taskInit": {
+        "aliases": [
+          "sys-driver"
+        ],
+        "baseProtectionTier": "T0",
+        "combinationProtectionTiers": []
+      },
+      "taskSemantics": {
+        "presentPath": "driverAnalysis.present",
+        "versionPath": "driverAnalysis.version",
+        "artifactsPath": "driverAnalysis.artifacts",
+        "minArtifacts": 2,
+        "arrayPaths": [
+          "driverAnalysis.keyFindings"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "driverAnalysis.present",
+        "requirementsAll": [
+          {
+            "message": "driverAnalysis.present=true but status is still not-started",
+            "path": "driverAnalysis.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "driverAnalysis.present=true but keyFindings is still empty",
+            "path": "driverAnalysis.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "driverAnalysis.present=true 但 report.md 缺少「Kernel driver / dispatch / ioctl」专题小节",
+            "reportSection": "驱动|Driver|IOCTL",
+            "minChars": 120
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-driver-workflow.mjs"
+      ],
+      "templateArtifacts": [],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "IOCTL",
+        "DriverEntry",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/driver",
+      "requiredSignals": [
+        "sys",
+        "driverentry",
+        "dispatch",
+        "ioctl",
+        "irp",
+        "deviceiocontrol"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "driverAnalysis.present",
+          "equals": true
+        },
+        {
+          "message": "driverAnalysis.present=true but status is still not-started",
+          "path": "driverAnalysis.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "driverAnalysis.present=true but keyFindings is still empty",
+          "path": "driverAnalysis.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": []
+    },
+    {
+      "key": "exception-runtime",
+      "label": "TLS callback / SEH / VEH / startup chain",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "exception-runtime",
+      "signals": [
+        "seh",
+        "veh",
+        "tlscallback",
+        "unhandledexceptionfilter",
+        "cfg",
+        "cet"
+      ],
+      "protocol": "references/exception-runtime-playbook.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/exception-runtime.json",
+      "taskInit": {
+        "aliases": [
+          "seh-veh",
+          "tls-callback"
+        ],
+        "baseProtectionTier": "T1",
+        "combinationProtectionTiers": [
+          {
+            "withTopics": [
+              "anti-analysis"
+            ],
+            "tier": "T2"
+          },
+          {
+            "withTopics": [
+              "packer-unpack"
+            ],
+            "tier": "T2"
+          },
+          {
+            "withTopics": [
+              "protection-bypass"
+            ],
+            "tier": "T3"
+          }
+        ]
+      },
+      "taskSemantics": {
+        "presentPath": "exceptionRuntime.present",
+        "versionPath": "exceptionRuntime.version",
+        "artifactsPath": "exceptionRuntime.artifacts",
+        "minArtifacts": 2,
+        "arrayPaths": [
+          "exceptionRuntime.keyFindings",
+          "exceptionRuntime.entryEdges"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "exceptionRuntime.present",
+        "requirementsAll": [
+          {
+            "message": "exceptionRuntime.present=true but status is still not-started",
+            "path": "exceptionRuntime.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "exceptionRuntime.present=true but keyFindings is still empty",
+            "path": "exceptionRuntime.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "exceptionRuntime.present=true 但 report.md 缺少「TLS callback / SEH / VEH / startup chain」专题小节",
+            "reportSection": "异常|启动链|exception",
+            "minChars": 120
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-exception-runtime-workflow.mjs"
+      ],
+      "templateArtifacts": [],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "TLS callback",
+        "SEH",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/exception-runtime",
+      "requiredSignals": [
+        "seh",
+        "veh",
+        "tlscallback",
+        "unhandledexceptionfilter",
+        "cfg",
+        "cet"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "exceptionRuntime.present",
+          "equals": true
+        },
+        {
+          "message": "exceptionRuntime.present=true but status is still not-started",
+          "path": "exceptionRuntime.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "exceptionRuntime.present=true but keyFindings is still empty",
+          "path": "exceptionRuntime.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": []
+    },
+    {
+      "key": "frida-hooking",
+      "label": "Frida runtime / API / crypto hook",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "frida-hooking",
+      "signals": [
+        "frida",
+        "interceptor",
+        "stalker",
+        "cryptoapi",
+        "bcrypt",
+        "hook"
+      ],
+      "protocol": "references/frida.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/frida-hooking.json",
+      "taskInit": {
+        "aliases": [
+          "frida"
+        ],
+        "baseProtectionTier": "T0",
+        "combinationProtectionTiers": []
+      },
+      "taskSemantics": {
+        "presentPath": "fridaHooking.present",
+        "versionPath": "fridaHooking.version",
+        "artifactsPath": "fridaHooking.artifacts",
+        "minArtifacts": 2,
+        "arrayPaths": [
+          "fridaHooking.keyFindings"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "fridaHooking.present",
+        "requirementsAll": [
+          {
+            "message": "fridaHooking.present=true but status is still not-started",
+            "path": "fridaHooking.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "fridaHooking.present=true but keyFindings is still empty",
+            "path": "fridaHooking.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "fridaHooking.present=true 但 report.md 缺少「Frida runtime / API / crypto hook」专题小节",
+            "reportSection": "Frida|hook",
+            "minChars": 120
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-frida-hook-workflow.mjs"
+      ],
+      "templateArtifacts": [
+        "references/templates/frida-hook-template.js"
+      ],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "Frida",
+        "Hook",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/frida-hooking",
+      "requiredSignals": [
+        "frida",
+        "interceptor",
+        "stalker",
+        "cryptoapi",
+        "bcrypt",
+        "hook"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "fridaHooking.present",
+          "equals": true
+        },
+        {
+          "message": "fridaHooking.present=true but status is still not-started",
+          "path": "fridaHooking.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "fridaHooking.present=true but keyFindings is still empty",
+          "path": "fridaHooking.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": [
+        "references/templates/frida-hook-template.js"
+      ]
+    },
+    {
+      "key": "ipc-persistence",
+      "label": "IPC / service / task / WMI persistence",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "ipc-persistence",
+      "signals": [
+        "service",
+        "schtasks",
+        "wmi",
+        "namedpipe",
+        "rpc",
+        "alpc"
+      ],
+      "protocol": "references/ipc-persistence-playbook.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/ipc-persistence.json",
+      "taskInit": {
+        "aliases": [
+          "ipc",
+          "persistence"
+        ],
+        "baseProtectionTier": "T1",
+        "combinationProtectionTiers": [
+          {
+            "withTopics": [
+              "loader-injection"
+            ],
+            "tier": "T2"
+          },
+          {
+            "withTopics": [
+              "anti-analysis"
+            ],
+            "tier": "T2"
+          }
+        ]
+      },
+      "taskSemantics": {
+        "presentPath": "ipcPersistence.present",
+        "versionPath": "ipcPersistence.version",
+        "artifactsPath": "ipcPersistence.artifacts",
+        "minArtifacts": 3,
+        "arrayPaths": [
+          "ipcPersistence.keyFindings",
+          "ipcPersistence.carriers",
+          "ipcPersistence.triggerPoints"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "ipcPersistence.present",
+        "requirementsAll": [
+          {
+            "message": "ipcPersistence.present=true but status is still not-started",
+            "path": "ipcPersistence.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "ipcPersistence.present=true but keyFindings is still empty",
+            "path": "ipcPersistence.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "ipcPersistence.present=true 但 report.md 缺少「IPC / service / task / WMI persistence」专题小节",
+            "reportSection": "IPC|持久化|ALPC|NamedPipe|COM",
+            "minChars": 120
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-ipc-persistence-workflow.mjs"
+      ],
+      "templateArtifacts": [],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "NamedPipe",
+        "ServiceMain",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/ipc-persistence",
+      "requiredSignals": [
+        "service",
+        "schtasks",
+        "wmi",
+        "namedpipe",
+        "rpc",
+        "alpc"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "ipcPersistence.present",
+          "equals": true
+        },
+        {
+          "message": "ipcPersistence.present=true but status is still not-started",
+          "path": "ipcPersistence.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "ipcPersistence.present=true but keyFindings is still empty",
+          "path": "ipcPersistence.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": []
+    },
+    {
+      "key": "loader-injection",
+      "label": "Loader / injection / manual map",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "loader-injection",
+      "signals": [
+        "inject",
+        "manualmap",
+        "createremotethread",
+        "apc",
+        "hollowing",
+        "reflective"
+      ],
+      "protocol": "references/loader-injection.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/loader-injection.json",
+      "taskInit": {
+        "aliases": [
+          "inject",
+          "manual-map"
+        ],
+        "baseProtectionTier": "T1",
+        "combinationProtectionTiers": [
+          {
+            "withTopics": [
+              "anti-analysis"
+            ],
+            "tier": "T2"
+          },
+          {
+            "withTopics": [
+              "protection-bypass"
+            ],
+            "tier": "T4"
+          }
+        ]
+      },
+      "taskSemantics": {
+        "presentPath": "loaderInjection.present",
+        "versionPath": "loaderInjection.version",
+        "artifactsPath": "loaderInjection.artifacts",
+        "minArtifacts": 3,
+        "arrayPaths": [
+          "loaderInjection.keyFindings",
+          "loaderInjection.techniques",
+          "loaderInjection.remoteModules"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "loaderInjection.present",
+        "requirementsAll": [
+          {
+            "message": "loaderInjection.present=true but status is still not-started",
+            "path": "loaderInjection.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "loaderInjection.present=true but keyFindings is still empty",
+            "path": "loaderInjection.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "loaderInjection.present=true 但 report.md 缺少「Loader / injection / manual map」专题小节",
+            "reportSection": "Loader|注入|manual.?map",
+            "minChars": 120
+          }
+        ],
+        "requirementsAny": [
+          {
+            "message": "loaderInjection.present=true 但 report.md 专题小节缺少Loader / injection / manual map的实现/证据细节",
+            "checks": [
+              {
+                "reportSection": "Loader|注入|manual.?map",
+                "minChars": 80
+              }
+            ]
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-loader-injection-workflow.mjs"
+      ],
+      "templateArtifacts": [
+        "references/templates/loader-hook-template.js"
+      ],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "CreateRemoteThread",
+        "manual map",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/loader-injection",
+      "requiredSignals": [
+        "inject",
+        "manualmap",
+        "createremotethread",
+        "apc",
+        "hollowing",
+        "reflective"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "loaderInjection.present",
+          "equals": true
+        },
+        {
+          "message": "loaderInjection.present=true but status is still not-started",
+          "path": "loaderInjection.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "loaderInjection.present=true but keyFindings is still empty",
+          "path": "loaderInjection.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": [
+        "references/templates/loader-hook-template.js"
+      ]
+    },
+    {
+      "key": "memory-forensics",
+      "label": "Memory forensics / VAD / minidump reconstruction",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "memory-forensics",
+      "signals": [
+        "vad",
+        "minidump",
+        "pesieve",
+        "hollowfind",
+        "modulemap",
+        "dumpmem"
+      ],
+      "protocol": "references/memory-forensics-playbook.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/memory-forensics.json",
+      "taskInit": {
+        "aliases": [
+          "memory-dump",
+          "forensics"
+        ],
+        "baseProtectionTier": "T1",
+        "combinationProtectionTiers": [
+          {
+            "withTopics": [
+              "loader-injection"
+            ],
+            "tier": "T2"
+          },
+          {
+            "withTopics": [
+              "packer-unpack"
+            ],
+            "tier": "T2"
+          },
+          {
+            "withTopics": [
+              "protection-bypass"
+            ],
+            "tier": "T4"
+          }
+        ]
+      },
+      "taskSemantics": {
+        "presentPath": "memoryForensics.present",
+        "versionPath": "memoryForensics.version",
+        "artifactsPath": "memoryForensics.artifacts",
+        "minArtifacts": 2,
+        "arrayPaths": [
+          "memoryForensics.keyFindings",
+          "memoryForensics.suspiciousRegions"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "memoryForensics.present",
+        "requirementsAll": [
+          {
+            "message": "memoryForensics.present=true but status is still not-started",
+            "path": "memoryForensics.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "memoryForensics.present=true but keyFindings is still empty",
+            "path": "memoryForensics.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "memoryForensics.present=true 但 report.md 缺少「Memory forensics / VAD / minidump reconstruction」专题小节",
+            "reportSection": "内存|取证|dump|VAD|Minidump",
+            "minChars": 120
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-memory-forensics-workflow.mjs"
+      ],
+      "templateArtifacts": [],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "VAD",
+        "minidump",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/memory-forensics",
+      "requiredSignals": [
+        "vad",
+        "minidump",
+        "pesieve",
+        "hollowfind",
+        "modulemap",
+        "dumpmem"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "memoryForensics.present",
+          "equals": true
+        },
+        {
+          "message": "memoryForensics.present=true but status is still not-started",
+          "path": "memoryForensics.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "memoryForensics.present=true but keyFindings is still empty",
+          "path": "memoryForensics.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": []
+    },
+    {
+      "key": "mixed-mode-interop",
+      "label": "Mixed-mode / COM interop / CLR hosting",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "mixed-mode-interop",
+      "signals": [
+        "cxxcli",
+        "mixedmode",
+        "ijw",
+        "pinvoke",
+        "cominterop",
+        "clrhost"
+      ],
+      "protocol": "references/mixed-mode-interop-playbook.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/mixed-mode-interop.json",
+      "taskInit": {
+        "aliases": [
+          "mixed-mode",
+          "interop"
+        ],
+        "baseProtectionTier": "T1",
+        "combinationProtectionTiers": [
+          {
+            "withTopics": [
+              "dotnet"
+            ],
+            "tier": "T2"
+          },
+          {
+            "withTopics": [
+              "loader-injection"
+            ],
+            "tier": "T2"
+          }
+        ]
+      },
+      "taskSemantics": {
+        "presentPath": "mixedModeInterop.present",
+        "versionPath": "mixedModeInterop.version",
+        "artifactsPath": "mixedModeInterop.artifacts",
+        "minArtifacts": 3,
+        "arrayPaths": [
+          "mixedModeInterop.keyFindings",
+          "mixedModeInterop.bridgeEdges",
+          "mixedModeInterop.hostTypes"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "mixedModeInterop.present",
+        "requirementsAll": [
+          {
+            "message": "mixedModeInterop.present=true but status is still not-started",
+            "path": "mixedModeInterop.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "mixedModeInterop.present=true but keyFindings is still empty",
+            "path": "mixedModeInterop.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "mixedModeInterop.present=true 但 report.md 缺少「Mixed-mode / COM interop / CLR hosting」专题小节",
+            "reportSection": "混合|interop|托管|CLR",
+            "minChars": 120
+          }
+        ],
+        "requirementsAny": [
+          {
+            "message": "mixedModeInterop.present=true 但 report.md 专题小节缺少Mixed-mode / COM interop / CLR hosting的实现/证据细节",
+            "checks": [
+              {
+                "reportSection": "interop|桥|混合|CLR",
+                "minChars": 80
+              }
+            ]
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-mixed-mode-interop-workflow.mjs"
+      ],
+      "templateArtifacts": [
+        "references/templates/interop-hook-template.js"
+      ],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "C++/CLI",
+        "P/Invoke",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/mixed-mode-interop",
+      "requiredSignals": [
+        "cxxcli",
+        "mixedmode",
+        "ijw",
+        "pinvoke",
+        "cominterop",
+        "clrhost"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "mixedModeInterop.present",
+          "equals": true
+        },
+        {
+          "message": "mixedModeInterop.present=true but status is still not-started",
+          "path": "mixedModeInterop.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "mixedModeInterop.present=true but keyFindings is still empty",
+          "path": "mixedModeInterop.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": [
+        "references/templates/interop-hook-template.js"
+      ]
+    },
+    {
+      "key": "packer-unpack",
+      "label": "Packer / OEP / dump / IAT rebuild",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "packer-unpack",
+      "signals": [
+        "packer",
+        "vmp",
+        "vmprotect",
+        "oep",
+        "dump",
+        "iat",
+        "vm entry",
+        "dispatcher",
+        "thunk",
+        "devirtualization",
+        "stub",
+        "rwx"
+      ],
+      "protocol": "references/packers.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/packer-unpack.json",
+      "taskInit": {
+        "aliases": [
+          "unpack"
+        ],
+        "baseProtectionTier": "T0",
+        "combinationProtectionTiers": []
+      },
+      "taskSemantics": {
+        "presentPath": "packerUnpack.present",
+        "versionPath": "packerUnpack.version",
+        "artifactsPath": "packerUnpack.artifacts",
+        "minArtifacts": 2,
+        "arrayPaths": [
+          "packerUnpack.keyFindings"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "packerUnpack.present",
+        "requirementsAll": [
+          {
+            "message": "packerUnpack.present=true but status is still not-started",
+            "path": "packerUnpack.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "packerUnpack.present=true but keyFindings is still empty",
+            "path": "packerUnpack.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "packerUnpack.present=true 但 report.md 缺少「Packer / OEP / dump / IAT rebuild」专题小节",
+            "reportSection": "脱壳|Unpack|OEP",
+            "minChars": 120
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-packer-unpack-workflow.mjs"
+      ],
+      "templateArtifacts": [
+        "artifacts/tasks/_TEMPLATE/topic-packs/packer-unpack/run/dump-manifest.json",
+        "artifacts/tasks/_TEMPLATE/topic-packs/packer-unpack/run/crash-diagnostics.md"
+      ],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards",
+            "validatePackerUnpackEvidence",
+            "toolRoutes",
+            "specialRegisters"
+          ]
+        },
+        {
+          "path": "references/vmp-unpack-playbook.md",
+          "needles": [
+            "Runtime 依赖分类",
+            "工具路线矩阵",
+            "run/crash-diagnostics.md"
+          ]
+        },
+        {
+          "path": "references/vmp-devirt-playbook.md",
+          "needles": [
+            "specialRegisters",
+            "VRLIMIT",
+            "handlerSegmentation",
+            "blackbox-boundary"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "OEP",
+        "IAT",
+        "run/dump-manifest.json",
+        "run/crash-diagnostics.md",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/packer-unpack",
+      "requiredSignals": [
+        "packer",
+        "vmp",
+        "vmprotect",
+        "oep",
+        "dump",
+        "iat",
+        "vm entry",
+        "dispatcher",
+        "thunk",
+        "devirtualization",
+        "stub",
+        "rwx"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "packerUnpack.present",
+          "equals": true
+        },
+        {
+          "message": "packerUnpack.present=true but status is still not-started",
+          "path": "packerUnpack.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "packerUnpack.present=true but keyFindings is still empty",
+          "path": "packerUnpack.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": [
+        "run/crash-diagnostics.md",
+        "run/dump-manifest.json",
+        "topic-packs/packer-unpack/run/dump-manifest.json",
+        "topic-packs/packer-unpack/run/crash-diagnostics.md"
+      ]
+    },
+    {
+      "key": "protection-bypass",
+      "label": "Anti-tamper / anti-debug bypass / file protection bypass",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "protection-bypass",
+      "signals": [
+        "file-integrity",
+        "integrity-check",
+        "hardware-bp",
+        "direct-syscall",
+        "kernel-callback",
+        "code-vm",
+        "anti-tamper",
+        "anti-dump",
+        "anti-attach",
+        "stolen-bytes",
+        "crc-check",
+        "文件保护",
+        "内存校验",
+        "反篡改",
+        "校验",
+        "闪退",
+        "内核保护"
+      ],
+      "protocol": "references/protection-bypass.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/protection-bypass.json",
+      "taskInit": {
+        "aliases": [
+          "protection-bypass",
+          "anti-tamper"
+        ],
+        "baseProtectionTier": "T2",
+        "combinationProtectionTiers": [
+          {
+            "withTopics": [
+              "anti-analysis"
+            ],
+            "tier": "T3"
+          },
+          {
+            "withTopics": [
+              "exception-runtime"
+            ],
+            "tier": "T3"
+          },
+          {
+            "withTopics": [
+              "loader-injection"
+            ],
+            "tier": "T4"
+          },
+          {
+            "withTopics": [
+              "memory-forensics"
+            ],
+            "tier": "T4"
+          }
+        ]
+      },
+      "taskSemantics": {
+        "presentPath": "protectionBypass.present",
+        "versionPath": "protectionBypass.version",
+        "artifactsPath": "protectionBypass.artifacts",
+        "minArtifacts": 3,
+        "arrayPaths": [
+          "protectionBypass.keyFindings"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "protectionBypass.present",
+        "requirementsAll": [
+          {
+            "message": "protectionBypass.present=true but status is still not-started",
+            "path": "protectionBypass.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "protectionBypass.present=true but keyFindings is still empty",
+            "path": "protectionBypass.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "protectionBypass.present=true 但 report.md 缺少「Anti-tamper / anti-debug bypass / file protection bypass」专题小节",
+            "reportSection": "保护|绕过|patch|bypass|许可|license",
+            "minChars": 120
+          }
+        ],
+        "requirementsAny": [
+          {
+            "message": "protectionBypass.present=true 但 report.md 专题小节缺少Anti-tamper / anti-debug bypass / file protection bypass的实现/证据细节",
+            "checks": [
+              {
+                "reportSection": "绕过|bypass|patch|hook",
+                "minChars": 80
+              }
+            ]
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-protection-bypass-workflow.mjs"
+      ],
+      "templateArtifacts": [
+        "references/templates/protection-bypass-hook.js",
+        "references/templates/protection-bypass-patch.py"
+      ],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "反篡改",
+        "文件保护",
+        "检测面枚举",
+        "绕过方案",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/protection-bypass",
+      "requiredSignals": [
+        "file-integrity",
+        "integrity-check",
+        "hardware-bp",
+        "direct-syscall",
+        "kernel-callback",
+        "code-vm",
+        "anti-tamper",
+        "anti-dump",
+        "anti-attach",
+        "stolen-bytes",
+        "crc-check",
+        "文件保护",
+        "内存校验",
+        "反篡改",
+        "校验",
+        "闪退",
+        "内核保护"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "protectionBypass.present",
+          "equals": true
+        },
+        {
+          "message": "protectionBypass.present=true but status is still not-started",
+          "path": "protectionBypass.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "protectionBypass.present=true but keyFindings is still empty",
+          "path": "protectionBypass.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": [
+        "references/templates/protection-bypass-hook.js",
+        "references/templates/protection-bypass-patch.py"
+      ]
+    },
+    {
+      "key": "static-triage",
+      "label": "PE triage / imports / resources",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "static-triage",
+      "signals": [
+        "pe",
+        "section",
+        "import",
+        "resource",
+        "rtti",
+        "entrypoint"
+      ],
+      "protocol": "references/static-triage-playbook.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/static-triage.json",
+      "taskInit": {
+        "aliases": [
+          "pe-triage"
+        ],
+        "baseProtectionTier": "T0",
+        "combinationProtectionTiers": []
+      },
+      "taskSemantics": {
+        "presentPath": "staticTriage.present",
+        "versionPath": "staticTriage.version",
+        "artifactsPath": "staticTriage.artifacts",
+        "minArtifacts": 2,
+        "arrayPaths": [
+          "staticTriage.keyFindings"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "staticTriage.present",
+        "requirementsAll": [
+          {
+            "message": "staticTriage.present=true but status is still not-started",
+            "path": "staticTriage.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "staticTriage.present=true but keyFindings is still empty",
+            "path": "staticTriage.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "staticTriage.present=true 但 report.md 缺少「PE triage / imports / resources」专题小节",
+            "reportSection": "静态分诊|static.?triage|导入表",
+            "minChars": 120
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-static-triage-workflow.mjs"
+      ],
+      "templateArtifacts": [],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "PE",
+        "导入",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/static-triage",
+      "requiredSignals": [
+        "pe",
+        "section",
+        "import",
+        "resource",
+        "rtti",
+        "entrypoint"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "staticTriage.present",
+          "equals": true
+        },
+        {
+          "message": "staticTriage.present=true but status is still not-started",
+          "path": "staticTriage.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "staticTriage.present=true but keyFindings is still empty",
+          "path": "staticTriage.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": []
+    },
+    {
+      "key": "tls-network",
+      "label": "TLS / network / protocol",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "tls-network",
+      "signals": [
+        "winhttp",
+        "wininet",
+        "schannel",
+        "openssl",
+        "socket",
+        "tls"
+      ],
+      "protocol": "references/tls-network-playbook.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/tls-network.json",
+      "taskInit": {
+        "aliases": [
+          "network"
+        ],
+        "baseProtectionTier": "T0",
+        "combinationProtectionTiers": []
+      },
+      "taskSemantics": {
+        "presentPath": "tlsNetwork.present",
+        "versionPath": "tlsNetwork.version",
+        "artifactsPath": "tlsNetwork.artifacts",
+        "minArtifacts": 2,
+        "arrayPaths": [
+          "tlsNetwork.keyFindings"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "tlsNetwork.present",
+        "requirementsAll": [
+          {
+            "message": "tlsNetwork.present=true but status is still not-started",
+            "path": "tlsNetwork.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "tlsNetwork.present=true but keyFindings is still empty",
+            "path": "tlsNetwork.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "tlsNetwork.present=true 但 report.md 缺少「TLS / network / protocol」专题小节",
+            "reportSection": "TLS|网络",
+            "minChars": 120
+          }
+        ],
+        "requirementsAny": [
+          {
+            "message": "tlsNetwork.present=true 但 report.md 专题小节缺少TLS / network / protocol的实现/证据细节",
+            "checks": [
+              {
+                "reportSection": "TLS|hook|协议",
+                "minChars": 80
+              }
+            ]
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-tls-network-workflow.mjs"
+      ],
+      "templateArtifacts": [
+        "references/templates/tls-hook-template.js"
+      ],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "TLS",
+        "网络栈",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/tls-network",
+      "requiredSignals": [
+        "winhttp",
+        "wininet",
+        "schannel",
+        "openssl",
+        "socket",
+        "tls"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "tlsNetwork.present",
+          "equals": true
+        },
+        {
+          "message": "tlsNetwork.present=true but status is still not-started",
+          "path": "tlsNetwork.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "tlsNetwork.present=true but keyFindings is still empty",
+          "path": "tlsNetwork.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": [
+        "references/templates/tls-hook-template.js"
+      ]
+    },
+    {
+      "key": "ui-runtime",
+      "label": "UI runtime / WndProc / dialog flow",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "ui-runtime",
+      "signals": [
+        "wndproc",
+        "dialog",
+        "user32",
+        "message",
+        "subclass",
+        "custom-control"
+      ],
+      "protocol": "references/ui.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/ui-runtime.json",
+      "taskInit": {
+        "aliases": [
+          "wndproc"
+        ],
+        "baseProtectionTier": "T0",
+        "combinationProtectionTiers": []
+      },
+      "taskSemantics": {
+        "presentPath": "uiRuntime.present",
+        "versionPath": "uiRuntime.version",
+        "artifactsPath": "uiRuntime.artifacts",
+        "minArtifacts": 2,
+        "arrayPaths": [
+          "uiRuntime.keyFindings"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "uiRuntime.present",
+        "requirementsAll": [
+          {
+            "message": "uiRuntime.present=true but status is still not-started",
+            "path": "uiRuntime.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "uiRuntime.present=true but keyFindings is still empty",
+            "path": "uiRuntime.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "uiRuntime.present=true 但 report.md 缺少「UI runtime / WndProc / dialog flow」专题小节",
+            "reportSection": "UI|消息流|消息",
+            "minChars": 120
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-ui-runtime-workflow.mjs"
+      ],
+      "templateArtifacts": [],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "WndProc",
+        "消息",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/ui-runtime",
+      "requiredSignals": [
+        "wndproc",
+        "dialog",
+        "user32",
+        "message",
+        "subclass",
+        "custom-control"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "uiRuntime.present",
+          "equals": true
+        },
+        {
+          "message": "uiRuntime.present=true but status is still not-started",
+          "path": "uiRuntime.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "uiRuntime.present=true but keyFindings is still empty",
+          "path": "uiRuntime.keyFindings",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": []
+    },
+    {
+      "key": "web-shell-triage",
+      "label": "Web shell / WebView runtime fingerprinting",
+      "maturity": "synthetic-e2e",
+      "routeTrack": "web-shell-triage",
+      "signals": [
+        "electron",
+        "cef",
+        "webview2",
+        "tauri",
+        "wails",
+        "nwjs",
+        "asar",
+        "webview"
+      ],
+      "protocol": "references/web-shell-triage.md",
+      "taskModelFile": "artifacts/tasks/_TEMPLATE/extensions/web-shell-triage.json",
+      "taskInit": {
+        "aliases": [
+          "web-shell",
+          "webview-shell",
+          "electron-shell"
+        ],
+        "baseProtectionTier": "T0",
+        "combinationProtectionTiers": [
+          {
+            "withTopics": [
+              "tls-network"
+            ],
+            "tier": "T1"
+          },
+          {
+            "withTopics": [
+              "config-recovery"
+            ],
+            "tier": "T1"
+          },
+          {
+            "withTopics": [
+              "anti-analysis"
+            ],
+            "tier": "T2"
+          }
+        ]
+      },
+      "taskSemantics": {
+        "presentPath": "webShellTriage.present",
+        "versionPath": "webShellTriage.version",
+        "artifactsPath": "webShellTriage.artifacts",
+        "minArtifacts": 2,
+        "arrayPaths": [
+          "webShellTriage.keyFindings",
+          "webShellTriage.probableRuntimes",
+          "webShellTriage.probableFrontend",
+          "webShellTriage.probablePackagers",
+          "webShellTriage.entryHints",
+          "webShellTriage.downstreamTopics"
+        ]
+      },
+      "formalValidation": {
+        "presentPath": "webShellTriage.present",
+        "requirementsAll": [
+          {
+            "message": "webShellTriage.present=true but status is still not-started",
+            "path": "webShellTriage.status",
+            "disallow": [
+              "not-started"
+            ]
+          },
+          {
+            "message": "webShellTriage.present=true but keyFindings is still empty",
+            "path": "webShellTriage.keyFindings",
+            "minLength": 1
+          },
+          {
+            "message": "webShellTriage.present=true but downstreamTopics is still empty",
+            "path": "webShellTriage.downstreamTopics",
+            "minLength": 1
+          },
+          {
+            "message": "webShellTriage.present=true 但 report.md 缺少「Web shell / WebView runtime fingerprinting」专题小节",
+            "reportSection": "套壳|WebView|Electron|web.?shell",
+            "minChars": 120
+          }
+        ],
+        "requirementsAny": [
+          {
+            "message": "webShellTriage.present=true but probableRuntimes/probableFrontend/probablePackagers are all empty",
+            "checks": [
+              {
+                "path": "webShellTriage.probableRuntimes",
+                "minLength": 1
+              },
+              {
+                "path": "webShellTriage.probableFrontend",
+                "minLength": 1
+              },
+              {
+                "path": "webShellTriage.probablePackagers",
+                "minLength": 1
+              }
+            ]
+          }
+        ]
+      },
+      "caseFiles": [
+        "scripts/cases/win-web-shell-triage-workflow.mjs"
+      ],
+      "templateArtifacts": [
+        "artifacts/tasks/_TEMPLATE/topic-packs/web-shell-triage/run/web-shell-tech.json"
+      ],
+      "qaFiles": [
+        {
+          "path": "tools/task/validation.mjs",
+          "needles": [
+            "evaluateTopicFormalValidation",
+            "evaluateTopicPhaseGuards"
+          ]
+        }
+      ],
+      "outputNeedles": [
+        "web-shell-triage",
+        "wrapper/runtime",
+        "run/web-shell-tech.json",
+        "report.md 专题发现"
+      ],
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [
+        "check:topic-manifests",
+        "check:capability-coverage",
+        "check:operating-contracts",
+        "check:deliverables"
+      ],
+      "taskPackDir": "artifacts/tasks/_TEMPLATE/topic-packs/web-shell-triage",
+      "requiredSignals": [
+        "electron",
+        "cef",
+        "webview2",
+        "tauri",
+        "wails",
+        "nwjs",
+        "asar",
+        "webview"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [
+        {
+          "path": "webShellTriage.present",
+          "equals": true
+        },
+        {
+          "message": "webShellTriage.present=true but status is still not-started",
+          "path": "webShellTriage.status",
+          "disallow": [
+            "not-started"
+          ]
+        },
+        {
+          "message": "webShellTriage.present=true but keyFindings is still empty",
+          "path": "webShellTriage.keyFindings",
+          "minLength": 1
+        },
+        {
+          "message": "webShellTriage.present=true but downstreamTopics is still empty",
+          "path": "webShellTriage.downstreamTopics",
+          "minLength": 1
+        },
+        {
+          "path": "webShellTriage.probableRuntimes",
+          "minLength": 1
+        },
+        {
+          "path": "webShellTriage.probableFrontend",
+          "minLength": 1
+        },
+        {
+          "path": "webShellTriage.probablePackagers",
+          "minLength": 1
+        }
+      ],
+      "taskPackFiles": [
+        "run/web-shell-tech.json",
+        "topic-packs/web-shell-triage/run/web-shell-tech.json"
+      ]
+    },
+    {
+      "key": "ctf",
+      "label": "Windows CTF / crackme solving",
+      "maturity": "reference-only",
+      "routeTrack": "ctf",
+      "signals": [
+        "ctf",
+        "crackme",
+        "keygen",
+        "z3",
+        "angr",
+        "flag"
+      ],
+      "protocol": "references/ctf.md",
+      "taskInit": {
+        "aliases": [
+          "windows-ctf",
+          "crackme"
+        ],
+        "baseProtectionTier": "T1",
+        "combinationProtectionTiers": []
+      },
+      "owner": "win-reverse-core",
+      "riskLevel": "medium",
+      "requiredChecks": [],
+      "requiredSignals": [
+        "ctf",
+        "crackme",
+        "keygen",
+        "z3",
+        "angr",
+        "flag"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [],
+      "taskPackFiles": []
+    },
+    {
+      "key": "game-reverse",
+      "label": "Windows game reverse engineering",
+      "maturity": "reference-only",
+      "routeTrack": "game-reverse",
+      "signals": [
+        "ue4",
+        "ue5",
+        "unity",
+        "il2cpp",
+        "cocos",
+        "gobjects",
+        "gnames",
+        "anti-cheat"
+      ],
+      "protocol": "references/game-reverse.md",
+      "taskInit": {
+        "aliases": [
+          "game",
+          "ue",
+          "unity-game"
+        ],
+        "baseProtectionTier": "T3",
+        "combinationProtectionTiers": []
+      },
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [],
+      "requiredSignals": [
+        "ue4",
+        "ue5",
+        "unity",
+        "il2cpp",
+        "cocos",
+        "gobjects",
+        "gnames",
+        "anti-cheat"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [],
+      "taskPackFiles": []
+    },
+    {
+      "key": "malware-analysis",
+      "label": "Windows malware analysis",
+      "maturity": "reference-only",
+      "routeTrack": "malware-analysis",
+      "signals": [
+        "malware",
+        "ransomware",
+        "rat",
+        "rootkit",
+        "stealer",
+        "miner",
+        "ioc"
+      ],
+      "protocol": "references/malware-analysis.md",
+      "taskInit": {
+        "aliases": [
+          "malware",
+          "ransomware",
+          "ioc"
+        ],
+        "baseProtectionTier": "T3",
+        "combinationProtectionTiers": []
+      },
+      "owner": "win-reverse-core",
+      "riskLevel": "high",
+      "requiredChecks": [],
+      "requiredSignals": [
+        "malware",
+        "ransomware",
+        "rat",
+        "rootkit",
+        "stealer",
+        "miner",
+        "ioc"
+      ],
+      "requiredArtifacts": [],
+      "requiredTaskFlags": [],
+      "taskPackFiles": []
+    }
+  ]
+}

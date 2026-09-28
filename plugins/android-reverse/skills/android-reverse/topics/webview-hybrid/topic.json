@@ -1,0 +1,22 @@
+{
+  "key": "webview-hybrid",
+  "label": "WebView / hybrid bridge / JS-Native boundary",
+  "routeTrack": "webview-hybrid",
+  "signals": [
+    "webview",
+    "addjavascriptinterface",
+    "evaluatejavascript",
+    "hybrid",
+    "webchromeclient"
+  ],
+  "protocol": "references/webview-hybrid-playbook.md",
+  "caseFiles": [
+    "scripts/cases/android-webview-hybrid-workflow.mjs"
+  ],
+  "owner": "android-reverse-core",
+  "riskLevel": "medium",
+  "references": [
+    "artifacts/tasks/_TEMPLATE/run/webview-bridge-notes.md"
+  ],
+  "historicalMaturity": "closed-loop"
+}
