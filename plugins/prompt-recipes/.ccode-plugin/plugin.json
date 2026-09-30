@@ -1,0 +1,11 @@
+{
+  "name": "prompt-recipes",
+  "version": "0.1.0",
+  "description": "Recommended system-prompt snippets for the editable CCode prompt segments.",
+  "author": {
+    "name": "JnmHub"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/JnmHub/jnmhub-ccode-market",
+  "prompts": "prompts"
+}
