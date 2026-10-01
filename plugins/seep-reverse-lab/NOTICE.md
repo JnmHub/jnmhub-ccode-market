@@ -60,9 +60,12 @@ Tool/skill/safe-skills/reverse-engineering/SKILL.md     license: MIT
 ## CCode 集成方式
 
 - `.ccode-plugin/plugin.json` 的 `skills` 声明了两个扫描根：`Tool/skill` 与
-  `Tool/skill/safe-skills`（CCode 对每个根只扫一层，`safe-skills` 下的 5 个包需要单独声明）。
-  上游另有更深层的 `SKILL.md`（在 `Tool/mcp/**`、`Tool/upstream/**` 内），**故意未注册**为技能，
-  避免引入无关的第三方技能名。
+  `Tool/skill/safe-skills`。**两个都必须写**，因为客户端有两套扫描：UI 侧（桌面 services，
+  `walkSkillMarkdownPaths`）是**递归**的，agent 侧（`adapters/src/skills/scan.ts` 的
+  `scanSkillFilesUnderRootSync`）是**单层**的（根本身 + 直接子目录）。
+  单层那套只有声明了子根才能看到 `safe-skills` 下的 5 个（它们的 `SKILL.md` 在下一层）；
+  **删掉子根声明会让 agent 侧从 9 掉到 4**。上游另有更深层的 `SKILL.md`
+  （在 `Tool/mcp/**`、`Tool/upstream/**` 内），**故意未注册**为技能，避免引入无关的第三方技能名。
 - `.mcp.json` 由 CCode 从插件根自动读取，其 `command`/`args`/`env` 支持 `${CCODE_PLUGIN_ROOT}`。
 - 部分技能文件带 UTF-8 BOM（`Tool/skill/safe-skills/{apk-reverse,ida-reverse,radare2}/SKILL.md`）。
   CCode 的 frontmatter 解析会剥离 BOM，可正常读取；此处保留原文未动。
@@ -183,3 +186,23 @@ pip install mcp            # 或：python -m pip install mcp
 
 - Windows：`setup/install.ps1`
 - Linux / macOS：`setup/install.sh`
+
+## 客户端侧两个缺陷会让技能页「只显示一半」（已修；留档 + 绕开办法）
+
+在 CCode 二开版上实测到：技能页曾只列出本插件的 **5** 个技能，且其中 `apk-reverse` /
+`ida-reverse` / `radare2` 显示成**目录名**（而不是 frontmatter 里的 `seep-safe-*`），
+全程**不产生任何诊断**。原因是客户端，不在本插件：
+
+1. 同时声明父根与子根时，客户端把**父根**当成「被更深根完全覆盖的祖先目录」丢掉 ⇒
+   父根下 4 个（`softseep` / `apkseep` / `seep-ida-reverse` /
+   `client-license-validation-bypass`）全部消失；
+2. frontmatter 解析不剥 UTF-8 BOM ⇒ 带 BOM 的 3 个技能名退化成目录名。
+
+二开版已修（覆盖判定改为「只丢可证明被祖先递归遍历覆盖的子根」，并补上 BOM 剥离）。
+
+**上游 `zai-org/ZCode` 未修。但不要靠改 `skills` 声明去绕**：实测（同一份 fixture）
+只声明父根 `["Tool/skill"]` 时，修复前的 UI 侧确实能拿到全部技能，可 agent 侧是**单层**扫描，
+会从 9 掉到 4 —— 拿一个面的正确去换另一个面的错误，不划算。正确做法是修客户端那两处。
+
+命令行侧本来就看不到这两个 bug：`ccode plugins list` 一直报 `skills: 9`
+（单层扫描 × 两个根：`Tool/skill` 出 4 个、`Tool/skill/safe-skills` 出 5 个）。
