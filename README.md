@@ -37,7 +37,7 @@ tools/
 | `shiyi-executor` | 同名 | 石井执行器：大白话需求路由 + 阶段化交付 + 拒绝自愈 |
 | `shiyi-pentest-gate` | 同名 | 渗透授权归一化：自有/SRC/CTF/客户授权判定后执行 |
 | `zzy-reverse-skill` | 60+ 子技能 | 第三方整包（MIT，zhaoxuya520/reverse-skill）；撞名技能发布为 `zzy-ida-reverse` / `zzy-reverse-engineering` |
-| `seep-reverse-lab` | 9 技能 + MCP | 第三方整包（GPL-3.0，angusdevgo/Seep-Reverse-Lab）；含内置工具链与 `seep` MCP server，5 个撞名技能加 `seep-` 前缀 |
+| `seep-reverse-lab` | 9 技能 + 12 命令 + MCP | 第三方整包（GPL-3.0，angusdevgo/Seep-Reverse-Lab）；含内置工具链与 `seep` MCP server，5 个撞名技能加 `seep-` 前缀 |
 
 除 `zzy-reverse-skill` 与 `seep-reverse-lab`（一插件多技能，见各自 `plugin.json` 的 `skills` 数组）外，其余都是**单技能插件**。
 CCode 技能扫描：只扫一层、符号链接不跟随、同名去重；细节见 CCode 的 `skills/scan.ts`。

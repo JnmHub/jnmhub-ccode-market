@@ -341,7 +341,7 @@
         "zh-CN": "angusdevgo/Seep-Reverse-Lab（GPL-3.0）的整包收录：AI 原生逆向工作台——softseep 总控按大白话判型分发、apkseep 做 Android APK/DEX/SO 全链路、客户端授权校验走查、IDA Pro 自动化、五个工具链技能，以及 23 工具的 seep MCP server + 183+ 攻防知识库。5 个技能名加前缀以便与本市场其他插件同装。"
       },
       "category": "developer-tools",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "angusdevgo",
       "homepage": "https://github.com/angusdevgo/Seep-Reverse-Lab",
       "source": "seep-reverse-lab",

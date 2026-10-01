@@ -1,6 +1,6 @@
 {
   "name": "seep-reverse-lab",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Seep Reverse Lab — AI-native reverse-engineering workbench for CCode: a softseep orchestrator that routes plain-language requests, apkseep for Android APK/DEX/SO work, a client-side license/authorization validation track, an IDA Pro automation skill, plus five bundled toolchain skills (jadx/radare2/apktool/Frida playbooks) and a 23-tool `seep` MCP server with a 183+ technique knowledge base. — Seep 逆向工作台：softseep 总控按大白话判型分发，apkseep 做 Android APK/DEX/SO 全链路，含客户端授权校验走查、IDA Pro 自动化技能、五个工具链技能（jadx/radare2/apktool/Frida）与 23 工具的 seep MCP server + 183+ 攻防知识库。",
   "author": {
     "name": "angusdevgo",
@@ -8,6 +8,7 @@
   },
   "license": "GPL-3.0",
   "homepage": "https://github.com/angusdevgo/Seep-Reverse-Lab",
+  "commands": "commands",
   "skills": [
     "Tool/skill",
     "Tool/skill/safe-skills"

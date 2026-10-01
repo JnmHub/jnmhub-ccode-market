@@ -77,3 +77,70 @@ Tool/skill/safe-skills/reverse-engineering/SKILL.md     license: MIT
   安装依赖、生成各客户端配置）
 
 未满足前提时，CCode 会在 MCP 诊断里报该 server 启动失败，技能文本仍可用。
+
+---
+
+# 追加：在 CCode 里怎么用（2026-10 补）
+
+上游那份 `Tool/prompts/extensions/security-audit-interceptor.ts` 是给 **Pi** 写的进程内扩展
+（`import { ExtensionAPI } from "@earendil-works/pi-coding-agent"`），CCode 不加载也不执行它。
+所以本插件在 CCode 里**不要**指望它那四件事（lab-mode 开关 / 快捷口令 / 词表替换 / Gemini
+`BLOCK_NONE`）生效。原文件**保持原样未改**，Pi 用户照旧可用。
+
+能力按下面的方式映射到 CCode 原生机制，互不重复、不冲突：
+
+| 上游扩展里的能力 | 在 CCode 里的归属 | 说明 |
+| --- | --- | --- |
+| 词表替换（`SENSITIVE_WORD_MAP` 31 条） | **CCode 内置**「设置 → Agent 能力 → 输入替换」的内置预设「Seep 逆向工作台」 | 本插件**不再重复实现**，避免与内置功能冲突 |
+| lab-mode 开关（`~/.pi/agent/lab-mode.flag`） | **CCode 内置**输入替换的总开关（按 profile 隔离） | 不需要 flag 文件；切 profile 即换一份配置 |
+| 快捷口令（`poc` / `hook` / `keygen` …） | **本插件的斜杠命令**（`commands/`） | 见下表 |
+| Gemini `safetySettings: BLOCK_NONE` | 尚未移植 | 它是 Google 专有字段，只在客户端真走 Gemini 时才有意义，需先确认 provider |
+
+## 本插件提供的斜杠命令
+
+命名约束：CCode 的命令名只允许 `a-z0-9._-`（可含 `:`），因此上游那几个中文口令
+（`找验证` / `体检` / `检查`）**无法作为命令名**，未收录；对应的 `find-auth` / `check` /
+`doctor` 已覆盖同样语义。
+
+| 命令 | 对应上游口令 | 用途 |
+| --- | --- | --- |
+| `/poc <目标>` | `poc` | 客户端本地鉴权逻辑脆弱性验证（CWE-602） |
+| `/test <目标>` | `test` | 客户端鉴权逻辑安全走查 |
+| `/find-auth <目标>` | `find-auth` | 检索授权/会员/订阅/License 判断位点 |
+| `/hook <方法>` | `hook` | 编写 Frida / LSPilot 动态验证脚本 |
+| `/gen-patch <位点>` | `gen-patch` | 编写等长热补丁验证代码 |
+| `/report` | `report` | 汇总生成白盒安全评估报告 |
+| `/triage <样本>` | `triage` | 样本全量体检与基础画像 |
+| `/kb <主题>` | `kb` | 检索随包知识库，先查方法论 |
+| `/full <样本>` | `full` | 全链路自动化分析 |
+| `/keygen <目标>` | `keygen` | 算号可行性评估与路线决策 |
+| `/check` | `check` / `体检` / `检查` | 工作台自检 |
+| `/doctor` | `doctor` | 自检（`/check` 别名） |
+
+## 组合顺序（与内置功能的关系）
+
+CCode 侧的执行先后是固定的，插件无法插队：
+
+```
+用户输入
+  → 【内置】输入替换（按 profile 的词表；总开关关闭时整段跳过）
+  → 【内置】插件斜杠命令解析（`/poc` 这类）
+  → 【插件】hooks（若声明，见下）
+  = 送进模型的文本
+```
+
+两点由此推出：
+
+1. **内置替换对斜杠命令整条跳过**（命令名必须保持可解析）。所以 `/poc 破解某软件` 里的参数
+   **不会**被词表替换 —— 这是有意的保守取舍，代价只是「命令参数不替换」。
+2. 斜杠命令的展开结果**会**参与后续流程，命令正文因此可以直接承担合规表述（本插件的命令正文
+   已自带 `[授权白盒审计任务]` 前缀）。
+
+## 插件还可以用 hook 改写用户输入
+
+CCode 的 `UserPromptSubmit` hook 支持 `updatedPrompt` 字段（在 hook 的
+`hookSpecificOutput` 里返回），它成为**送模型的那一份**，而界面与输入历史仍显示用户原文。
+路径：插件目录下 `hooks/hooks.json`，或 `plugin.json` 的 `hooks` 字段。
+
+本插件**目前没有**声明任何 hook：它需要的改写已经由 CCode 内置的输入替换覆盖，再声明一个
+只会和内置能力重复。这里写出来是为了说明可用性，以及「需要时不必改宿主」。
