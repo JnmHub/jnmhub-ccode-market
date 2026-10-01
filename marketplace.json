@@ -330,28 +330,6 @@
       ]
     },
     {
-      "name": "prompt-recipes",
-      "displayName": "Prompt Recipes",
-      "displayName_i18n": {
-        "zh-CN": "推荐提示词模板"
-      },
-      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/prompt-recipes/icon.png",
-      "description": "Ready-to-use system-prompt snippets for the editable CCode prompt segments. Each recipe declares which segment it belongs to and ships a title plus a one-line intro, so it can be picked and applied in one click.",
-      "description_i18n": {
-        "zh-CN": "可直接套用的系统提示词片段集合，对应 CCode「系统提示词」页里可编辑的那几段。每条模板声明自己属于哪一段，并带标题与一句介绍词，选中即可一键填入该段编辑框。"
-      },
-      "category": "developer-tools",
-      "version": "0.1.0",
-      "author": "JnmHub",
-      "homepage": "https://github.com/JnmHub/jnmhub-ccode-market",
-      "source": "prompt-recipes",
-      "tags": [
-        "prompt",
-        "template",
-        "system-prompt"
-      ]
-    },
-    {
       "name": "seep-reverse-lab",
       "displayName": "Seep Reverse Lab",
       "displayName_i18n": {
