@@ -350,6 +350,29 @@
         "template",
         "system-prompt"
       ]
+    },
+    {
+      "name": "seep-reverse-lab",
+      "displayName": "Seep Reverse Lab",
+      "displayName_i18n": {
+        "zh-CN": "Seep 逆向工作台"
+      },
+      "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/seep-reverse-lab/icon.png",
+      "description": "Whole-package redistribution of angusdevgo/Seep-Reverse-Lab (GPL-3.0): an AI-native reverse-engineering workbench — a softseep orchestrator that routes plain-language requests, apkseep for Android APK/DEX/SO end-to-end work, a client-side license/authorization validation track, IDA Pro automation, five bundled toolchain skills plus a 23-tool `seep` MCP server over a 183+ technique knowledge base. Five skill names are prefixed to coexist with this market's other plugins.",
+      "description_i18n": {
+        "zh-CN": "angusdevgo/Seep-Reverse-Lab（GPL-3.0）的整包收录：AI 原生逆向工作台——softseep 总控按大白话判型分发、apkseep 做 Android APK/DEX/SO 全链路、客户端授权校验走查、IDA Pro 自动化、五个工具链技能，以及 23 工具的 seep MCP server + 183+ 攻防知识库。5 个技能名加前缀以便与本市场其他插件同装。"
+      },
+      "category": "developer-tools",
+      "version": "1.0.0",
+      "author": "angusdevgo",
+      "homepage": "https://github.com/angusdevgo/Seep-Reverse-Lab",
+      "source": "seep-reverse-lab",
+      "tags": [
+        "reverse-engineering",
+        "mcp",
+        "ida",
+        "apk"
+      ]
     }
   ]
 }
