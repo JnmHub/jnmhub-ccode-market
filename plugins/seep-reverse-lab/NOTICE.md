@@ -144,3 +144,42 @@ CCode 的 `UserPromptSubmit` hook 支持 `updatedPrompt` 字段（在 hook 的
 
 本插件**目前没有**声明任何 hook：它需要的改写已经由 CCode 内置的输入替换覆盖，再声明一个
 只会和内置能力重复。这里写出来是为了说明可用性，以及「需要时不必改宿主」。
+
+---
+
+# 追加：安装后的实测结果与必须补的前置条件
+
+用 CCode 自带 CLI 走了一遍真实安装（隔离数据根，非模拟）：
+
+```
+ccode plugins marketplace add D:\code\jnmhub-ccode-market   → Added marketplace jnmhub-ccode-market (16 plugins)
+ccode plugins install seep-reverse-lab@jnmhub-ccode-market  → Installed (1.1.0) [enabled]
+ccode plugins list                                          → skills: 9, mcp: plugin:seep-reverse-lab:seep, plugin:seep-reverse-lab:js-reverse
+ccode commands                                              → Custom commands (12)：/check /doctor /find-auth /full /gen-patch
+                                                              /hook /kb /keygen /poc /report /test /triage
+```
+
+即：**9 个技能、12 条斜杠命令、2 个 MCP server** 都被正确识别，版本 1.1.0 从市场条目正确读出。
+`ccode plugins validate` 对本包与整个市场均通过。
+
+## ⚠️ `seep` MCP 在装好 Python 依赖前会启动失败
+
+`seep` server 是 Python 进程（`Tool/mcp/seep_mcp_server.py`）。它只依赖标准库 + **`mcp` 包**，
+而该包不在 Python 标准库里。**本机实测：Python 3.12.10 在，`mcp` 包未安装** ⇒ 首次启用插件时
+CCode 会报这个 MCP 启动失败（技能与命令不受影响，仍可用）。
+
+补齐：
+
+```bash
+pip install mcp            # 或：python -m pip install mcp
+```
+
+另外 `js-reverse` server 走 `npx -y js-reverse-mcp`，需要 Node 与网络。
+
+## 内置工具链需要先解压
+
+`Tool/mcp/Tool/safe/` 下的 jadx / radare2 / apktool / ida-pro-mcp / js-reverse-mcp / playwright-mcp
+以 `.zip` / `.jar` 形式随包分发，未解压。用到相应能力前，先在插件目录里跑上游安装脚本：
+
+- Windows：`setup/install.ps1`
+- Linux / macOS：`setup/install.sh`
