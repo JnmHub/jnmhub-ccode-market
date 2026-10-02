@@ -1,0 +1,57 @@
+{
+  "name": "ui-slot-demo",
+  "version": "0.1.0",
+  "description": "插件 UI 插槽（沙箱视图）的参考实现：演示 ui.views / permissions / 白名单桥、越界拒绝与只读设置。开发用，未列入 market.json。",
+  "author": "CCode fork",
+  "permissions": ["ui.view", "ui.settings.read"],
+  "userConfig": {
+    "greeting": {
+      "type": "string",
+      "default": "你好，插件视图",
+      "title": "问候语",
+      "description": "非敏感项：视图页通过 plugin.getSettings 能读到。"
+    },
+    "refreshSeconds": {
+      "type": "number",
+      "default": 30,
+      "title": "刷新间隔（秒）",
+      "description": "演示数值型 userConfig 也能回给页面。"
+    },
+    "apiToken": {
+      "type": "string",
+      "sensitive": true,
+      "title": "API Token",
+      "description": "敏感项：只有声明了 ui.settings.read 才会回给视图页，否则键名出现在 withheld 里。"
+    }
+  },
+  "ui": {
+    "views": [
+      {
+        "id": "dashboard",
+        "title": "插槽演示",
+        "icon": "sparkles",
+        "entry": "views/dashboard.html",
+        "order": 1
+      },
+      {
+        "id": "sandbox",
+        "title": "沙箱与桥自检",
+        "icon": "shield",
+        "entry": "views/sandbox.html",
+        "order": 2
+      }
+    ],
+    "detailSections": [
+      {
+        "title": "这是什么",
+        "text": "一个不发布到市场的参考插件：它声明了两个 ui.views，宿主侧栏的「+」菜单里会出现两个入口。页面本身跑在主进程持有的沙箱 WebContentsView 里，能看到的能力只有 5 个只读方法。",
+        "order": 1
+      },
+      {
+        "title": "怎么用它验插槽",
+        "text": "打开侧栏「+」→「插槽演示」：页面会逐项打印插件身份、主题、设置、读自己根内的文件，并尝试读一个越界路径（应当被拒绝）。第二个入口展示沙箱边界自检。",
+        "order": 2
+      }
+    ]
+  }
+}

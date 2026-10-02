@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'" />
+    <title>插件 UI 插槽 · 沙箱视图演示</title>
+    <link rel="stylesheet" href="view.css" />
+    <script src="view.js"></script>
+  </head>
+  <body>
+    <h1>插件 UI 插槽 · 沙箱视图演示</h1>
+    <div class="sub">
+      本页是 <code>ui-slot-demo</code> 插件声明的
+      <code>ui.views[0]</code>。页面跑在宿主主进程创建的沙箱
+      WebContentsView 里，通过 <code>ccode-plugin://</code> 加载。
+    </div>
+
+    <div class="card">
+      <h2>1 · 我是谁（桥：plugin.getInfo）</h2>
+      <dl>
+        <dt>插件 id</dt><dd id="info-id">…</dd>
+        <dt>展示名</dt><dd id="info-name">…</dd>
+        <dt>版本</dt><dd id="info-version">…</dd>
+        <dt>市场</dt><dd id="info-marketplace">…</dd>
+        <dt>视图 id</dt><dd id="info-view">…</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2>2 · 跟随宿主主题（桥：theme.get）</h2>
+      <dl>
+        <dt>appearance</dt><dd id="theme-appearance">…</dd>
+      </dl>
+      <div class="note">宿主切换明/暗之后重新打开这个标签即可看到本页跟着变。</div>
+    </div>
+
+    <div class="card">
+      <h2>3 · 读插件设置（桥：plugin.getSettings）</h2>
+      <dl>
+        <dt>values</dt><dd id="settings-values">…</dd>
+        <dt>withheld</dt><dd id="settings-withheld">…</dd>
+      </dl>
+      <div class="note">
+        <code>apiToken</code> 标了 sensitive：本插件声明了
+        <code>ui.settings.read</code>，所以它在 values 里；
+        把权限去掉就会出现在 withheld 里。
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4 · 读插件根内的文件（桥：plugin.readText）</h2>
+      <dl>
+        <dt>demo-data.txt</dt><dd id="root-read-status">…</dd>
+      </dl>
+      <pre id="root-read-body">…</pre>
+    </div>
+
+    <div class="card">
+      <h2>5 · 越界必须被拒（负向自检）</h2>
+      <div class="rows" id="boundary-rows"></div>
+      <div class="note">
+        这几条是**故意**越界的读取。页面上「拒绝」才是正确结果：主进程会在 realpath 之后
+        再判一次"是否仍在插件根内"，所以软链/junction 也绕不过去；含 <code>..</code> 的路径
+        则连归一化都不做，直接拒（把"多一条规则"这件事留在声明期）。
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>6 · 数据目录（桥：plugin.readDataText）</h2>
+      <dl>
+        <dt>notes.json</dt><dd id="data-read-status">…</dd>
+      </dl>
+      <pre id="data-read-body">…</pre>
+    </div>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>

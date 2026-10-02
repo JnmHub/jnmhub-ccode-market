@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'" />
+    <title>沙箱与桥自检</title>
+    <link rel="stylesheet" href="view.css" />
+    <script src="view.js"></script>
+  </head>
+  <body>
+    <h1>沙箱与桥自检</h1>
+    <div class="sub">
+      这一页只做一件事：把「插件页能碰到什么」逐项打印出来。所有「拒绝」都是正确结果。
+    </div>
+
+    <div class="card">
+      <h2>A · 桥暴露了什么（<code>Object.keys(window.ccodePlugin)</code>）</h2>
+      <pre id="bridge-keys">…</pre>
+      <div class="note">
+        应当**只有** 5 个键：getInfo / getSettings / getTheme / readText / readDataText。
+        多出任何一个都说明 preload 被放宽了。
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>B · 沙箱里不该存在的东西</h2>
+      <div class="rows" id="globals-rows"></div>
+      <div class="note">
+        <code>sandbox: true</code> + <code>contextIsolation: true</code> + <code>nodeIntegration: false</code>
+        之后，以下对象在插件页主世界必须全部是 undefined。
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>C · 宿主渲染进程的对象也不可见</h2>
+      <div class="rows" id="host-rows"></div>
+      <div class="note">
+        插件页与宿主渲染进程是两个 document。宿主挂在 <code>window.ccode</code> 上的一整套
+        桥（文件选择、远程会话、更新…）在这里必须取不到。
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>D · 能读与不能读</h2>
+      <div class="rows" id="read-rows"></div>
+    </div>
+
+    <div class="card">
+      <h2>E · 位置与协议</h2>
+      <dl>
+        <dt>location.href</dt><dd id="loc-href">…</dd>
+        <dt>origin</dt><dd id="loc-origin">…</dd>
+        <dt>isSecureContext</dt><dd id="loc-secure">…</dd>
+      </dl>
+      <div class="note">
+        页面经自定义协议 <code>ccode-plugin://</code> 加载（不是 <code>file://</code>），
+        所以它自带一个页面自己的 origin。
+      </div>
+    </div>
+
+    <script src="sandbox.js"></script>
+  </body>
+</html>

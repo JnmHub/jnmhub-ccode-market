@@ -1,0 +1,141 @@
+/* 插件沙箱视图的样式。
+ *
+ * 主题变量由 JS 从宿主桥（theme.get）拿到后写到 <html data-appearance>，
+ * 页面不去猜宿主的配色 —— 插件页与宿主是两个渲染进程，CSS 变量不共享。
+ */
+:root {
+  --bg: #ffffff;
+  --panel: #f6f7f9;
+  --border: #e3e6ea;
+  --fg: #1b1f24;
+  --fg-subtle: #6b7280;
+  --accent: #2f6feb;
+  --ok: #1a7f42;
+  --bad: #c02b2b;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html[data-appearance="dark"] {
+  --bg: #16181c;
+  --panel: #1d2025;
+  --border: #2b2f36;
+  --fg: #e8eaed;
+  --fg-subtle: #9aa1ab;
+  --accent: #7aa2f7;
+  --ok: #4ec97a;
+  --bad: #ff6b6b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 14px 16px 24px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+h1 {
+  font-size: 15px;
+  margin: 0 0 2px;
+}
+
+.sub {
+  color: var(--fg-subtle);
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+.card > h2 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--fg-subtle);
+  margin: 0 0 6px;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 2px 10px;
+  margin: 0;
+}
+
+dt {
+  color: var(--fg-subtle);
+}
+
+dd {
+  margin: 0;
+  font-family: var(--mono);
+  word-break: break-all;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+pre {
+  margin: 6px 0 0;
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-size: 11px;
+  border: 1px solid var(--border);
+}
+
+.badge.ok {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 45%, transparent);
+}
+
+.badge.bad {
+  color: var(--bad);
+  border-color: color-mix(in srgb, var(--bad) 45%, transparent);
+}
+
+.rows {
+  display: grid;
+  gap: 4px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.row .name {
+  font-family: var(--mono);
+  min-width: 15ch;
+}
+
+.note {
+  color: var(--fg-subtle);
+  font-size: 12px;
+}
