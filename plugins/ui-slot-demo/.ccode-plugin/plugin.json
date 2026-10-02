@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "description": "插件 UI 插槽（沙箱视图）的参考实现：演示 ui.views / permissions / 白名单桥、越界拒绝与只读设置。开发用，未列入 market.json。",
   "author": "CCode fork",
-  "permissions": ["ui.view", "ui.settings.read"],
+  "permissions": [
+    "ui.view",
+    "ui.settings.read"
+  ],
   "userConfig": {
     "greeting": {
       "type": "string",
@@ -39,6 +42,27 @@
         "icon": "shield",
         "entry": "views/sandbox.html",
         "order": 2
+      },
+      {
+        "id": "probe-1",
+        "title": "探测视图 1",
+        "icon": "flask",
+        "entry": "views/probe-1.html",
+        "order": 10
+      },
+      {
+        "id": "probe-2",
+        "title": "探测视图 2",
+        "icon": "flask",
+        "entry": "views/probe-2.html",
+        "order": 11
+      },
+      {
+        "id": "probe-3",
+        "title": "探测视图 3",
+        "icon": "flask",
+        "entry": "views/probe-3.html",
+        "order": 12
       }
     ],
     "detailSections": [

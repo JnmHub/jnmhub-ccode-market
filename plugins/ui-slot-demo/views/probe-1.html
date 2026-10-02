@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'" />
+    <title>probe-1</title>
+    <link rel="stylesheet" href="view.css" />
+  </head>
+  <body data-probe="1">
+    <h1>探测视图 1</h1>
+    <div class="sub">
+      这一页没有实际功能，只用来验证「同时存活的插件视图上限 4（LRU）」与「导航必须被宿主拦下」。
+    </div>
+    <div class="card">
+      <h2>它证明什么</h2>
+      <div id="probe-out" class="note">…</div>
+      <div class="note">
+        打开 5 个插件视图后，主进程应当淘汰**最旧的、且当前不是正在显示的**那一个：
+        CDP 目标列表里只剩 4 个 <code>ccode-plugin://</code> 页面。切回被淘汰的那个应当**自动重建**。
+      </div>
+    </div>
+    <script src="probe.js"></script>
+  </body>
+</html>
