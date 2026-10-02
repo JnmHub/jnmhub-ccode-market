@@ -124,6 +124,69 @@ CCode 技能扫描：只扫一层、符号链接不跟随、同名去重；细�
 里出现上表以外的键只会告警，不会被拒绝。`channels` / `lspServers` / `outputStyles` / `settings` 四个
 字段在这个运行时是「只诊断不生效」的。
 
+## 跨平台（Windows / macOS / Linux）
+
+同一个插件会装到不同系统上，所以**不要在命令里写死 `python` / `python3`**：`python` 这个名字只在
+Windows 上普遍成立，macOS 上通常是 `python3`（本仓库的 `seep-reverse-lab` 原来就写死了 `python`，
+在 mac 上会直接 `spawn ENOENT`）。
+
+客户端会把下面这些**平台事实**注入到 `mcpServers` 的字段、以及 hook 的 `command` / `args` 里，
+用 `${...}` 引用即可：
+
+| 变量 | 值 |
+| --- | --- |
+| `${CCODE_PLATFORM}` | `win32` / `darwin` / `linux` |
+| `${CCODE_PYTHON}` | 用户在设置页「运行环境」里手动指定的路径优先；否则 win32 → `python`，其它 → `python3` |
+| `${CCODE_NODE}` | 同上，缺省 `node` |
+| `${CCODE_PATH_SEPARATOR}` | win32 → `\`，其它 → `/` |
+
+```jsonc
+// .mcp.json —— 一份配置两端都对
+{
+  "mcpServers": {
+    "seep": { "command": "${CCODE_PYTHON}", "args": ["${CCODE_PLUGIN_ROOT}/Tool/mcp/seep_mcp_server.py"] }
+  }
+}
+```
+
+已经有 `${CCODE_PLUGIN_ROOT}` / `${CCODE_PLUGIN_DATA}` / `${CCODE_PROJECT_DIR}` 等既有变量，用法相同。
+
+### 组件级 `platforms`：某些东西只在一个系统上才有意义
+
+对确实**只在单端有意义**的组件（例如依赖 `codesign` / `osascript` 的 MCP 服务器或 hook），
+在**条目上**声明 `platforms`：
+
+```jsonc
+// .mcp.json
+{ "mcpServers": {
+    "codesign": { "command": "codesign-helper", "platforms": ["darwin"] },
+    "always":   { "command": "always-here" }
+} }
+
+// hooks/hooks.json
+{ "hooks": { "PostToolUse": [ { "hooks": [
+    { "type": "command", "command": "osascript -e 'beep'", "platforms": ["darwin"] },
+    { "type": "command", "command": "echo ok" }
+] } ] } }
+```
+
+规则（**只跳过该条目，不会废掉整个插件**）：
+
+| 写法 | 行为 |
+| --- | --- |
+| 不写 `platforms`，或写 `[]` | 所有平台都生效（`[]` 按「没有限制」理解） |
+| `["win32"]` / `["windows"]` / `["darwin"]` / `["macos"]` / `["linux"]` | 只在这些平台生效（别名可用） |
+| 写了但**认不出的名字**（如 `windows-11`） | **该条目被跳过**并出 warning 诊断 —— 写错不会静默放行 |
+| 当前平台不在声明里 | 该条目被跳过，出 `plugin_platform_skipped` 诊断（warning，属预期状态） |
+
+要点：
+
+- **不要**用 `platforms` 去表达「这个平台上缺依赖」——那是 `requires`（运行环境页会检测并提示）；
+  `platforms` 表达的是「在这个平台上它**本来就没有意义**」。
+- 拿不准就**别写** `platforms`：不写是所有平台都生效，写了才会被跳过。
+- 不要为两个系统各维护一份插件（或把同一份配置写成 `platforms: { win32: {...} }` 这种整块分支）——
+  优先用 `${CCODE_PYTHON}` 这类变量让**同一个条目**两端都对。
+
 ## 首次发布到 GitHub
 
 本仓库已经是一个提交好的本地 Git 仓库（分支 `main`），发布就是把远端接上再推：

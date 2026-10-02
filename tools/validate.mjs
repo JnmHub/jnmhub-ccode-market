@@ -175,6 +175,12 @@ for (const entry of entries) {
       commandNameOwners.get(name).push(`${label}/${f}`);
     }
   }
+
+  // ── 平台声明（FORK §49）────────────────────────────────────────────────────
+  // 客户端认组件级 `platforms` 与 `${CCODE_PLATFORM|PYTHON|NODE|PATH_SEPARATOR}`。
+  // 这里在**发布前**把拼错的平台名拦下来：客户端口径是「认不出的名字 ⇒ 跳过该条目 + warning」，
+  // 属于「不报错但功能没了」，作者在本机（写错的名字恰好也匹配不到）很难发现。
+  checkPlatformDeclarations(dir, label);
 }
 
 // ── 3. 跨插件重名（CCode 会静默丢掉后到的那个）──
@@ -214,4 +220,102 @@ function manifestSafeSkills(dir) {
 }
 function note(msg) {
   notes.push(msg);
+}
+
+/**
+ * 平台声明白名单检查（FORK §49）。
+ *
+ * 为什么必须在这里查一遍：
+ *   - 客户端对**认不出的平台名**是「跳过该条目 + warning」，也就是**不报错、功能静默消失**；
+ *   - 作者在自己机器上跑，写错的名字（例如 `windows-11`）同样匹配不到，于是"看起来就是没生效"，
+ *     真正原因要翻诊断才看得到。发布前拦下来成本最低。
+ *
+ * 顺带把**写死平台命令**的地方点出来（`python` / `python3` 直接当 command / args[0]）：
+ * 这类写法在另一个系统上一定失败，应当改用 `${CCODE_PYTHON}`。只提醒不阻断
+ * —— 有些插件的可执行文件确实随包自带，写死是对的。
+ */
+function checkPlatformDeclarations(dir, label) {
+  const PLATFORM_ALIASES = new Set([
+    "darwin", "linux", "mac", "macos", "osx", "win", "win32", "windows",
+  ]);
+
+  const checkAttr = (attr, where) => {
+    if (!Array.isArray(attr)) {
+      fail(`[${label}] ${where} 的 platforms 必须是字符串数组`);
+      return;
+    }
+    if (attr.length === 0) return; // 空数组 = 没有限制，与客户端口径一致
+    for (const raw of attr) {
+      if (typeof raw !== "string") {
+        fail(`[${label}] ${where} 的 platforms 里有非字符串项`);
+        continue;
+      }
+      if (!PLATFORM_ALIASES.has(raw.trim().toLowerCase())) {
+        fail(
+          `[${label}] ${where} 的 platforms 有认不出的平台名: ${raw}` +
+            `
+      → 只认 win32/windows/win、darwin/macos/mac/osx、linux；` +
+            `客户端对认不出的名字会**跳过该条目**且不报错`,
+        );
+      }
+    }
+  };
+
+  const readJson = (file) => {
+    if (!existsSync(file)) return null;
+    try {
+      return JSON.parse(readFileSync(file, "utf8"));
+    } catch (error) {
+      fail(`[${label}] ${file.slice(repoRoot.length + 1)} 无法解析: ${error.message}`);
+      return null;
+    }
+  };
+
+  // 1) .mcp.json 的每个 server 条目
+  const mcpServers = readJson(join(dir, ".mcp.json"))?.mcpServers;
+  if (mcpServers && typeof mcpServers === "object") {
+    for (const [name, server] of Object.entries(mcpServers)) {
+      if (!server || typeof server !== "object") continue;
+      if (server.platforms !== undefined) checkAttr(server.platforms, `MCP server ${name}`);
+      const command = typeof server.command === "string" ? server.command : "";
+      const firstArg =
+        Array.isArray(server.args) && typeof server.args[0] === "string" ? server.args[0] : "";
+      const hardcoded = /^python3?$/.test(command) ? command : /^python3?$/.test(firstArg) ? firstArg : "";
+      if (hardcoded) {
+        note(
+          `[${label}] MCP server ${name} 把 ${hardcoded} 写死了 —— macOS 上通常只有 python3、` +
+            `Windows 上通常只有 python；建议改成 \${CCODE_PYTHON}`,
+        );
+      }
+    }
+  }
+
+  // 2) hooks：目录约定 hooks/hooks.json 与 manifest.hooks
+  const manifest = readJson(join(dir, ".ccode-plugin", "plugin.json"));
+  const hookSources = [];
+  const standardHooks = join(dir, "hooks", "hooks.json");
+  if (existsSync(standardHooks)) hookSources.push({ file: standardHooks, wrapper: true });
+  const manifestHooks = manifest?.hooks;
+  if (manifestHooks !== undefined) {
+    for (const spec of Array.isArray(manifestHooks) ? manifestHooks : [manifestHooks]) {
+      if (typeof spec === "string") hookSources.push({ file: join(dir, spec), wrapper: true });
+      else hookSources.push({ inline: spec, wrapper: false });
+    }
+  }
+  for (const source of hookSources) {
+    const raw = source.inline !== undefined ? source.inline : readJson(source.file);
+    const hooksRoot = source.wrapper ? raw?.hooks : raw;
+    if (!hooksRoot || typeof hooksRoot !== "object") continue;
+    for (const [event, matchers] of Object.entries(hooksRoot)) {
+      if (!Array.isArray(matchers)) continue;
+      for (const matcher of matchers) {
+        if (!matcher || typeof matcher !== "object" || !Array.isArray(matcher.hooks)) continue;
+        for (const hook of matcher.hooks) {
+          if (hook && typeof hook === "object" && hook.platforms !== undefined) {
+            checkAttr(hook.platforms, `hook ${event} (${hook.command ?? hook.type ?? "?"})`);
+          }
+        }
+      }
+    }
+  }
 }

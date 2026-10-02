@@ -33,6 +33,13 @@
    MCP，进程 CWD 不是包根，相对路径会失效。`${CCODE_PLUGIN_ROOT}` 是 CCode 的插件根模板变量，
    在 command/args/env 中会被替换为实际插件根。`js-reverse` 项未改（`npx -y js-reverse-mcp` 全局可解析）。
 
+3. **`.mcp.json` 里 `seep` server 的 `command` 由写死的 `python` 改为 `${CCODE_PYTHON}`**。
+   上游写死 `python`，这个名字**只在 Windows 上普遍成立**；macOS / Linux 上通常是 `python3`，
+   `python` 往往根本不存在 ⇒ 同一个包在 mac 上启动 MCP 会直接 `spawn ENOENT`。
+   改成 `${CCODE_PYTHON}` 后由客户端按平台给值（win32 → `python`，其它 → `python3`；
+   用户在设置页「运行环境」手动指定了路径则以那个为准），于是**一份配置两端都对**。
+   这是本市场面向所有插件的通用约定，见根 `README.md` 的「跨平台」一节。
+
 ## 未改动、随包一并转发的第三方内容（需自行评估）
 
 - `Tool/mcp/Tool/safe/**`（约 234 MB）：随包内置的工具链 —— jadx、radare2、apktool、

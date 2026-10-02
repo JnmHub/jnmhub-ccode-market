@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "seep": {
-      "command": "python",
+      "command": "${CCODE_PYTHON}",
       "args": [
         "${CCODE_PLUGIN_ROOT}/Tool/mcp/seep_mcp_server.py"
       ],
