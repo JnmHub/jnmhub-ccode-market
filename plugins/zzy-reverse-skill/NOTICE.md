@@ -22,3 +22,18 @@ Packaging notes for CCode (jnmhub-ccode-market):
   competition-* skills and src-hunter are discovered.
 - The upstream 1.6MB reverse-skill.png is not copied; the market card uses the
   128×128 transparent icon generated for this marketplace.
+
+- `plugin.json` declares `requires` so the client can check the runtime before the
+  pack is used, instead of letting `npx` / helper scripts fail later:
+
+      "requires": {
+        "node":   { "minVersion": "22.12" },
+        "python": {}
+      }
+
+  `node >= 22.12` is the floor the upstream README states ("Required for JS/MCP");
+  Python is declared without a version because upstream only says "Python 3.x —
+  Frida and helper scripts" (commonly used rather than required), and an invented
+  floor would show as a false failure. Java/JDK is needed for jadx and apktool but
+  has no place in this schema (it only carries python/node), so it is documented in
+  the marketplace description instead of declared here.

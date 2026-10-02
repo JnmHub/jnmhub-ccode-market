@@ -1,6 +1,6 @@
 {
   "name": "zzy-reverse-skill",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Marketplace packaging of zhaoxuya520/reverse-skill (MIT): a 60+ skill router pack for reverse engineering, authorized pentest, CTF and EDR-bypass. Two CCode-visible names are prefixed (zzy-ida-reverse, zzy-reverse-engineering) so they coexist with this market's independent plugins. — zhaoxuya520/reverse-skill 的市场封装：60+ 逆向/授权渗透/CTF/EDR 绕过路由包。两个会与本市场独立插件撞名的技能发布为 zzy-ida-reverse / zzy-reverse-engineering。",
   "author": {
     "name": "zhaoxuya520",
@@ -12,5 +12,11 @@
     "skills",
     "CTF-Sandbox-Orchestrator",
     "skills/pentest-tools"
-  ]
+  ],
+  "requires": {
+    "node": {
+      "minVersion": "22.12"
+    },
+    "python": {}
+  }
 }

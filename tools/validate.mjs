@@ -181,6 +181,7 @@ for (const entry of entries) {
   // 这里在**发布前**把拼错的平台名拦下来：客户端口径是「认不出的名字 ⇒ 跳过该条目 + warning」，
   // 属于「不报错但功能没了」，作者在本机（写错的名字恰好也匹配不到）很难发现。
   checkPlatformDeclarations(dir, label);
+  checkRuntimeRequires(dir, label);
 }
 
 // ── 3. 跨插件重名（CCode 会静默丢掉后到的那个）──
@@ -315,6 +316,70 @@ function checkPlatformDeclarations(dir, label) {
             checkAttr(hook.platforms, `hook ${event} (${hook.command ?? hook.type ?? "?"})`);
           }
         }
+      }
+    }
+  }
+}
+
+/**
+ * `requires` 形状检查（客户端「运行环境」页读的就是它）。
+ *
+ * 为什么必须在发布前查：客户端的 `parsePluginRuntimeRequires` 是**宽容**实现 ——
+ * 认不出的工具 key 直接忽略、形状不对就返回空数组（一个插件的声明写坏不该让整页崩）。
+ * 于是写错 `requires` 的表现是「运行环境页里这个插件什么都没声明」，不报错、也没痕迹。
+ *
+ * 形状（客户端只认 python / node）：
+ *   "requires": { "python": { "minVersion": "3.10", "packages": ["mcp"] }, "node": { "minVersion": "18" } }
+ *   - minVersion 可省（表示「只要装了就行，不卡版本」）
+ *   - packages 只对 python 生效（客户端只对 python 做 import 探测；别的工具声明包会被永久判缺失，
+ *     §48 已明确忽略这类声明，所以这里直接拦掉）
+ */
+function checkRuntimeRequires(dir, label) {
+  const manifestPath = join(dir, ".ccode-plugin", "plugin.json");
+  if (!existsSync(manifestPath)) return;
+  let manifest;
+  try {
+    manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+  } catch (error) {
+    fail(`[${label}] plugin.json 无法解析（requires 检查跳过）: ${error.message}`);
+    return;
+  }
+  const requires = manifest && typeof manifest === "object" ? manifest.requires : undefined;
+  if (requires === undefined) return;
+  if (!requires || typeof requires !== "object" || Array.isArray(requires)) {
+    fail(`[${label}] requires 必须是对象，例如 {"python":{"minVersion":"3.10","packages":["mcp"]}}`);
+    return;
+  }
+  const TOOLS = new Set(["python", "node"]);
+  for (const [tool, spec] of Object.entries(requires)) {
+    if (!TOOLS.has(tool)) {
+      fail(
+        `[${label}] requires.${tool} 不是客户端认识的工具
+` +
+          `      → 只认 python / node；其它 key 会被**静默忽略**（运行环境页上看不到任何声明）`,
+      );
+      continue;
+    }
+    if (!spec || typeof spec !== "object" || Array.isArray(spec)) {
+      fail(`[${label}] requires.${tool} 必须是对象（可写 {} 表示只要求装了即可）`);
+      continue;
+    }
+    for (const key of Object.keys(spec)) {
+      if (key !== "minVersion" && key !== "packages") {
+        fail(`[${label}] requires.${tool}.${key} 不是有效字段（只认 minVersion / packages）`);
+      }
+    }
+    if (spec.minVersion !== undefined && typeof spec.minVersion !== "string") {
+      fail(`[${label}] requires.${tool}.minVersion 必须是字符串，例如 "3.10"`);
+    }
+    if (spec.packages !== undefined) {
+      if (tool !== "python") {
+        fail(
+          `[${label}] requires.${tool}.packages 无效：客户端只对 python 做包探测，` +
+            `别的工具声明包会被永久判「缺失」，属误导`,
+        );
+      } else if (!Array.isArray(spec.packages) || spec.packages.some((x) => typeof x !== "string")) {
+        fail(`[${label}] requires.python.packages 必须是字符串数组，例如 ["mcp"]`);
       }
     }
   }

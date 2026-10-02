@@ -9,7 +9,7 @@
       "name": "hello-ccode",
       "displayName": "Hello CCode（示例插件）",
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/hello-ccode/icon.png",
-      "description": "最小示例插件：一条斜杠命令 + 一个技能，用来验证「自建市场源 → 添加 → 安装 → 启用 → 命令/skill 生效」的完整链路。",
+      "description": "Smallest example plugin for this self-hosted marketplace: one slash command (/hello) plus one skill. Its only purpose is to verify the whole chain end to end — self-hosted source → add → install → enable → a real slash command / skill activation — by printing a fixed marker you can find in a screenshot or a transcript. No runtime prerequisites. Use it when asked to verify the marketplace works; it does no real work.",
       "category": "examples",
       "version": "0.1.0",
       "author": "JnmHub",
@@ -18,7 +18,10 @@
       "tags": [
         "example",
         "demo"
-      ]
+      ],
+      "description_i18n": {
+        "zh-CN": "自建市场的最小示例插件：1 条斜杠命令 /hello + 1 个技能。它的唯一用途是端到端验证「自建市场源 → 添加 → 安装 → 启用 → 命令/技能生效」这条链路是否打通——命令会打印一个固定标记，便于从截图或会话记录里确认市场源确实生效。无运行时依赖。触发：说「测一下 hello-ccode / 市场通不通」。不用于任何实际任务。"
+      }
     },
     {
       "name": "android-reverse",
@@ -27,12 +30,12 @@
         "zh-CN": "安卓逆向工程"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/android-reverse/icon.png",
-      "description": "Android app reverse-engineering framework covering static triage, Java API and call-chain tracing, JNI/native analysis, Frida instrumentation, protection bypass, dynamic DEX, split delivery, Flutter/Hermes/Unity, native TLS, storage and IPC, WebView hybrids, smali patching, protocol and crypto recovery, and Android CTF — across APK/APKS/AAB/XAPK/DEX/JAR/AAR/SO and the IDA / JADX / JEB toolchain.",
+      "description": "Android app reverse-engineering framework (one skill backed by 78 graded docs: guides, references, case workflows). Covers APK / APKS / AAB / XAPK / DEX / JAR / AAR / SO / JNI: static triage and Java API / call-chain recovery, JNI-native work with the IDA / JADX / JEB toolchain, Frida instrumentation and anti-Frida playbooks, shell unpacking with dynamic DEX / memory dumps, Split Delivery, Flutter / Hermes / Unity, native TLS, storage and IPC, WebView hybrids, smali patching, protocol and crypto recovery, and Android CTF. Ships case-workflow scripts plus a capability matrix and acceptance criteria. Trigger it for APK triage, unpacking, Frida hooking, signature or device-fingerprint recovery. Requires Node >= 20 for its own scripts; Frida flows need frida-tools installed via Python, so Python is declared too. Not for plain Android development, unauthorized exploitation, ROM/TEE-level work, or iOS.",
       "description_i18n": {
-        "zh-CN": "Android 应用逆向工程技能框架：覆盖静态分诊、Java API 与调用链还原、JNI/Native 分析、Frida 动态插桩、保护绕过、动态 DEX、Split Delivery、Flutter/Hermes/Unity、Native TLS、Storage/IPC、WebView 混合、Smali 改动、协议与加解密还原、Android CTF；面向 APK/APKS/AAB/XAPK/DEX/JAR/AAR/SO 与 IDA、JADX、JEB 工具链。"
+        "zh-CN": "Android 应用逆向工程技能框架（1 个技能，内含 78 篇分级文档：指南 / 参考 / 案例工作流）。覆盖 APK / APKS / AAB / XAPK / DEX / JAR / AAR / SO / JNI：静态分诊与 Java API、调用链还原，JNI/Native 与 IDA / JADX / JEB 工具链，Frida 动态插桩与反 Frida 对抗，加固脱壳与动态 DEX / 内存 dump，Split Delivery、Flutter / Hermes / Unity、Native TLS、Storage / IPC、WebView 混合，Smali 改动、协议与加解密还原、Android CTF 反向；附案例工作流脚本与能力矩阵、验收标准。触发：说「安卓逆向 / APK 脱壳 / Frida hook / 还原接口签名 / 设备指纹」等。前提：本机 Node ≥ 20（它自带的案例工作流脚本是 .mjs）；Frida 相关流程需自行安装 frida-tools（Python），故一并声明 Python。边界：不用于普通 Android 开发、未授权漏洞利用、Android 系统 / ROM / TEE 级逆向或 iOS 逆向。"
       },
       "category": "developer-tools",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "author": "JnmHub",
       "source": "android-reverse",
       "tags": [
@@ -49,9 +52,9 @@
         "zh-CN": "逆向工程"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/reverse-engineering/icon.png",
-      "description": "General reverse-engineering skill for websites, desktop binaries (PE/ELF), mobile apps (APK/IPA) and network protocols: web scraping and API reverse, disassembly and decompilation, Frida/Xposed hooking, il2cpp/Unity reverse, protocol capture and replay, encryption and signature analysis, and memory debugging.",
+      "description": "General reverse-engineering skill (one skill plus four topic references: binary, mobile, protocol, web). Use it when the target type is not settled yet and you need one triage path: website and API reverse (including crawling and endpoint recovery), desktop binaries (PE / ELF) disassembly and decompilation, mobile apps (APK / IPA), and protocol capture and replay. Includes Frida / Xposed hooking, il2cpp / Unity reverse, signature and crypto identification, memory debugging, and one-liners for the common ciphers. Trigger it with plain requests like \"reverse this\" or \"recover this protocol\". Prefer the platform-specific plugins (Android / Windows / Web / assembly) when you need the deeper workflows and acceptance criteria; no unauthorized exploitation.",
       "description_i18n": {
-        "zh-CN": "通用逆向工程技能，面向网站、桌面二进制（PE/ELF）、移动应用（APK/IPA）与网络协议：爬虫与 API 逆向、反汇编与反编译、Frida/Xposed Hook、il2cpp/Unity 逆向、协议抓取与重放、加密与签名分析、内存调试。"
+        "zh-CN": "通用逆向工程技能（1 个技能 + 4 篇专题参考：二进制 / 移动端 / 协议 / Web）。用于在目标类型还没定型时做统一分诊：网站与 API 逆向（含爬虫与接口还原）、桌面二进制（PE / ELF）反汇编与反编译、移动应用（APK / IPA）、网络协议抓取与重放。覆盖面包括 Frida / Xposed Hook、il2cpp / Unity 逆向、签名与加密算法识别、内存调试，并给出常见加密的复现一行式。触发：说「逆向这个 / 分析这个二进制 / 还原这个协议」。边界：它是通用入口，具体平台（Android / Windows / Web / 汇编）请用对应的专项插件以获得更深的流程与验收标准；不做未授权漏洞利用。"
       },
       "category": "developer-tools",
       "version": "1.0.0",
@@ -71,12 +74,12 @@
         "zh-CN": "汇编分析"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/asm-analysis/icon.png",
-      "description": "Deep assembly-level reverse analysis on Linux, joining dynamic debugging with static analysis: drives GDB/LLDB/radare2/Frida/angr/strace/ltrace/perf/bpftrace through one analysis chain, with a built-in context-memory loop that snapshots progress every 10 rounds so long sessions stay coherent.",
+      "description": "Deep assembly-level reverse analysis, mainly on Linux (one skill plus 12 references: algorithm and compiler patterns, CFG, angr workflows, Frida scripts, struct recovery, tool commands). It joins dynamic debugging and static analysis into one chain, coordinating GDB / LLDB / radare2 / Frida / angr / strace / ltrace / perf / bpftrace, with a built-in context-memory loop that snapshots progress every ten rounds so long sessions stay coherent. Trigger it for assembly analysis, live debugging, cipher identification, struct recovery, deobfuscation, or a quick strace. Python is declared because its readiness probes and its angr / Frida usage run on python3. Aimed at Linux user-space binaries; use the dedicated plugins for Windows or Android.",
       "description_i18n": {
-        "zh-CN": "深度汇编级逆向分析（Linux），把动态调试与静态分析串成一条链路：统一调度 GDB/LLDB/radare2/Frida/angr/strace/ltrace/perf/bpftrace。内置上下文记忆机制——每 10 轮生成一次分析快照，保证长会话连续性并降低幻觉。"
+        "zh-CN": "汇编级深度逆向分析（Linux 为主，1 个技能 + 12 篇参考：算法模式、编译器模式、CFG、angr 工作流、Frida 脚本、结构体恢复、工具命令等）。把动态调试与静态分析串成一条链路：统一调度 GDB / LLDB / radare2 / Frida / angr / strace / ltrace / perf / bpftrace，并内置上下文记忆机制——每 10 轮生成一次分析快照，保证长会话不漂移、少幻觉。触发：说「汇编分析 / 动态调试 / 识别加密算法 / 结构体恢复 / 混淆还原 / strace 一下」。前提：它的环境探测与 angr、Frida 用法都跑在 Python 上（技能里直接用 python3 -c 做可用性探针），因此声明 Python。边界：面向 Linux 用户态二进制；Windows / Android 请用对应专项插件。"
       },
       "category": "developer-tools",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "JnmHub",
       "source": "asm-analysis",
       "tags": [
@@ -93,9 +96,9 @@
         "zh-CN": "IDA 逆向"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/ida-reverse/icon.png",
-      "description": "IDA Pro analysis companion. Use when disassembling or analysing binaries — PE, ELF, APK, DLL, SO, Mach-O, SYS — including firmware images, malware and vulnerability research, string and crypto hunting, and function and call-graph recovery.",
+      "description": "IDA Pro analysis companion (one skill plus an IDA-MCP cheat sheet). For work done inside IDA: disassembly and analysis of PE / ELF / APK / DLL / SO / Mach-O / SYS, including firmware images, malware and vulnerability research, string and crypto hunting, and function and call-graph recovery, with quick reference for IDA and MCP tool calls. Trigger it with requests like \"look at this in IDA\", \"write an IDAPython script\", \"rename functions in bulk\", or \"recover the call graph\". You must supply IDA Pro itself (IDAPython ships with it, so Python is not declared separately); without IDA use the Radare2-based plugins. It does not replace live debugging or device-side forensics.",
       "description_i18n": {
-        "zh-CN": "IDA Pro 逆向分析辅助技能。用于反汇编与分析各类二进制：PE/ELF/APK/DLL/SO/Mach-O/SYS，含固件镜像、恶意样本与漏洞分析、字符串与加密线索定位、函数与调用图还原。"
+        "zh-CN": "IDA Pro 逆向分析助手（1 个技能 + IDA MCP 速查表）。面向用 IDA 做反汇编与分析的场景：PE / ELF / APK / DLL / SO / Mach-O / SYS，含固件镜像、恶意样本与漏洞研究、字符串与加密线索定位、函数与调用图还原，并给出 IDA 与 MCP 工具调用的速查。触发：说「用 IDA 看这个 / IDAPython 脚本 / 批量重命名函数 / 还原调用图」。前提：需要你自备 **IDA Pro**（含 IDAPython，随 IDA 提供，所以不额外声明 Python）；未装 IDA 时请用自带 Radare2 路线的插件。边界：不替代动态调试与设备侧取证。"
       },
       "category": "developer-tools",
       "version": "1.0.0",
@@ -115,12 +118,12 @@
         "zh-CN": "Web 前端逆向"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/web-reverse/icon.png",
-      "description": "Web front-end reverse engineering: recovering signing schemes, protocols and encryption, request-parameter and cookie obfuscation, and anti-bot/risk-control fields; defeating obfuscation, anti-debugging and anti-tampering; analysing Worker/WASM/JSVMP execution chains; unpacking mini-program bundles; and extracting minimal self-contained code plus a Node/Python runtime shim.",
+      "description": "Web front-end reverse engineering (one skill backed by 109 graded docs): recovering signing schemes, protocols and encryption, request-parameter and cookie obfuscation, and anti-bot / risk-control fields; defeating obfuscation, anti-debugging and anti-tampering; analysing Worker / iframe / multi-context, JSVMP, custom VMs, WASM and media decryption; mini-program work (WeChat wxapkg unpacking, AppService logic, endpoint and signature reproduction; Alipay / Douyin follow the same chain); minimal-closure code extraction with a Node / Python shim for offline reproduction; fingerprint checks, DevTools hooks and source-map recovery. Ships verification scripts (.py) and browser-controlled templates (.mjs). Trigger it for signature recovery, code extraction, mini-program unpacking or bypassing risk control. Requires Node >= 22 — webcrack, its first-choice extractor, officially needs Node 22/24 and fails to install or run below that — with Python for the bundled verification scripts. Not for plain front-end development, exploitation, or Android reverse.",
       "description_i18n": {
-        "zh-CN": "Web 前端逆向：还原签名与协议、请求参数与 Cookie 加密、反爬与风控字段；处理混淆/反调试/反篡改并做反混淆还原；分析 Worker/WASM/JSVMP 运行链；解包小程序；扣代码做最小闭包提取并补环境（Node/Python）。"
+        "zh-CN": "Web 前端逆向技能（1 个技能，内含 109 篇分级文档）：还原签名 / 协议 / 加解密、请求参数与 Cookie 加密、反爬虫与风控字段；处理混淆、反调试、反篡改并做反混淆还原；分析 Worker / iframe / 多上下文、JSVMP / 自定义 VM / WASM / 媒体解密；小程序（微信 wxapkg 解密解包、AppService 逻辑层、接口与签名复现；支付宝 / 抖音同链平移）；扣代码与最小闭包提取、补环境（Node / Python 复现）、浏览器内复用或纯算法迁移；指纹检测、DevTools hook、source map 还原。附带验证脚本（.py）与浏览器受控模板（.mjs）。触发：说「还原这个网站的签名 / 扣代码 / 小程序解包 / 过风控」。前提：Node ≥ 22（扣代码首选工具 webcrack 明确要求 Node 22/24，低于该版本会安装或运行失败），Python 用于自带的验证脚本与部分复现。边界：不用于普通前端开发、漏洞利用与 Android 逆向。"
       },
       "category": "developer-tools",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "author": "JnmHub",
       "source": "web-reverse",
       "tags": [
@@ -137,12 +140,12 @@
         "zh-CN": "Windows 逆向"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/win-reverse/icon.png",
-      "description": "Advanced Windows reverse-engineering framework covering PE/EXE/DLL/SYS, .NET/CLR/C++-CLI, WOW64, VMP/Themida/Enigma packing, x64dbg/IDA/WinDbg/Frida/dnSpy/ILSpy, COM/RPC/ALPC/named pipes, services and WMI, minidumps and VAD — with topic tracks, drills and a task-local execution contract with phase gates.",
+      "description": "Advanced Windows reverse-engineering framework (one skill backed by 54 docs plus subagents): PE / EXE / DLL / SYS, .NET / CLR / C++-CLI, WOW64, VMP / Themida / Enigma packing with OEP and IAT recovery, the x64dbg / IDA / WinDbg / Frida / dnSpy / ILSpy toolchain, COM / RPC / ALPC / named pipes, services and WMI, minidumps and VAD, memory forensics and Windows CTF; also game reverse (UE4 / UE5 / Unity / IL2CPP / Cocos2d-x, GNames / GObjects, SDK dumps, anti-cheat) and malware analysis (ransomware, RATs, trojans, rootkits, miners) plus app-layer protocol recovery (sign algorithms, protobuf, SSL pinning, Electron, Delphi, MFC). It enforces a task-local execution contract with phase gates: for packing, protocol/signature, patching or hooking work it opens a task-local before touching analysis tools. Its task gate runs on Node, hence the declaration. Not for AV-evasion delivery or unauthorized targets.",
       "description_i18n": {
-        "zh-CN": "Windows 高级逆向工程框架：覆盖 PE/EXE/DLL/SYS、.NET/CLR/C++-CLI、WOW64、VMP/Themida/Enigma 壳、x64dbg/IDA/WinDbg/Frida/dnSpy/ILSpy、COM/RPC/ALPC/命名管道、服务与 WMI、Minidump/VAD；含专题库、演练与带阶段门禁的 task-local 执行契约。"
+        "zh-CN": "Windows 平台专业逆向框架（1 个技能，内含 54 篇文档 + 子代理）：PE / EXE / DLL / SYS、.NET / CLR / C++-CLI、WOW64、VMP / Themida / Enigma 壳与 OEP / IAT 恢复、x64dbg / IDA / WinDbg / Frida / dnSpy / ILSpy 工具链、COM / RPC / ALPC / 命名管道、服务与 WMI、Minidump 与 VAD、内存取证与 Windows CTF；另含游戏逆向（UE4 / UE5 / Unity / IL2CPP / Cocos2d-x、GNames / GObjects、SDK dump、反作弊）、恶意软件分析（勒索 / 远控 / 木马 / rootkit / 挖矿）与应用层协议还原（sign / 签名算法 / protobuf / SSL Pinning / Electron / Delphi / MFC）。它带 task-local 执行契约与阶段门禁：命中壳 / 脱壳、协议 / 签名、补丁或 hook 等场景时先建 task-local 再动手。触发：说「Windows 逆向 / 查这个 exe / 脱 VMP / 抓这个软件的网络协议」。前提：它的 task 门禁脚本是 Node（.mjs），因此声明 Node。边界：不用于免杀投递或未授权目标。"
       },
       "category": "developer-tools",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "author": "JnmHub",
       "source": "win-reverse",
       "tags": [
@@ -159,12 +162,12 @@
         "zh-CN": "Linker 假加载脱壳"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/linker-fake-load-unwrapper/icon.png",
-      "description": "Recovering Android AArch64 ELF files wrapped by a linker-style fake PT_LOAD: impossible high-address LOAD segments, entry-point translation, XOR runtime decryptors, carved embedded ELF stages and custom mmap/mprotect loaders — with both static and dynamic workflows to reach the real image.",
+      "description": "Unwrapping skill for Android AArch64 ELF files protected by a linker-style fake-load wrapper (one skill plus a principles reference, and a bundled linker_static_unwrap.py). It handles impossible high-address LOAD segments, translated entry points (e_entry minus the fake p_vaddr), XOR runtime decryptors, carved embedded ELF stages, shell-looking second stages, and custom mmap / mprotect loaders, providing static and dynamic workflows plus validation gates whose goal is the real runtime image. Trigger it with \"linker hardening\", \"it unpacks but the SO won't load\", or \"generic linker unpack\". Its bundled script runs on Python. For self-owned or authorized samples only.",
       "description_i18n": {
-        "zh-CN": "处理被 linker 风格假 PT_LOAD 包裹的 Android AArch64 ELF：虚高地址 LOAD 段、入口点偏移、XOR 运行期解密、内嵌 ELF 分阶段、自研 mmap/mprotect loader——提供静态与动态两条路走到真实镜像。"
+        "zh-CN": "针对「linker 式假加载」加固的 Android AArch64 ELF 脱壳技能（1 个技能 + 原理参考，自带 linker_static_unwrap.py）。处理这些特征：不可能的高地址 LOAD 段、入口点被平移（如 e_entry 减去假 p_vaddr）、XOR 运行时解密器、内嵌 ELF 分阶段、伪装成 shell 的二阶段 ELF、自定义 mmap / mprotect loader；给出静态与动态两条工作流与验证门禁，目标是拿到真实运行镜像。触发：说「linker 加固 / 脱壳 / 这个 so 加载不了 / 通杀 linker」。前提：自带脚本用 python 运行（无版本门槛声明）。边界：仅限自有或已授权样本。"
       },
       "category": "developer-tools",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "JnmHub",
       "source": "linker-fake-load-unwrapper",
       "tags": [
@@ -181,12 +184,12 @@
         "zh-CN": "西宫 FUNK-Hikari 去混淆"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/xigong-funk-hikari/icon.png",
-      "description": "Evidence-driven deobfuscation and plaintext recovery for Hikari-LLVM/OLLVM output: MBA rewriting, bogus control flow, opaque predicates, relocation-backed BR/BLR dispatch, function wrappers, runtime string decoding, high-entropy containers, flat anonymous RX/RO/RW inner images and custom loaders — mainly Android/Linux AArch64 PIE and SO.",
+      "description": "Evidence-driven deobfuscation and plaintext recovery for Hikari-LLVM / OLLVM output (one skill plus seven references and a bundled hikari_*.py toolchain with tests). It covers MBA rewriting, bogus control flow, opaque predicates, relocation-backed BR / BLR dispatch, function wrappers (FCO), runtime string decoding, high-entropy containers, flat anonymous RX / RO / RW inner images with no primary ELF magic, embedded auxiliary ELFs, and custom mmap / mprotect loaders, mainly for Android / Linux AArch64 PIE and SO. Trigger it with \"Hikari deobfuscation\" or \"recover the strings from this OLLVM SO\". Its own docs state \"Python 3.10+; static rewriting needs capstone, the dynamic device path needs adb and read access to /proc/PID/mem\", so Python >= 3.10 and the capstone package are declared — they are direct dependencies of the bundled tools, and without capstone static rewriting cannot run. Self-owned or authorized samples only.",
       "description_i18n": {
-        "zh-CN": "针对 Hikari-LLVM/OLLVM 的实证式去混淆与明文还原：MBA 重写、虚假控制流、不透明谓词、基于重定位的 BR/BLR 分发、函数包装（FCO）、运行期字符串解密、高熵容器、扁平匿名 RX/RO/RW 内层镜像与自研 loader——主要面向 Android/Linux AArch64 PIE 与 SO。"
+        "zh-CN": "面向 Hikari-LLVM / OLLVM 加固产物的实证式去混淆与明文还原（1 个技能 + 7 篇参考 + 自带 hikari_*.py 工具链与测试）。处理：MBA 代数重写、虚假控制流（BCF）、不透明谓词、基于重定位的 BR / BLR 分派、函数外壳（FCO）、运行时字符串解密、高熵容器、缺主 ELF magic 的扁平匿名 RX / RO / RW 内层镜像、内嵌辅助 ELF 与自定义 mmap / mprotect loader；主要针对 Android / Linux AArch64 PIE 与 SO。触发：说「Hikari 去混淆 / 还原 OLLVM 字符串 / 这个 so 全是虚假控制流」。前提：技能正文明确写「Python 3.10+；静态改写需 capstone，动态设备通道需 adb 与可读 /proc/PID/mem 权限」——所以声明 Python ≥ 3.10 与 capstone 包（这是它自带工具的直接依赖，缺失时静态改写直接不可用）；动态通道另需真机 adb。边界：仅限自有或已授权样本。"
       },
       "category": "developer-tools",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "西宫 (xigong)",
       "source": "xigong-funk-hikari",
       "tags": [
@@ -203,12 +206,12 @@
         "zh-CN": "影安/影婆 脱壳重建"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/yingan-tuoxiu/icon.png",
-      "description": "Evidence-driven rehydration of YingAn/YingPo shelled Android APKs: abnormal or tiny root DEX, v.m.p / abcd655xx shell callbacks, libabcd and lib*shellservice_dex native loaders, runtime-loaded DEX images and native lifecycle wrappers — rebuilt into a normally installable, signed multidex APK while leaving login, entitlement and backend behaviour untouched.",
+      "description": "Evidence-driven rehydration and stable rebuild for YingAn / YingPo shelled Android APKs (one skill plus five references and bundled capture_proc_mem.py / capture_runtime_dex.py / inspect_runtime_graph.py scripts). It targets abnormal or tiny root DEX files, v.m.p / abcd655xx shell callbacks, libabcd and lib*shellservice_dex native loaders, protected assets, runtime-loaded DEX images, hidden real Application / Activity routes, and native lifecycle wrappers — rebuilding them into a normally installable, signed, multidex APK without changing login, entitlement or backend authorization behaviour, with a verification matrix and a rebuild-plan schema. Trigger it with \"YingAn unpack\", \"YingPo APK\", or \"rebuild the shelled APK\". Its docs state Python 3.10+ and its tools are .py, so Python >= 3.10 is declared. Self-owned or authorized samples only.",
       "description_i18n": {
-        "zh-CN": "影安/影婆加固 APK 的实证式脱壳与稳定重建：根 DEX 异常或极小、v.m.p / abcd655xx 壳回调、libabcd 与 lib*shellservice_dex 原生 loader、运行期加载的 DEX 镜像、原生生命周期包装——产出可正常安装并签名的 multidex APK，且不改动登录、授权与后端行为。"
+        "zh-CN": "影安 / 影婆壳加固 Android APK 的实证式脱壳与稳定重建（1 个技能 + 5 篇参考，自带 capture_proc_mem.py / capture_runtime_dex.py / inspect_runtime_graph.py 等脚本）。针对这些特征：根 DEX 异常或极小、v.m.p / abcd655xx 壳回调、libabcd 与 lib*shellservice_dex 原生 loader、受保护 assets、运行时加载的 DEX 镜像、被隐藏的真实 Application / Activity 路由、原生生命周期包装；目标是把它们还原成**能正常安装、签名、多 dex** 的 APK，同时不改动登录、权益与后端授权行为（附验证矩阵与重建计划 schema）。触发：说「影安脱壳 / 影婆 APK / 壳回调 / 重建 APK」。前提：技能正文写「Python 3.10+」，其自带脚本是 .py，故声明 Python ≥ 3.10。边界：仅限自有或已授权样本。"
       },
       "category": "developer-tools",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "西宫影安",
       "source": "yingan-tuoxiu",
       "tags": [
@@ -225,12 +228,12 @@
         "zh-CN": "游戏辅助逆向"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/game-hacking/icon.png",
-      "description": "End-to-end game-assist reverse-engineering covering memory R/W, protocol analysis, decompilation, hooks, driver-level hiding and automation scripts — for PC clients, Android/iOS mobile games and consoles, across C/C++, Python, x86/x64, DirectX/OpenGL, Frida, Unity/UE4 and il2cpp.",
+      "description": "End-to-end game-assist reverse engineering (one skill plus 16 references and automation-script templates). Covers memory read/write and pointer tracing, protocol analysis, decompilation, hooking (including DLL injection and DirectX / OpenGL), driver-level hiding and anti-cheat opposition, and automation scripts with image recognition; supports C / C++, Python and x86 / x64 assembly, across PC games, Android / iOS titles and consoles. Ships automation and packet-analysis script templates (.py). Trigger it with requests about game memory editing, CE workflows, game hooks, protocol analysis, driver hiding or coordinate recognition. Python is declared because the templates and the stack the skill lists (protocol analysis, automation, Frida scripts, image recognition) are Python-centred. Self-owned environments, local testing and authorized targets only.",
       "description_i18n": {
-        "zh-CN": "游戏辅助开发全链路：内存读写、协议分析、反编译、Hook、驱动级隐藏与自动化脚本；覆盖 PC 端游、Android/iOS 手游与主机，以及 C/C++、Python、x86/x64、DirectX/OpenGL、Frida、Unity/UE4、il2cpp。"
+        "zh-CN": "游戏辅助逆向全链路技能（1 个技能 + 16 篇参考 + 自动化脚本模板）。覆盖内存读写与指针追踪、协议分析、反编译、Hook（含 DLL 注入、DirectX / OpenGL）、驱动级隐藏与反作弊对抗、自动化脚本与图像识别；支持 C / C++、Python、x86 / x64 汇编，面向 PC 端游、Android / iOS 手游与主机游戏。自带自动化与协议分析脚本模板（.py）。触发：说「游戏外挂 / 内存修改 / CE 教程 / 游戏 Hook / 协议分析 / 驱动隐藏 / 坐标识别」。前提：其脚本模板与技能里列出的技术栈（协议分析、自动化、Frida 脚本、图像识别）都以 Python 为主，故声明 Python。边界：仅限自有环境、单机测试与已授权目标；不含发布级免杀或对抗性投递。"
       },
       "category": "developer-tools",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "JnmHub",
       "source": "game-hacking",
       "tags": [
@@ -247,12 +250,12 @@
         "zh-CN": "ELF 本地授权 Patch"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/elf-local-auth-patcher/icon.png",
-      "description": "Owner-authorized APK/ELF local test authorization: equal-length AArch64 branch patches, assets/bin ELF replacement, loader/memfd execution-chain recovery, payload-trailer preservation, overlay-vs-injection diagnosis and real-device verification — without breaking the business chain.",
+      "description": "A merged APK/ELF local-authorization patcher for self-owned projects or authorized test environments (one skill plus one subskill, with a bundled xg_elf_tool.py and its tests). It covers equal-length AArch64 branch patches with expected-byte verification, replacing ELFs under APK assets/bin, loader / memfd execution-chain recovery, payload-trailer preservation, and real-device verification that leaves the business chain intact, plus overlay-vs-injection diagnosis, driver-vs-proc-mem trade-offs and APK re-signing, with a \"prefer finished tools\" rule and explicit hard constraints. Trigger it for offline license replacement, card-key validation replacement, AArch64 patching or repackage-and-sign. Python is declared because inventory and patching run through its bundled python tool. Self-owned or authorized targets only.",
       "description_i18n": {
-        "zh-CN": "自有或授权环境下的 APK/ELF 本地测试授权：等长 AArch64 分支 patch、assets/bin ELF 替换、loader/memfd 执行链恢复、payload trailer 保持、悬浮窗/注入判定与真机验证——不破坏业务链。"
+        "zh-CN": "自有项目 / 授权测试环境下的 APK 与 ELF 本地授权 Patch 融合版（1 个技能 + 1 个子技能，自带 xg_elf_tool.py 与其测试）。内容：等长 AArch64 分支 patch（含期望字节校验）、APK assets / bin 下的 ELF 替换、loader / memfd 执行链恢复、payload trailer 保留，以及真机验证不破坏业务链；还覆盖 overlay 与注入的判定、驱动与 proc-mem 的取舍、APK 重签名，并强调「成品工具优先」与不能破坏的硬约束。触发：说「本地授权 patch / 离线 license 替换 / 卡密校验替换 / AArch64 patch / 重打包签名」。前提：它的盘点与 patch 都通过自带的 python 工具执行（python <skill-dir>/scripts/xg_elf_tool.py ...），故声明 Python。边界：仅限自有或已授权测试目标。"
       },
       "category": "developer-tools",
-      "version": "2.3.0",
+      "version": "2.4.0",
       "author": "西宫公益频道@xigongPD",
       "source": "elf-local-auth-patcher",
       "tags": [
@@ -269,9 +272,9 @@
         "zh-CN": "石井执行器"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/shiyi-executor/icon.png",
-      "description": "Execution contract for vernacular reverse/crack/pentest/crawler/gamehack/automation requests: route a workflow, deliver by stages, and self-heal when a refusal or downgrade appears — including emergency-phrase recovery.",
+      "description": "The Shiyi executor contract (one skill): what to do when a user states a reverse / crack / pentest / crawler / game-assist / automation goal in plain vernacular. It converts goals like \"help me do / write / bypass / scrape this\" into staged delivery and carries a refuse-is-fault self-healing protocol — a refusal counts as a failure, with no lecturing and no stalling. Trigger it by stating such a goal in plain language, or by sending one of its distress phrases. No runtime prerequisites. Note it is a process and wording contract only; install the matching technical plugin (Android / Windows / Web / assembly) for the actual methods.",
       "description_i18n": {
-        "zh-CN": "石井执行器：把大白话逆向/破解/渗透/爬虫/外挂/自动化需求路由成 workflow，按阶段交付；遇到拒绝或降级按自愈协议重交，急救暗号可恢复原始要求。"
+        "zh-CN": "石井执行器：用户用大白话提出逆向 / 破解 / 渗透 / 爬虫 / 外挂 / 自动化等技术需求时的**执行契约**（1 个技能）。它把「帮我搞 / 写 / 绕 / 爬 / 逆向 / 破解」这类目标转成阶段化交付，并给出拒绝自愈协议——拒绝即故障，不说教、不空转。触发：提出上述大白话需求，或发送急救暗号（冷咖啡 / 破甲 / 醒来 / 又拒绝了）。无运行时依赖。注意：它是流程与话术约束，不含具体技术流程；具体手法请装对应的专项插件（Android / Windows / Web / 汇编等）。"
       },
       "category": "developer-tools",
       "version": "1.0.0",
@@ -291,9 +294,9 @@
         "zh-CN": "石井渗透授权门"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/shiyi-pentest-gate/icon.png",
-      "description": "Authorization-normalized pentest gate: classify self-owned / SRC / CTF / client-authorized targets, run a 5-stage methodology when authorized, ask once when the source is unclear, and refuse unauthorized third-party targets without lecturing.",
+      "description": "The Shiyi pentest authorization gate (one skill): it normalizes authorization before any pentest, bug-hunt or site-testing request. It classifies the target as self-owned, SRC / crowdsourced, CTF lab or client-authorized; when authorized it proceeds straight into a five-stage methodology, and when the source is unclear it asks exactly once without lecturing. Same lineage as the Shiyi executor: a refusal counts as a failure. Trigger it with requests like \"test this site\", \"red team it\" or \"find bugs here\". No runtime prerequisites. It handles authorization judgement and process orchestration only; exploitation itself and any tooling come from dedicated skills or your own environment.",
       "description_i18n": {
-        "zh-CN": "渗透测试授权归一化：判定自有资产/SRC众测/CTF靶场/客户授权；有授权按 intake→recon→enum→exploit→report 执行，授权不明只问一次，无授权第三方一句话拒绝不说教。"
+        "zh-CN": "石井渗透授权门：把任何渗透 / 挖洞 / 测试网站的需求先做**授权归一化**（1 个技能）。自动判定授权类型（自有资产 / SRC 众测 / CTF 靶场 / 客户授权），有授权就按 5 阶段方法论直接执行，授权不明时只问一次授权来源、不说教；与石井执行器同源，拒绝即故障。触发：说「渗透 / 打点 / 挖洞 / 测试这个站 / 给他来一发 / 测个网站 / 红队 / 入侵测试」。无运行时依赖。注意：它只管授权的判定与流程编排；漏洞利用本身与所需工具由专用技能或你自备环境提供。"
       },
       "category": "developer-tools",
       "version": "1.0.0",
@@ -313,12 +316,12 @@
         "zh-CN": "ZZY 逆向技能包"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/zzy-reverse-skill/icon.png",
-      "description": "Marketplace packaging of zhaoxuya520/reverse-skill (MIT): 60+ routed skills for reverse engineering, authorized pentest, CTF and EDR-bypass. Two CCode-visible names are prefixed (zzy-ida-reverse, zzy-reverse-engineering) so the pack can be installed alongside this market's independent plugins.",
+      "description": "Marketplace packaging of zhaoxuya520/reverse-skill (MIT): a 60+ skill router pack — 63 skills visible to CCode — covering reverse engineering, authorized pentest, CTF and EDR bypass, with routing skills that dispatch by target. It bundles a large set of field playbooks: APK / iOS / web / protocol reverse, JWT, OAuth, REST and GraphQL testing, SSRF, cloud-security and cache-poisoning SRC plays, a CTF sandbox orchestrator, and kali / burp extension scripts. Two names that clash with this market's standalone plugins are prefixed (zzy-ida-reverse, zzy-reverse-engineering) so both can be installed together. Its README states Node.js >= 22.12 as required (JS toolchain and MCP servers) and Python 3.x as commonly used (Frida and helper scripts), plus Java / JDK for jadx and apktool. Self-owned or authorized targets only.",
       "description_i18n": {
-        "zh-CN": "zhaoxuya520/reverse-skill（MIT）的市场封装：60+ 逆向/授权渗透/CTF/EDR 绕过路由技能。两个会与本市场独立插件撞名的技能发布为 zzy-ida-reverse / zzy-reverse-engineering，可与独立插件同装。"
+        "zh-CN": "zhaoxuya520/reverse-skill（MIT）的市场包装版：一个 60+ 技能的路由包（本市场可见 63 个技能），覆盖逆向工程、授权渗透、CTF 与 EDR 绕过，并带跳板（routing）技能按目标分流。内含大量实战 playbook：APK / iOS / Web / 协议逆向，JWT、OAuth、REST / GraphQL 测试，SSRF、云安全、缓存投毒等 SRC 打法，CTF 沙箱编排，以及 kali / burp 扩展脚本。两个与本站独立插件重名的技能已加前缀（zzy-ida-reverse、zzy-reverse-engineering）以便同装共存。前置（其 README 表格）：**Node.js ≥ 22.12**（Required，用于 JS 工具链与 MCP 服务）、Python 3.x（Frida 与辅助脚本，常用）、另需 Java / JDK 跑 jadx / apktool。触发：说「用 zzy 的技能包 / 渗透测试 / CTF / EDR 绕过」。边界：仅限自有或已授权目标。"
       },
       "category": "developer-tools",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "zhaoxuya520",
       "homepage": "https://github.com/zhaoxuya520/reverse-skill",
       "source": "zzy-reverse-skill",
@@ -336,12 +339,12 @@
         "zh-CN": "Seep 逆向工作台"
       },
       "icon": "https://raw.githubusercontent.com/JnmHub/jnmhub-ccode-market/main/plugins/seep-reverse-lab/icon.png",
-      "description": "Whole-package redistribution of angusdevgo/Seep-Reverse-Lab (GPL-3.0): an AI-native reverse-engineering workbench — a softseep orchestrator that routes plain-language requests, apkseep for Android APK/DEX/SO end-to-end work, a client-side license/authorization validation track, IDA Pro automation, five bundled toolchain skills plus a 23-tool `seep` MCP server over a 183+ technique knowledge base. Five skill names are prefixed to coexist with this market's other plugins.",
+      "description": "Whole-package redistribution of angusdevgo/Seep-Reverse-Lab (GPL-3.0): an AI-native reverse-engineering workbench with 9 skills, 12 slash commands and 2 MCP servers. The softseep orchestrator routes plain-language requests; apkseep covers Android APK / AAB / DEX / SO end to end (client-side authorization review via CWE-602, micro-patching binary internals, dynamic Frida / RPC instrumentation, unpacking plus Java2C / VMP diffing, repackage and sign) with Recon asset profiling, four hard quality gates (G1-G4), anti-tamper and anti-hook playbooks and closed-loop delivery; it also ships a client license/authorization validation track, IDA Pro automation, and toolchain skills for jadx / radare2 / apktool / Frida. Commands: /triage /find-auth /gen-patch /hook /poc /report /kb /check /doctor /full /keygen /test. The `seep` MCP server exposes 23 tools over a 183+ technique knowledge base; `js-reverse` adds JS reverse and headless-browser capability. Prerequisites: Python >= 3.10 with the `mcp` package installed (`pip install \"mcp>=1.20,<1.29\"`) — without it that MCP fails to start; Node >= 18 for npx-running js-reverse-mcp; and the bundled toolchain (radare2 / JADX / Apktool / Playwright pieces) must be unpacked first via the upstream `setup/install.ps1` (Windows) or `setup/install.sh` (Linux / macOS). Its upstream Pi extension (lab-mode toggle, shorthand triggers, word-list replacement, Gemini BLOCK_NONE) is not loaded by CCode — those capabilities are provided by CCode-native mechanisms instead. Self-owned or authorized samples only.",
       "description_i18n": {
-        "zh-CN": "angusdevgo/Seep-Reverse-Lab（GPL-3.0）的整包收录：AI 原生逆向工作台——softseep 总控按大白话判型分发、apkseep 做 Android APK/DEX/SO 全链路、客户端授权校验走查、IDA Pro 自动化、五个工具链技能，以及 23 工具的 seep MCP server + 183+ 攻防知识库。5 个技能名加前缀以便与本市场其他插件同装。"
+        "zh-CN": "angusdevgo/Seep-Reverse-Lab（GPL-3.0）的整包收录：AI 原生逆向工作台（9 个技能 + 12 条斜杠命令 + 2 个 MCP server）。softseep 总控用大白话判型后分发；apkseep 做 Android APK / AAB / DEX / SO 全链路（含客户端鉴权走查 CWE-602、底层二进制微创补丁、动态 Frida / RPC 插桩、脱壳与 Java2C / VMP 差分、重打包签名），配 Recon 资产画像、四道硬性质量门禁（G1-G4）、Anti-Tamper / Anti-Hook 对抗与端到端闭环交付；另有客户端授权校验走查、IDA Pro 自动化，以及 jadx / radare2 / apktool / Frida playbook 等工具链技能。命令：/triage /find-auth /gen-patch /hook /poc /report /kb /check /doctor /full /keygen /test。`seep` MCP server 提供 23 个工具 + 183+ 技法知识库，`js-reverse` MCP 提供 JS 逆向与无头浏览器能力。前提：Python ≥ 3.10 且需安装 `mcp` 包（`pip install \"mcp>=1.20,<1.29\"`）——缺失时该 MCP 会启动失败；Node ≥ 18 供 npx 运行 js-reverse-mcp；内置工具链（radare2 / JADX / Apktool / Playwright 组件）需先跑上游 `setup/install.ps1`（Windows）或 `setup/install.sh`（Linux / macOS）解压。注意：上游那份 Pi 扩展（lab-mode 开关 / 快捷口令 / 词表替换 / Gemini BLOCK_NONE）CCode 不加载，对应能力已改由 CCode 原生机制承担。边界：仅限自有或已授权样本。"
       },
       "category": "developer-tools",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "author": "angusdevgo",
       "homepage": "https://github.com/angusdevgo/Seep-Reverse-Lab",
       "source": "seep-reverse-lab",

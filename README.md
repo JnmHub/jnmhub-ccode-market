@@ -21,24 +21,27 @@ tools/
 
 ## 插件索引
 
-| 插件 | 技能 | 说明 |
-| --- | --- | --- |
-| `hello-ccode` | `hello-ccode` | 最小示例：一条斜杠命令 + 一个技能，用于验证链路 |
-| `android-reverse` | `android-reverse` | Android 逆向框架（APK/DEX/SO、Frida、JADX/JEB、脱壳、协议还原） |
-| `reverse-engineering` | `reverse-engineering` | 通用逆向（网站/PE/ELF/APK/IPA/协议、Hook、签名与加密分析） |
-| `asm-analysis` | `asm-analysis` | 汇编级逆向（GDB/LLDB/r2/Frida/angr/strace… 统一链路 + 上下文快照） |
-| `ida-reverse` | `ida-reverse` | IDA Pro 分析辅助（反汇编、固件、样本、函数调用图） |
-| `web-reverse` | `web-reverse` | Web 前端逆向（签名/协议/加密、混淆与反调试、WASM/JSVMP、扣代码补环境） |
-| `win-reverse` | `win-reverse` | Windows 逆向框架（PE/.NET/驱动/壳/IPC，含专题、演练与阶段门禁） |
-| `linker-fake-load-unwrapper` | 同名 | 假 PT_LOAD 包裹的 Android AArch64 ELF 还原 |
-| `xigong-funk-hikari` | 同名 | Hikari-LLVM/OLLVM 去混淆与明文还原 |
-| `yingan-tuoxiu` | 同名 | 影安/影婆加固 APK 脱壳与稳定重建 |
-| `game-hacking` | 同名 | 游戏辅助全链路（内存/协议/Hook/驱动/自动化） |
-| `elf-local-auth-patcher` | 同名 | 自有/授权环境下的 APK/ELF 本地授权等长 patch |
-| `shiyi-executor` | 同名 | 石井执行器：大白话需求路由 + 阶段化交付 + 拒绝自愈 |
-| `shiyi-pentest-gate` | 同名 | 渗透授权归一化：自有/SRC/CTF/客户授权判定后执行 |
-| `zzy-reverse-skill` | 60+ 子技能 | 第三方整包（MIT，zhaoxuya520/reverse-skill）；撞名技能发布为 `zzy-ida-reverse` / `zzy-reverse-engineering` |
-| `seep-reverse-lab` | 9 技能 + 12 命令 + MCP | 第三方整包（GPL-3.0，angusdevgo/Seep-Reverse-Lab）；含内置工具链与 `seep` MCP server，5 个撞名技能加 `seep-` 前缀 |
+「运行前提」列的来源是各插件 `plugin.json` 的 `requires`（客户端设置页「运行环境」就按它检查）；
+写什么、不写什么的取舍标准见下面「运行前提（`requires`）」一节。
+
+| 插件 | 技能 | 运行前提 | 说明 |
+| --- | --- | --- | --- |
+| `hello-ccode` | `hello-ccode` | — | 最小示例：一条斜杠命令 + 一个技能，用于验证链路 |
+| `android-reverse` | `android-reverse` | Python + Node.js ≥ 20 | Android 逆向框架（APK/DEX/SO、Frida、JADX/JEB、脱壳、协议还原） |
+| `reverse-engineering` | `reverse-engineering` | — | 通用逆向（网站/PE/ELF/APK/IPA/协议、Hook、签名与加密分析） |
+| `asm-analysis` | `asm-analysis` | Python | 汇编级逆向（GDB/LLDB/r2/Frida/angr/strace… 统一链路 + 上下文快照） |
+| `ida-reverse` | `ida-reverse` | — | IDA Pro 分析辅助（反汇编、固件、样本、函数调用图） |
+| `web-reverse` | `web-reverse` | Python + Node.js ≥ 22 | Web 前端逆向（签名/协议/加密、混淆与反调试、WASM/JSVMP、扣代码补环境） |
+| `win-reverse` | `win-reverse` | Node.js | Windows 逆向框架（PE/.NET/驱动/壳/IPC，含专题、演练与阶段门禁） |
+| `linker-fake-load-unwrapper` | `同名` | Python | 假 PT_LOAD 包裹的 Android AArch64 ELF 还原 |
+| `xigong-funk-hikari` | `同名` | Python ≥ 3.10（capstone） | Hikari-LLVM/OLLVM 去混淆与明文还原 |
+| `yingan-tuoxiu` | `同名` | Python ≥ 3.10 | 影安/影婆加固 APK 脱壳与稳定重建 |
+| `game-hacking` | `同名` | Python | 游戏辅助全链路（内存/协议/Hook/驱动/自动化） |
+| `elf-local-auth-patcher` | `同名` | Python | 自有/授权环境下的 APK/ELF 本地授权等长 patch |
+| `shiyi-executor` | `同名` | — | 石井执行器：大白话需求路由 + 阶段化交付 + 拒绝自愈 |
+| `shiyi-pentest-gate` | `同名` | — | 渗透授权归一化：自有/SRC/CTF/客户授权判定后执行 |
+| `zzy-reverse-skill` | `60+ 子技能` | Python + Node.js ≥ 22.12 | 第三方整包（MIT，zhaoxuya520/reverse-skill）；撞名技能发布为 `zzy-ida-reverse` / `zzy-reverse-engineering` |
+| `seep-reverse-lab` | `9 技能 + 12 命令 + MCP` | Python ≥ 3.10（mcp） + Node.js ≥ 18 | 第三方整包（GPL-3.0，angusdevgo/Seep-Reverse-Lab）；含内置工具链与 `seep` MCP server，5 个撞名技能加 `seep-` 前缀 |
 
 除 `zzy-reverse-skill` 与 `seep-reverse-lab`（一插件多技能，见各自 `plugin.json` 的 `skills` 数组）外，其余都是**单技能插件**。
 CCode 技能扫描：只扫一层、符号链接不跟随、同名去重；细节见 CCode 的 `skills/scan.ts`。
@@ -186,6 +189,65 @@ Windows 上普遍成立，macOS 上通常是 `python3`（本仓库的 `seep-reve
 - 拿不准就**别写** `platforms`：不写是所有平台都生效，写了才会被跳过。
 - 不要为两个系统各维护一份插件（或把同一份配置写成 `platforms: { win32: {...} }` 这种整块分支）——
   优先用 `${CCODE_PYTHON}` 这类变量让**同一个条目**两端都对。
+
+## 运行前提（`requires`）
+
+在 `.ccode-plugin/plugin.json` 里声明**这个插件跑起来需要什么运行时**。客户端设置页的
+「运行环境」分区会按它检查本机环境：缺什么直接列出来（含缺哪个 python 包），并给出下载安装包、
+写入 PATH 的入口。写清楚的前提是「用户不必先踩一次启动失败才知道要装东西」。
+
+```jsonc
+{
+  "name": "my-plugin",
+  "version": "1.0.0",
+  "requires": {
+    "python": { "minVersion": "3.10", "packages": ["mcp"] },
+    "node":   { "minVersion": "18" }
+  }
+}
+```
+
+| 字段 | 说明 |
+| --- | --- |
+| 顶层 key | **只认 `python` 与 `node`**。其它 key（`java`/`rust`/`go`…）会被客户端**静默忽略**，写了等于没写 |
+| `minVersion` | 可选。`"3.10"` / `"18"` / `"22.12"` 都行（缺段按 0 比）。**不写 = 不卡版本** |
+| `packages` | **只对 `python` 有效**（客户端只做 `python -c "import <包>"` 探测）。写在 `node` 上无效 |
+| `{}` | 合法，表示「要这个工具，但不卡版本」。不要为了"看起来完整"而编一个版本号 |
+
+**什么该写（这是本仓库的取舍标准，写在这里便于 review）**：
+
+1. **插件自己带的、由客户端启动的入口**所需运行时 —— 不装就一定跑不起来，属硬门槛。
+   例：`seep-reverse-lab` 的 `seep` MCP server 是 Python 脚本且 `import mcp`，所以
+   `python >= 3.10` + `packages: ["mcp"]`，另外 `js-reverse` MCP 走 `npx` ⇒ `node >= 18`。
+2. **插件文档里自己写下的运行时门槛** —— 作者已经声明过的准入标准。
+   例：`xigong-funk-hikari` 写「Python 3.10+；静态改写需 capstone」；`android-reverse` 写「Node >= 20」；
+   `web-reverse` 写扣代码首选工具 webcrack 要求 Node 22/24；`zzy-reverse-skill` 的 README 表格写 Node.js 22.12+。
+3. **插件自带脚本（`.py` / `.mjs`）的解释器** —— 技能正文会让 Agent 去跑它们。
+   例：`yingan-tuoxiu` / `linker-fake-load-unwrapper` / `elf-local-auth-patcher` / `game-hacking` 都自带 `.py` 工具。
+
+**什么不该写**：技能里作为**可选手段**提到的第三方工具（jadx / radare2 / frida / sqlmap / x64dbg…）。
+它们不是"装这个插件的前提"，写成 `requires` 会让页面对大多数用户长期显示「不满足」，反而误导。
+只把**该插件自身入口的直接依赖**写进 `packages`（如 seep 的 `mcp`、xigong 的 `capstone`）；
+其余外部工具请在**插件介绍**里说明。
+
+> 注意：`requires` 在插件包里，**改它必须同时提版本号**（本仓库按版本号生成下载地址），
+> 否则用户那边不会重新下载，改了也白改。
+> `tools/validate.mjs` 会检查上面这些形状问题（未知工具名、`node` 上写 `packages`、类型不对），
+> 发布前跑一遍即可。
+
+## 插件介绍怎么写
+
+`marketplace.json` 的 `description`（英）与 `description_i18n.zh-CN`（中）是用户唯一能看到的介绍，
+按下面六段写，缺哪段都会被"看不明白"：
+
+1. **定位**：一句话说清它是什么；
+2. **覆盖范围**：具体到文件类型 / 技术栈 / 主题（不要只写"逆向工具"）；
+3. **提供什么**：技能数、命令数、MCP server 数（数字要与实际一致）；
+4. **怎么触发**：用户说什么话会命中它；
+5. **前提**：`requires` 里的运行时 + 需要自备的外部工具；
+6. **边界**：不做什么、仅限什么授权范围。
+
+中英都要写，且**英中信息量要一致**（只写英文时中文用户看到的是空白）。
 
 ## 首次发布到 GitHub
 

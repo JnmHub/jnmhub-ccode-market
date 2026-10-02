@@ -9,7 +9,7 @@
 | 上游许可证 | **GPL-3.0** — `LICENSE` 原文随包保留在本目录根 |
 | 本目录规模 | 约 306 MB / 4626 文件 |
 
-## 相对上游的改动（仅以下两类，其余逐字节保持一致）
+## 相对上游的改动（仅以下几处，其余逐字节保持一致）
 
 1. **5 个技能的 frontmatter `name` 加 `seep-` / `seep-safe-` 前缀**。
    原因：CCode 按技能 `name` 全局去重，后到的同名技能会被静默忽略（`skill_duplicate_name`）。
@@ -39,6 +39,21 @@
    改成 `${CCODE_PYTHON}` 后由客户端按平台给值（win32 → `python`，其它 → `python3`；
    用户在设置页「运行环境」手动指定了路径则以那个为准），于是**一份配置两端都对**。
    这是本市场面向所有插件的通用约定，见根 `README.md` 的「跨平台」一节。
+
+4. **`plugin.json` 新增 `requires` 字段**，把「运行前提」从文档搬到机器可读的声明上：
+
+   ```json
+   "requires": {
+     "node":   { "minVersion": "18" },
+     "python": { "minVersion": "3.10", "packages": ["mcp"] }
+   }
+   ```
+
+   为什么值得改：本插件的 `seep` MCP server 依赖 Python 的 `mcp` 包，缺失时会以
+   `ModuleNotFoundError` 启动失败（见下文「运行前提」），而在此之前客户端只能把那次启动失败
+   当成一个笼统的 MCP 错误报出来。写上 `requires` 之后，设置页「运行环境」会直接列出
+   「seep-reverse-lab 需要 Python ≥ 3.10 且缺少 `mcp`」，并给出下载与写 PATH 的入口。
+   版本号 3.10 / 18 分别取自本目录 `NOTICE.md`「运行前提」与 `MANUAL/DEPLOYMENT.md` 的准入表。
 
 ## 未改动、随包一并转发的第三方内容（需自行评估）
 
