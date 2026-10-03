@@ -68,7 +68,7 @@
     "detailSections": [
       {
         "title": "这是什么",
-        "text": "一个不发布到市场的参考插件：它声明了两个 ui.views，宿主侧栏的「+」菜单里会出现两个入口。页面本身跑在主进程持有的沙箱 WebContentsView 里，能看到的能力只有 11 个白名单方法（5 只读 + 6 数据通道）。",
+        "text": "一个不发布到市场的参考插件：它声明了两个 ui.views，宿主侧栏的「+」菜单里会出现两个入口。页面本身跑在主进程持有的沙箱 WebContentsView 里，能看到的能力只有 14 个白名单方法（5 只读 + 6 数据通道 + requestService + requestLsp / readLspNotifications）；后三个需要 `ui.service` 权限，本插件没声明，因此调用会回 service-unauthorized。",
         "order": 1
       },
       {
