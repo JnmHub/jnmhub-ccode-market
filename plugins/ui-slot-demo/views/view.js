@@ -4,7 +4,7 @@
  * 这里没有构建步骤、没有依赖：`ccode-plugin://` 协议下裸 `<script>` 就能加载相对路径，
  * 这正是"插件自带一个网页"的最小形态。
  *
- * 全部宿主能力都只有 `window.ccodePlugin` 这 5 个只读方法（见宿主 preload）。
+ * 全部宿主能力都只有 `window.ccodePlugin` 这 11 个白名单方法（5 只读 + 6 数据通道，见宿主 preload）。
  */
 (function () {
   "use strict";

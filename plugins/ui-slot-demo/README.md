@@ -8,7 +8,7 @@
 | --- | --- |
 | `ui.views` 在宿主侧栏「+」菜单里出两个入口 | 宿主 UI |
 | 插件页跑在主进程持有的沙箱 `WebContentsView` 里 | 「沙箱与桥自检」页 |
-| 页面只有 5 个只读白名单方法 | 同上（会列出 `window.ccodePlugin` 的键） |
+| 页面只有 11 个白名单方法（5 只读 + 6 数据通道） | 同上（会列出 `window.ccodePlugin` 的键） |
 | 没有 Node / `ipcRenderer` / 宿主 `window.ccode` | 同上（逐项判 `undefined`） |
 | 读自己插件根内的文件 | 「插槽演示」页 |
 | 读插件数据目录内的文件 | 「插槽演示」页 |

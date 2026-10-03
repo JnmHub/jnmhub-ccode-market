@@ -17,7 +17,8 @@
       <h2>A · 桥暴露了什么（<code>Object.keys(window.ccodePlugin)</code>）</h2>
       <pre id="bridge-keys">…</pre>
       <div class="note">
-        应当**只有** 5 个键：getInfo / getSettings / getTheme / readText / readDataText。
+        应当**只有** 11 个键：只读的 getInfo / getSettings / getTheme / readText / readDataText，
+        以及数据通道的 dataUsage / listDataText / listDataTrash / writeDataText / deleteDataText / restoreDataText。
         多出任何一个都说明 preload 被放宽了。
       </div>
     </div>
