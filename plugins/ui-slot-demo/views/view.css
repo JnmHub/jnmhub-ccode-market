@@ -89,6 +89,19 @@ code {
   font-size: 12px;
 }
 
+/* 长 JSON 之类的机器可读值：宁可横向滚动，也不要拦腰断 token
+   （`break-all` 会把它切成 `...toke` / `n"}`，读起来很费劲）。 */
+.value-block {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--mono);
+  font-size: 12px;
+  white-space: pre;
+  overflow-x: auto;
+}
+
 pre {
   margin: 6px 0 0;
   padding: 8px;
