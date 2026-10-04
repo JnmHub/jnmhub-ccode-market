@@ -46,6 +46,11 @@ tools/
 除 `zzy-reverse-skill` 与 `seep-reverse-lab`（一插件多技能，见各自 `plugin.json` 的 `skills` 数组）外，其余都是**单技能插件**。
 CCode 技能扫描：只扫一层、符号链接不跟随、同名去重；细节见 CCode 的 `skills/scan.ts`。
 
+> `plugins/ui-slot-demo/` **刻意不在 `marketplace.json` 里**：它是「插件界面（沙箱视图）」的**参考夹具** ——
+> 声明了 5 个 `ui.views` 与说明段落，用来验收「同时存活上限 4」的 LRU、桥的 14 个方法、宿主基线样式等行为。
+> 它只从**本地目录市场**加载（应用里把源指向本仓库目录即可），**不随市场发布**。
+> 所以**上面那张索引表是 16 行，而 `plugins/` 目录里有 17 个** —— 这不是漏登记。
+
 关键点：**市场是仓库根目录的 `marketplace.json`，插件是普通子目录**。CCode 会把整个仓库
 （或它声明的子集）取下来缓存到本地，再按 `marketplace.json` 里的相对路径逐个定位插件。
 
@@ -122,10 +127,19 @@ CCode 技能扫描：只扫一层、符号链接不跟随、同名去重；细�
 | 技能 | `skills/` | 每个 `skills/<名>/SKILL.md`，frontmatter `name` / `description` |
 | 子代理 | `agents/` | 每个 `*.md`，frontmatter `name` / `description` |
 | hooks / MCP | — | 写在 `plugin.json` 的 `hooks` / `mcpServers` 字段里 |
+| 插件界面 | `ui` | `views[]`（沙箱网页，入口是设置里的**「配置面板」**按钮）+ `detailSections[]`（纯文本段落）+ **声明式槽位** `toolCards[]` / `composerActions[]` / `blockRenderers[]`（宿主渲染，**不用写 JS**）+ `domains[]`（出网白名单）。**需要 `permissions`**（`ui.view` 等） |
+| 插件工具 | `tools` | 每个工具一条命令（argv 形式、**不走 shell**、入参只走 stdin）；模型侧名字自动加 `plugin_` 前缀，撞名会被丢弃（不覆盖），执行**一律需用户批准** |
+| 输出风格 | `outputStyles` 或 `output-styles/<id>.md` | 声明**只传 id**，正文来自 `output-styles/<id>.md`（frontmatter `name` / `description` / `keep-coding-instructions`）或内联 `prompt`；用户在会话里可切换 |
+| 常驻服务 | `services` | 一个能对话的后台进程（argv 形式；按需起、全局同时 ≤2、空闲回收）；插件页经 `requestService` 调，**需要 `permissions: ["ui.service"]`** |
+| 语言服务器 | `lspServers` | 与 `services` 同一套宿主，**差别只在 LSP 的 `Content-Length` 分帧**；每插件 ≤2 个；同样需要 `ui.service` |
+| 预置供应商模板 | `providers` | 用户点一下就能在「设置 → 模型 → 添加供应商」里多出一个可选服务。**只能给模板**（`wireFormat` / `baseUrl` / 模型清单），**凭据仍由用户自己填** —— 插件永远接触不到 key |
 
 命名约束：**命令名、插件名、市场名都只允许小写字母数字加 `._-`**（命令名还允许 `:`）；命令 frontmatter
-里出现上表以外的键只会告警，不会被拒绝。`channels` / `lspServers` / `outputStyles` / `settings` 四个
-字段在这个运行时是「只诊断不生效」的。
+里出现上表以外的键只会告警，不会被拒绝。清单里**只有 `channels` / `settings` 两个**字段是
+「只诊断不生效」（运行时找不到它们的语义定义，写了会得到一条诊断，不会静默）。
+其余字段在本运行时**都真的生效**：`requires`（运行前提）、`platforms`（组件级 + 整包级平台门控）、
+`permissions` + `ui`、`tools`、`services`、`lspServers`、`outputStyles`、`providers`。
+逐字段的规则、上限与示例见 CCode 仓库的 `docs/plugin-and-hook-development.md` §2 / §3.x。
 
 ## 跨平台（Windows / macOS / Linux）
 
